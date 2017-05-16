@@ -34,29 +34,27 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label text="CPU Producer" />
-                <CheckBox mnemonicParsing="false" text="Intel" GridPane.rowIndex="1" />
-                <CheckBox mnemonicParsing="false" text="AMD" GridPane.rowIndex="2" />
-                <Label text="Number of Cores" GridPane.rowIndex="3" />
-                <CheckBox mnemonicParsing="false" text="2 or less" GridPane.rowIndex="4" />
-                <CheckBox mnemonicParsing="false" prefHeight="0.0" prefWidth="23.0" text="4" GridPane.rowIndex="5" />
-                <CheckBox mnemonicParsing="false" text="6" GridPane.rowIndex="6" />
-                <CheckBox mnemonicParsing="false" text="8 or more" GridPane.rowIndex="7" />
-                <Label text="Socket" GridPane.rowIndex="8" />
-                <CheckBox mnemonicParsing="false" text="LGA 1151" GridPane.rowIndex="9" />
-                <CheckBox mnemonicParsing="false" text="AM4" GridPane.rowIndex="10" />
-                <Label text="Family" GridPane.rowIndex="11" />
-                <CheckBox mnemonicParsing="false" text="Core i3" GridPane.rowIndex="14" />
-                <CheckBox mnemonicParsing="false" text="Core i5" GridPane.rowIndex="13" />
-                <CheckBox mnemonicParsing="false" text="Core i7" GridPane.rowIndex="12" />
-                <CheckBox mnemonicParsing="false" text="Pentium" GridPane.rowIndex="15" />
-                <CheckBox mnemonicParsing="false" text="Ryzen 7" GridPane.rowIndex="16" />
-                <CheckBox mnemonicParsing="false" text="Ryzen 5" GridPane.rowIndex="17" />
-                <CheckBox mnemonicParsing="false" text="Xeon" GridPane.rowIndex="18" />
+                <Label text="Socket" GridPane.rowIndex="3" />
+                <CheckBox mnemonicParsing="false" text="Tower Cooler" GridPane.rowIndex="1" />
+                <CheckBox mnemonicParsing="false" text="Top-Blow Cooler" GridPane.rowIndex="2" />
+                <Label text="Cooler Type" />
+                <ComboBox prefWidth="150.0" promptText="Select" GridPane.rowIndex="4" />
+                <Label text="Producer" GridPane.rowIndex="5" />
+                <CheckBox mnemonicParsing="false" text="Cooler Master" GridPane.rowIndex="6" />
+                <CheckBox mnemonicParsing="false" text="Noctua" GridPane.rowIndex="7" />
+                <CheckBox mnemonicParsing="false" text="Phanteks" GridPane.rowIndex="8" />
+                <CheckBox mnemonicParsing="false" text="SilentiumPC" GridPane.rowIndex="9" />
+                <CheckBox mnemonicParsing="false" text="Thermalright" GridPane.rowIndex="10" />
+                <Label text="Height" GridPane.rowIndex="11" />
+                <CheckBox mnemonicParsing="false" text="129mm or less" GridPane.rowIndex="12" />
+                <CheckBox mnemonicParsing="false" text="130-139mm" GridPane.rowIndex="13" />
+                <CheckBox mnemonicParsing="false" text="141-149mm" GridPane.rowIndex="14" />
+                <CheckBox mnemonicParsing="false" text="150-151mm" GridPane.rowIndex="15" />
+                <CheckBox mnemonicParsing="false" text="160mm or more" GridPane.rowIndex="16" />
                 <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="335.0" text="Apply Filters" GridPane.rowIndex="19" />
-
             </children>
         </GridPane>
         <Pane layoutX="185.0" layoutY="-1.0" prefHeight="700.0" prefWidth="1016.0">

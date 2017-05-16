@@ -16,8 +16,9 @@ public class ModelCPUCooler {
     private final DoubleProperty airFlow;
     private final IntegerProperty heatPipes;
     private final IntegerProperty numberOfFans;
-    private final IntegerProperty fanSizeDiameter;
-    private final IntegerProperty fanSizeHeight;
+    private final DoubleProperty fanSizeX;
+    private final DoubleProperty fanSizeY;
+    private final DoubleProperty fanSizeHeight;
     private final IntegerProperty minFanSpeed;
     private final IntegerProperty maxFanSpeed;
     private final IntegerProperty minFanNoise;
@@ -31,8 +32,8 @@ public class ModelCPUCooler {
 
     public ModelCPUCooler (String cpuCoolerBrand, String cpuCoolerName, String cpuCoolerManufacturerCode, String cpuCoolerSockets,
                            String cpuCoolerDesign, double cpuCoolerDepth, double cpuCoolerWidth, double cpuCoolerHeight, int cpuCoolerWeight,
-                           double cpuCoolerAirFlow, int cpuCoolerHeatPipes, int cpuCoolerNumberOfFans, int cpuCoolerFanSizeDiameter,
-                           int cpuCoolerFanSizeHeight, int cpuCoolerMinFanSpeed, int cpuCoolerMaxFanSpeed, int cpuCoolerMinFanNoise,
+                           double cpuCoolerAirFlow, int cpuCoolerHeatPipes, int cpuCoolerNumberOfFans, double cpuCoolerFanSizeX, double cpuCoolerFanSizeY,
+                           double cpuCoolerFanSizeHeight, int cpuCoolerMinFanSpeed, int cpuCoolerMaxFanSpeed, int cpuCoolerMinFanNoise,
                            int cpuCoolerMaxFanNoise, int cpuCoolerWattage, String cpuCoolerConnectorType, int cpuCoolerPrice,
                            String cpuCoolerImagePath, String cpuCoolerSmallImagePath ) {
 
@@ -48,8 +49,9 @@ public class ModelCPUCooler {
         airFlow = new SimpleDoubleProperty(cpuCoolerAirFlow);
         heatPipes = new SimpleIntegerProperty(cpuCoolerHeatPipes);
         numberOfFans = new SimpleIntegerProperty(cpuCoolerNumberOfFans);
-        fanSizeDiameter = new SimpleIntegerProperty(cpuCoolerFanSizeDiameter);
-        fanSizeHeight = new SimpleIntegerProperty(cpuCoolerFanSizeHeight);
+        fanSizeX = new SimpleDoubleProperty(cpuCoolerFanSizeX);
+        fanSizeY = new SimpleDoubleProperty(cpuCoolerFanSizeY);
+        fanSizeHeight = new SimpleDoubleProperty(cpuCoolerFanSizeHeight);
         minFanSpeed = new SimpleIntegerProperty(cpuCoolerMinFanSpeed);
         maxFanSpeed = new SimpleIntegerProperty(cpuCoolerMaxFanSpeed);
         minFanNoise = new SimpleIntegerProperty(cpuCoolerMinFanNoise);
@@ -97,11 +99,14 @@ public class ModelCPUCooler {
     public IntegerProperty numberOfFansProperty() {return numberOfFans;}
     public int getNumberOfFans() {return numberOfFans.get();}
 
-    public IntegerProperty fanSizeDiameterProperty() {return fanSizeDiameter;}
-    public int getFanSizeDiameter() {return fanSizeDiameter.get();}
+    public DoubleProperty fanSizeXProperty() {return fanSizeX;}
+    public double getFanSizeX() {return fanSizeX.get();}
 
-    public IntegerProperty fanSizeHeightProperty() {return fanSizeHeight;}
-    public int getFanSizeHeight() {return fanSizeHeight.get();}
+    public DoubleProperty fanSizeYProperty() {return fanSizeY;}
+    public double getFanSizeY() {return fanSizeY.get();}
+
+    public DoubleProperty fanSizeHeightProperty() {return fanSizeHeight;}
+    public double getFanSizeHeight() {return fanSizeHeight.get();}
 
     public IntegerProperty minFanSpeedProperty() {return minFanSpeed;}
     public int getMinFanSpeed(){return minFanSpeed.get(); }

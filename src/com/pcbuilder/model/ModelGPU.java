@@ -10,14 +10,16 @@ public class ModelGPU {
     private final StringProperty manufacturer;
     private final StringProperty series;
     private final StringProperty name;
+    private final StringProperty manufacturerCode;
     private final StringProperty architecture;
+    private final DoubleProperty cardLength;
     private final IntegerProperty technology;
     private final StringProperty interfaceType;
     private final IntegerProperty memorySize;
     private final StringProperty memoryType;
     private final IntegerProperty speed;
     private final IntegerProperty boostSpeed;
-    private final IntegerProperty memorySpeed;
+    private final DoubleProperty memorySpeed;
     private final IntegerProperty external6Pin;
     private final IntegerProperty external8Pin;
     private final IntegerProperty dpConnectors;
@@ -29,17 +31,22 @@ public class ModelGPU {
     private final BooleanProperty isCooledPassive;
     private final BooleanProperty hasBackplate;
     private final IntegerProperty price;
-    private final StringProperty imagePath;
+    private final StringProperty smallImagePath;
+    private final StringProperty bigImagePath;
 
 
-    public ModelGPU (String gpuChipManufacturer, String gpuManufacturer, String gpuSeries, String gpuName, String gpuArchitecture, int gpuTechnology, String gpuInterfaceType,
-                     int gpuMemorySize, String gpuMemoryType, int gpuSpeed, int gpuBoostSpeed, int gpuMemorySpeed, int gpuExternal6Pin, int gpuExternal8Pin, int gpuDpConnectors,
-                     int gpuHdmiConnectors, int gpuDviConnectors, int gpuVgaConnectors,
-                     int gpuTdp, int gpuWattage, boolean gpuIsCooledPassive, boolean gpuHasBackplate, int gpuPrice, String gpuImagePath) {
+    public ModelGPU (String gpuChipManufacturer, String gpuManufacturer, String gpuSeries, String gpuName, String gpuManufacturerCode,
+                     String gpuArchitecture, double gpuCardLength, int gpuTechnology, String gpuInterfaceType, int gpuMemorySize, String gpuMemoryType,
+                     int gpuSpeed, int gpuBoostSpeed, double gpuMemorySpeed, int gpuExternal6Pin, int gpuExternal8Pin, int gpuDpConnectors,
+                     int gpuHdmiConnectors, int gpuDviConnectors, int gpuVgaConnectors, int gpuTdp, int gpuWattage, boolean gpuIsCooledPassive,
+                     boolean gpuHasBackplate, int gpuPrice, String gpuSmallImagePath, String gpuBigImagePath) {
+
         chipManufacturer = new SimpleStringProperty(gpuChipManufacturer);
         manufacturer = new SimpleStringProperty(gpuManufacturer);
         series = new SimpleStringProperty(gpuSeries);
         name = new SimpleStringProperty(gpuName);
+        manufacturerCode = new SimpleStringProperty(gpuManufacturerCode);
+        cardLength = new SimpleDoubleProperty(gpuCardLength);
         architecture = new SimpleStringProperty(gpuArchitecture);
         technology = new SimpleIntegerProperty(gpuTechnology);
         interfaceType = new SimpleStringProperty(gpuInterfaceType);
@@ -47,7 +54,7 @@ public class ModelGPU {
         memoryType = new SimpleStringProperty(gpuMemoryType);
         speed = new SimpleIntegerProperty(gpuSpeed);
         boostSpeed = new SimpleIntegerProperty(gpuBoostSpeed);
-        memorySpeed = new SimpleIntegerProperty(gpuMemorySpeed);
+        memorySpeed = new SimpleDoubleProperty(gpuMemorySpeed);
         external6Pin = new SimpleIntegerProperty(gpuExternal6Pin);
         external8Pin = new SimpleIntegerProperty(gpuExternal8Pin);
         dpConnectors = new SimpleIntegerProperty(gpuDpConnectors);
@@ -59,7 +66,8 @@ public class ModelGPU {
         isCooledPassive = new SimpleBooleanProperty(gpuIsCooledPassive);
         hasBackplate = new SimpleBooleanProperty(gpuHasBackplate);
         price = new SimpleIntegerProperty(gpuPrice);
-        imagePath = new SimpleStringProperty(gpuImagePath);
+        smallImagePath = new SimpleStringProperty(gpuSmallImagePath);
+        bigImagePath = new SimpleStringProperty(gpuBigImagePath);
 
     }
 
@@ -74,6 +82,12 @@ public class ModelGPU {
 
     public StringProperty nameProperty() {return name;}
     public String getName(){return name.get();}
+
+    public StringProperty manufacturerCodeProperty() {return manufacturerCode;}
+    public String getManufacturerCode(){return manufacturerCode.get();}
+
+    public DoubleProperty cardLengthProperty(){return cardLength;}
+    public Double getCardLength(){return cardLength.get();}
 
     public StringProperty architectureProperty() {return architecture;}
     public String getarchitecture(){return architecture.get();}
@@ -96,8 +110,8 @@ public class ModelGPU {
     public IntegerProperty boostSpeedProperty() {return boostSpeed;}
     public int getBoostSpeed(){return boostSpeed.get(); }
 
-    public IntegerProperty memorySpeedProperty() {return memorySpeed;}
-    public int getMemorySpeed() {return memorySpeed.get();}
+    public DoubleProperty memorySpeedProperty() {return memorySpeed;}
+    public double getMemorySpeed() {return memorySpeed.get();}
 
     public IntegerProperty external6PinProperty() {return external6Pin;}
     public int getExternal6Pin(){return external6Pin.get(); }
@@ -132,7 +146,10 @@ public class ModelGPU {
     public IntegerProperty priceProperty(){return price;}
     public int getPrice(){return price.get(); }
 
-    public StringProperty imagePathProperty(){return imagePath;}
-    public String getImagePath(){return imagePath.get();}
+    public StringProperty smallImagePathProperty(){return smallImagePath;}
+    public String getSmallImagePath(){return smallImagePath.get();}
+
+    public StringProperty bigImagePathProperty(){return smallImagePath;}
+    public String getBigImagePath(){return bigImagePath.get();}
 
 }

@@ -34,21 +34,20 @@ public class CPUOverviewController implements Initializable {
 
     }
 
-
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         cpuData.clear();
         cpuData.add(new ModelCPU("Intel", "LGA 1151", "7700k", "Core i7", 14, 4, 8, true,
-                4.2, 4.5, 1, 8, 91, 140,"box", false, 1700,
+                4.2, 4.5, 1, 8, 91, 140,"box", false, 1580,
                 "images/cpuImages/big/i7-7700k.png","images/cpuImages/small/i7-7700k_small.png"));
         cpuData.add(new ModelCPU("Intel", "LGA 1151", "7700", "Core i7", 14, 4, 8, false,
-                3.6, 4.2, 1, 8, 65, 95, "box", true, 1500,
+                3.6, 4.2, 1, 8, 65, 95, "box", true, 1400,
                 "images/cpuImages/big/i7-7700.png","images/cpuImages/small/i7-7700_small.png"));
         cpuData.add(new ModelCPU("Intel", "LGA 1151", "7600k", "Core i5", 14, 4, 4, true,
-                3.8, 4.2, 1, 6, 91, 115,"box", false, 1200,
+                3.8, 4.2, 1, 6, 91, 115,"box", false, 1100,
                 "images/cpuImages/big/i5-7600k.png","images/cpuImages/small/i5-7600k_small.png"));
         cpuData.add(new ModelCPU("Intel", "LGA 1151", "7600", "Core i5", 14, 4, 4, false,
-                3.5, 4.1, 1, 6, 65, 85,"box", true,  1000,
+                3.5, 4.1, 1, 6, 65, 85,"box", true,  995,
                 "images/cpuImages/big/i5-kaby.png","images/cpuImages/small/i5-kaby_small.png"));
         cpuData.add(new ModelCPU("Intel", "LGA 1151", "7500", "Core i5", 14, 4, 4, false,
                 3.4, 3.8, 1, 6, 65, 80,"box", true, 930,
@@ -106,8 +105,16 @@ public class CPUOverviewController implements Initializable {
                                 spaceInName = "-";
                             if (cpuItem.getBoxCooler() == false)
                                 howItIsPacked += " without cooler";
-                            setText(cpuItem.getBrand() + " " + cpuItem.getFamily() + spaceInName +  cpuItem.getName() + ", "
-                                    + cpuItem.getSpeed() + "GHz, " + cpuItem.getCacheL3() + " MB" + ", " + howItIsPacked);
+                            String speed = "";
+                            if (cpuItem.getSpeed() == cpuItem.getBoostSpeed())
+                                speed = cpuItem.getSpeed() + "GHz";
+                            else
+                                speed = cpuItem.getSpeed() + "-" + cpuItem.getBoostSpeed() + "GHz";
+
+                            setText(cpuItem.getBrand() + " " + cpuItem.getFamily() + spaceInName +  cpuItem.getName() + " (" + howItIsPacked + ")"
+                                    + "\n" + cpuItem.getNumberOfCores() + "C/" + cpuItem.getNumberOfThreads() + "T, " + speed + ", " + mainApp.noZeros(cpuItem.getCacheL3()) + " MB" + ", "
+                                    + cpuItem.getTdp() + "W TDP"
+                                    + "\nPrice: " + cpuItem.getPrice() + " PLN");
                         }
                     }
                 };

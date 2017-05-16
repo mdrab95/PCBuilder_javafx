@@ -35,6 +35,13 @@ public class MainApp extends Application {
     //}
     //public ObservableList<ModelGPU> setGpuData() {return gpuData; }
 
+    public static String noZeros(double d)
+    {
+        if(d == (long) d)
+            return String.format("%d",(long)d);
+        else
+            return String.format("%s",d);
+    }
 
     @Override
     public void start(Stage primaryStage) {
