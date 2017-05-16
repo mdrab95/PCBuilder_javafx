@@ -28,6 +28,13 @@ public class MainViewController {
     }
 
     @FXML
+    private void showCpuCooler(){
+
+        mainApp.showCPUCoolerOverview();
+    }
+
+
+    @FXML
     private void showGpu() {
         mainApp.showGPUOverview();
     }

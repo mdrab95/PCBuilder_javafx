@@ -38,19 +38,44 @@ public class CPUOverviewController implements Initializable {
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         cpuData.clear();
-        cpuData.add(new ModelCPU("Intel", "LGA 1151", "7700k", "core i7", 14, 4, 8,
-                4.2, 4.5, 1, 8, 91, 140, false, 1700, "images/cpuImages/i7-7700k.png"));
-        cpuData.add(new ModelCPU("Intel", "LGA 1151", "7700", "core i7", 14, 4, 8,
-                3.6, 4.2, 1, 8, 65, 95, true, 1500, "images/cpuImages/i7-7700.png"));
-        cpuData.add(new ModelCPU("Intel", "LGA 1151", "7600k", "core i5", 14, 4, 4,
-                3.8, 4.2, 1, 6, 91, 115, false, 1200, "images/cpuImages/i5-7600k.png"));
-        cpuData.add(new ModelCPU("Intel", "LGA 1151", "7600", "core i5", 14, 4, 4,
-                3.5, 4.1, 1, 6, 65, 85, true,  1000, "images/cpuImages/i5-7600.png"));
-        cpuData.add(new ModelCPU("Intel", "LGA 1151", "7500", "core i5", 14, 4, 4,
-                3.4, 3.8, 1, 6, 65, 80, true, 930, "images/cpuImages/i5-7500.png"));
-        cpuData.add(new ModelCPU("Intel", "LGA 1151", "7400", "core i5", 14, 4, 4,
-                3.0, 3.5, 1, 6, 65, 75, true, 850, "images/cpuImages/i5-7400.png"));
+        cpuData.add(new ModelCPU("Intel", "LGA 1151", "7700k", "Core i7", 14, 4, 8, true,
+                4.2, 4.5, 1, 8, 91, 140,"box", false, 1700,
+                "images/cpuImages/big/i7-7700k.png","images/cpuImages/small/i7-7700k_small.png"));
+        cpuData.add(new ModelCPU("Intel", "LGA 1151", "7700", "Core i7", 14, 4, 8, false,
+                3.6, 4.2, 1, 8, 65, 95, "box", true, 1500,
+                "images/cpuImages/big/i7-7700.png","images/cpuImages/small/i7-7700_small.png"));
+        cpuData.add(new ModelCPU("Intel", "LGA 1151", "7600k", "Core i5", 14, 4, 4, true,
+                3.8, 4.2, 1, 6, 91, 115,"box", false, 1200,
+                "images/cpuImages/big/i5-7600k.png","images/cpuImages/small/i5-7600k_small.png"));
+        cpuData.add(new ModelCPU("Intel", "LGA 1151", "7600", "Core i5", 14, 4, 4, false,
+                3.5, 4.1, 1, 6, 65, 85,"box", true,  1000,
+                "images/cpuImages/big/i5-kaby.png","images/cpuImages/small/i5-kaby_small.png"));
+        cpuData.add(new ModelCPU("Intel", "LGA 1151", "7500", "Core i5", 14, 4, 4, false,
+                3.4, 3.8, 1, 6, 65, 80,"box", true, 930,
+                "images/cpuImages/big/i5-kaby.png","images/cpuImages/small/i5-kaby_small.png"));
+        cpuData.add(new ModelCPU("Intel", "LGA 1151", "7400", "Core i5", 14, 4, 4, false,
+                3.0, 3.5, 1, 6, 65, 75,"box", true, 850,
+                "images/cpuImages/big/i5-kaby.png","images/cpuImages/small/i5-kaby_small.png"));
+        cpuData.add(new ModelCPU("Intel", "LGA 1151", "7350k", "Core i3", 14, 2, 4, true,
+                4.2, 3.5, 0.5, 4, 60, 90,"box", false, 850,
+                "images/cpuImages/big/i3-7350k.png","images/cpuImages/small/i3-7350k_small.png"));
+        cpuData.add(new ModelCPU("Intel", "LGA 1151", "7300", "Core i3", 14, 2, 4, false,
+                4.0, 3.5, 0.5, 4, 51, 55,"box", true, 650,
+                "images/cpuImages/big/i3-kaby.png","images/cpuImages/small/i3-kaby_small.png"));
+        cpuData.add(new ModelCPU("Intel", "LGA 1151", "7100", "Core i3", 14, 2, 4, false,
+                3.9, 3.5, 0.5, 3, 51, 50,"box", true, 500,
+                "images/cpuImages/big/i3-kaby.png","images/cpuImages/small/i3-kaby_small.png"));
+        cpuData.add(new ModelCPU("Intel", "LGA 1151", "G4620", "Pentium", 14, 2, 4, false,
+                3.7, 3.5, 0.5, 3, 51, 47,"box", true, 400,
+                "images/cpuImages/big/pentium-kaby.png","images/cpuImages/small/pentium-kaby_small.png"));
+        cpuData.add(new ModelCPU("Intel", "LGA 1151", "G4600", "Pentium", 14, 2, 4, false,
+                3.6, 3.5, 0.5, 3, 61, 45,"box", true, 370,
+                "images/cpuImages/big/pentium-kaby.png","images/cpuImages/small/pentium-kaby_small.png"));
+        cpuData.add(new ModelCPU("Intel", "LGA 1151", "G4560", "Pentium", 14, 2, 4, false,
+                3.5, 3.5, 0.5, 3, 54, 40,"box", true, 250,
+                "images/cpuImages/big/pentium-kaby.png","images/cpuImages/small/pentium-kaby_small.png"));
         cpuListView.setItems(cpuData);
+
         cpuListView.setCellFactory(new Callback<ListView<ModelCPU>, ListCell<ModelCPU>>() {
             @Override
             public ListCell<ModelCPU> call(ListView<ModelCPU> param) {
@@ -62,21 +87,27 @@ public class CPUOverviewController implements Initializable {
                         super.updateItem(cpuItem, empty);
                         if (cpuItem != null) {
                             try {
-                                Image img = new Image(cpuItem.getImagePath(), true);
+                                Image img = new Image(cpuItem.getSmallImagePath(), true);
                                 ImageView imageView = new ImageView(img);
-                                imageView.setFitHeight(75);
-                                imageView.setFitWidth(75);
+                                imageView.setFitHeight(100);
+                                imageView.setFitWidth(100);
                                 setGraphic(imageView);
                             }
                             catch (Exception ex){
                                     Image img = new Image("images/no_img.png");
                                     ImageView imageView = new ImageView(img);
-                                    imageView.setFitHeight(75);
-                                    imageView.setFitWidth(75);
+                                    imageView.setFitHeight(100);
+                                    imageView.setFitWidth(100);
                                     setGraphic(imageView);
                                 }
-                            setText(cpuItem.getBrand() + " " + cpuItem.getFamily() + " " +  cpuItem.getName()
-                                    + ", " + cpuItem.getSpeed() + "GHz, " + cpuItem.getCacheL3() + " MB");
+                            String howItIsPacked = cpuItem.getPackageType();
+                            String spaceInName = " ";
+                            if (cpuItem.getFamily().contains("Core"))
+                                spaceInName = "-";
+                            if (cpuItem.getBoxCooler() == false)
+                                howItIsPacked += " without cooler";
+                            setText(cpuItem.getBrand() + " " + cpuItem.getFamily() + spaceInName +  cpuItem.getName() + ", "
+                                    + cpuItem.getSpeed() + "GHz, " + cpuItem.getCacheL3() + " MB" + ", " + howItIsPacked);
                         }
                     }
                 };

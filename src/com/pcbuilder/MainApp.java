@@ -2,6 +2,7 @@ package com.pcbuilder;
 
 import java.io.IOException;
 
+import com.pcbuilder.controller.CPUCoolerOverviewController;
 import com.pcbuilder.controller.MainViewController;
 import com.pcbuilder.model.ModelCPU;
 import com.pcbuilder.controller.CPUOverviewController;
@@ -74,7 +75,7 @@ public class MainApp extends Application {
      */
     public void showCPUOverview() {
         try {
-            // Load person overview.
+            // Load cpu overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/CPUView.fxml"));
             AnchorPane cpuOverview = (AnchorPane)loader.load();
@@ -91,14 +92,33 @@ public class MainApp extends Application {
         }
     }
 
+    public void showCPUCoolerOverview() {
+        try {
+            // Load cpucooler overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/CPUCoolerView.fxml"));
+            AnchorPane cpuCoolerOverview = (AnchorPane)loader.load();
+
+            // Set cpucooler overview into the center of root layout.
+            mainView.setCenter(cpuCoolerOverview);
+
+            // Give the controller access to the main app.
+            CPUCoolerOverviewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void showGPUOverview() {
         try {
-            // Load person overview.
+            // Load gpu overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/GPUView.fxml"));
             AnchorPane gpuOverview = (AnchorPane)loader.load();
 
-            // Set cpu overview into the center of root layout.
+            // Set gpu overview into the center of root layout.
             mainView.setCenter(gpuOverview);
 
             // Give the controller access to the main app.

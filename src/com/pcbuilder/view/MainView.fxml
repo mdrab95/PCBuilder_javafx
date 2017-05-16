@@ -15,7 +15,7 @@
           <Button mnemonicParsing="false" text="PC Builder (Step by step)" />
             <Button mnemonicParsing="false" text="PC Builder - EZ Mode" />
             <Button mnemonicParsing="false" onAction="#showCpu" text="Processors (CPUs)" />
-            <Button mnemonicParsing="false" text="CPU Coolers" />
+            <Button mnemonicParsing="false" onAction="#showCpuCooler" text="CPU Coolers" />
             <Button mnemonicParsing="false" onAction="#showGpu" text="Graphics Cards (GPUs) " />
             <Button mnemonicParsing="false" text="Memory (RAM)" />
             <Button mnemonicParsing="false" text="Solid State Drives (SSDs)" />
