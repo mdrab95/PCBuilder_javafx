@@ -153,7 +153,7 @@ public class GPUOverviewController implements Initializable {
                                 speed = gpuItem.getSpeed() + "-" + gpuItem.getBoostSpeed() + "MHz";
                             String videoConnectors = memoryConnectors(gpuItem);
 
-                            setText(gpuItem.getseries() + " " +  gpuItem.getName() + " " + gpuItem.getmemorySize() + "GB " + gpuItem.getMemoryType()
+                            setText(gpuItem.getManufacturer() + " " + gpuItem.getseries() + " " +  gpuItem.getName() + " " + gpuItem.getmemorySize() + "GB " + gpuItem.getMemoryType()
                                     + "\nVideo connectors: " + videoConnectors
                                     + "\nCore speed: " + speed + ", Memory speed: " + mainApp.noZeros(gpuItem.getMemorySpeed()) + " GHz"
                                     + "\nPrice: " + gpuItem.getPrice() + " PLN");
