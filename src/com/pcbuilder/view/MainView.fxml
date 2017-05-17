@@ -23,7 +23,7 @@
                   <Button mnemonicParsing="false" styleClass="button-menu" text="Motherboards" />
                   <Button mnemonicParsing="false" onAction="#showSsd" styleClass="button-menu" text="Solid State Drives (SSDs)" />
                   <Button mnemonicParsing="false" onAction="#showHdd" styleClass="button-menu" text="Hard Drives (HDDs)" />
-                  <Button mnemonicParsing="false" styleClass="button-menu" text="Power Supplies" />
+                  <Button mnemonicParsing="false" onAction="#showPsu" styleClass="button-menu" text="Power Supplies" />
                   <Button mnemonicParsing="false" styleClass="button-menu" text="Cases" />
                </children>
             </HBox>

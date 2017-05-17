@@ -44,5 +44,8 @@ public class MainViewController {
         mainApp.showSSDOverview();
     }
 
+    @FXML
+    private void showPsu() {mainApp.showPSUOverview();}
+
 
 }

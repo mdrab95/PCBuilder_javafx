@@ -192,6 +192,25 @@ public class MainApp extends Application {
         }
     }
 
+    public void showPSUOverview() {
+        try {
+            // Load psu overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/PSUView.fxml"));
+            AnchorPane psuOverview = (AnchorPane)loader.load();
+
+            // Set psu overview into the center of root layout.
+            mainView.setCenter(psuOverview);
+
+            // Give the controller access to the main app.
+            PSUOverviewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Returns the main stage.
      * @return
