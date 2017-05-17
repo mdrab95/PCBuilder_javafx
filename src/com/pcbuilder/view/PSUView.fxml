@@ -34,17 +34,25 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
                 <Label text="Producer" />
-                <CheckBox mnemonicParsing="false" text="Antec" GridPane.rowIndex="1" />
-                <CheckBox mnemonicParsing="false" text="Areocool" GridPane.rowIndex="2" />
-                <CheckBox mnemonicParsing="false" text="Be quiet!" GridPane.rowIndex="3" />
-                <CheckBox mnemonicParsing="false" text="Corsair" GridPane.rowIndex="4" />
-                <CheckBox mnemonicParsing="false" text="EVGA" GridPane.rowIndex="5" />
-                <CheckBox mnemonicParsing="false" text="SeaSonic" GridPane.rowIndex="6" />
-                <CheckBox mnemonicParsing="false" text="SilentiumPC" GridPane.rowIndex="7" />
-                <CheckBox mnemonicParsing="false" text="Thermaltake" GridPane.rowIndex="8" />
+                <CheckBox mnemonicParsing="false" text="Be quiet!" GridPane.rowIndex="1" />
+                <CheckBox mnemonicParsing="false" text="Corsair" GridPane.rowIndex="2" />
+                <CheckBox mnemonicParsing="false" text="EVGA" GridPane.rowIndex="3" />
+                <CheckBox mnemonicParsing="false" text="SeaSonic" GridPane.rowIndex="4" />
+                <CheckBox mnemonicParsing="false" text="SilentiumPC" GridPane.rowIndex="5" />
+                <CheckBox mnemonicParsing="false" text="Thermaltake" GridPane.rowIndex="6" />
+                <Label text="Power [W]" GridPane.rowIndex="7" />
+                <Pane prefHeight="200.0" prefWidth="200.0" styleClass="label-small" stylesheets="@style.css" GridPane.rowIndex="8">
+                    <children>
+                        <TextField layoutX="37.0" layoutY="5.0" prefHeight="25.0" prefWidth="51.0" styleClass="label-small" text="0" />
+                        <Label layoutX="95.0" layoutY="6.0" prefHeight="21.0" prefWidth="29.0" styleClass="label-small" text="to" />
+                        <TextField layoutX="117.0" layoutY="5.0" prefHeight="25.0" prefWidth="51.0" styleClass="label-small" text="1000" />
+                        <Label layoutY="6.0" styleClass="label-small" text="from" />
+                    </children>
+                </Pane>
                 <Label text="Modular cabling" GridPane.rowIndex="9" />
                 <CheckBox mnemonicParsing="false" text="Yes" GridPane.rowIndex="10" />
                 <CheckBox mnemonicParsing="false" text="No" GridPane.rowIndex="11" />

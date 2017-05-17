@@ -25,7 +25,13 @@
 
 .check-box {
   -fx-text-fill: #000000;
-  -fx-text-size: 9pt;
+  -fx-text-size: 11pt;
+  -fx-font-family: "Segoe UI Light";
+}
+
+.label-small {
+  -fx-text-fill: #000000;
+  -fx-text-size: 9;
   -fx-font-family: "Segoe UI Light";
 }
 
@@ -46,8 +52,8 @@
 }
 
 .text-field {
-    -fx-font-size: 12pt;
-    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 9pt;
+    -fx-font-family: "Segoe UI Light";
 }
 
 .button-menu {
