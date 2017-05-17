@@ -20,22 +20,29 @@ public class MainViewController {
         this.mainApp = mainApp;
     }
 
+    @FXML
+    private void showCpu(){ mainApp.showCPUOverview();}
 
     @FXML
-    private void showCpu(){
-
-        mainApp.showCPUOverview();
-    }
-
-    @FXML
-    private void showCpuCooler(){
-
-        mainApp.showCPUCoolerOverview();
-    }
-
+    private void showCpuCooler(){ mainApp.showCPUCoolerOverview();}
 
     @FXML
     private void showGpu() {
         mainApp.showGPUOverview();
     }
+
+    @FXML
+    private void showRam() {
+        mainApp.showRAMOverview();
+    }
+
+    @FXML
+    private void showHdd() {mainApp.showHDDOverview();}
+
+    @FXML
+    private void showSsd() {
+        mainApp.showSSDOverview();
+    }
+
+
 }

@@ -2,7 +2,7 @@ package com.pcbuilder.model;
 import javafx.beans.property.*;
 
 /**
- * Created by Ace on 05.05.2017.
+ * CPU Model class.
  */
 public class ModelCPU {
 
@@ -26,7 +26,28 @@ public class ModelCPU {
     private final StringProperty imagePath;
     private final StringProperty smallImagePath;
 
-
+    /**
+     * Constructor:
+     * @param cpuBrand brand
+     * @param cpuSocket socket
+     * @param cpuName code name
+     * @param cpuFamily family name
+     * @param cpuTechnology technology process [nm]
+     * @param cpuNumberOfCores number of cores
+     * @param cpuNumberOfThreads number of threads
+     * @param cpuIsUnlocked is the cpu unlocked?
+     * @param cpuSpeed normal speed [in GHz]
+     * @param cpuBoostSpeed boost speed [GHz]
+     * @param cpuCacheL2 L2 cache memory [MB]
+     * @param cpuCacheL3 L3 cache memory [MB]
+     * @param cpuTdp tdp given by producer [W]
+     * @param cpuWattage wattage which is used to calculate PSU requirements [W]
+     * @param cpuPackageType type of package (oem, box)
+     * @param cpuIsTheCpuCoolerIncluded does this package version has cpu cooler included?
+     * @param cpuPrice price of the cpu
+     * @param cpuImagePath path to big image file
+     * @param cpuSmallImagePath path to small image file
+     */
     public ModelCPU (String cpuBrand, String cpuSocket, String cpuName, String cpuFamily, int cpuTechnology, int cpuNumberOfCores,
               int cpuNumberOfThreads, boolean cpuIsUnlocked, double cpuSpeed, double cpuBoostSpeed, double cpuCacheL2, double cpuCacheL3,
               int cpuTdp, int cpuWattage, String cpuPackageType, boolean cpuIsTheCpuCoolerIncluded, int cpuPrice, String cpuImagePath, String cpuSmallImagePath ) {
@@ -51,61 +72,24 @@ public class ModelCPU {
         smallImagePath = new SimpleStringProperty(cpuSmallImagePath);
     }
 
-    public StringProperty brandProperty() { return brand;}
     public String getBrand(){return brand.get();}
-
-    public StringProperty socketProperty() {return socket;}
     public String getSocket(){return socket.get();}
-
-    public StringProperty nameProperty() {return name;}
     public String getName(){return name.get();}
-
-    public StringProperty familyProperty() {return family;}
     public String getFamily(){return family.get();}
-
-    public IntegerProperty technologyProperty() {return technology;}
     public int getTechnology(){return technology.get(); }
-
-    public IntegerProperty numberOfCoresProperty() {return numberOfCores;}
     public int getNumberOfCores(){return numberOfCores.get(); }
-
-    public IntegerProperty numberOfThreadsProperty() {return numberOfThreads;}
     public int getNumberOfThreads(){return numberOfThreads.get(); }
-
-    public BooleanProperty isUnlockedProperty() {return isUnlocked;}
     public boolean getIsUnlocked() {return isUnlocked.get();}
-
-    public DoubleProperty speedProperty() {return speed;}
     public double getSpeed(){return speed.get(); }
-
-    public DoubleProperty boostSpeedProperty() {return boostSpeed;}
     public double getBoostSpeed(){return boostSpeed.get(); }
-
-    public DoubleProperty cacheL2Property() {return cacheL2;}
     public double getCacheL2(){return cacheL2.get(); }
-
-    public DoubleProperty cacheL3Property() {return cacheL3;}
     public double getCacheL3(){return cacheL3.get(); }
-
-    public IntegerProperty tdpProperty() {return tdp;}
     public int getTdp(){return tdp.get(); }
-
-    public IntegerProperty wattageProperty() {return wattage;}
     public int getWattage(){return wattage.get(); }
-
-    public StringProperty packageTypeProperty() {return packageType;}
     public String getPackageType(){return packageType.get();}
-
-    public BooleanProperty isTheCpuCoolerIncludedProperty() {return isTheCpuCoolerIncluded;}
     public boolean getBoxCooler(){return isTheCpuCoolerIncluded.get(); }
-
-    public IntegerProperty priceProperty(){return price;}
     public int getPrice(){return price.get(); }
-
-    public StringProperty imagePathProperty(){return imagePath;}
     public String getImagePath(){return imagePath.get();}
-
-    public StringProperty smallImagePathProperty(){return smallImagePath;}
     public String getSmallImagePath(){return smallImagePath.get();}
 
 }
