@@ -37,8 +37,8 @@
             </rowConstraints>
             <children>
                 <Label text="Standard" />
-                <CheckBox fx:id="cbNvidia" mnemonicParsing="false" text="DDR4" GridPane.rowIndex="1" />
-                <CheckBox fx:id="cbAmd" mnemonicParsing="false" text="DDR3" GridPane.rowIndex="2" />
+                <CheckBox mnemonicParsing="false" text="DDR4" GridPane.rowIndex="1" />
+                <CheckBox mnemonicParsing="false" text="DDR3" GridPane.rowIndex="2" />
                 <Label text="Type" GridPane.rowIndex="3" />
                 <ComboBox prefWidth="150.0" promptText="Select" GridPane.rowIndex="4" />
                 <Label text="Kit Size" GridPane.rowIndex="5" />

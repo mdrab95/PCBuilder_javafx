@@ -42,8 +42,8 @@
                 <CheckBox mnemonicParsing="false" text="Toshiba" GridPane.rowIndex="3" />
                 <CheckBox mnemonicParsing="false" text="Western Digital" GridPane.rowIndex="4" />
                 <Label prefHeight="0.0" prefWidth="46.0" text="Capacity" GridPane.rowIndex="5" />
-                <CheckBox fx:id="cbNvidia" mnemonicParsing="false" text="500 GB or less" GridPane.rowIndex="6" />
-                <CheckBox fx:id="cbAmd" mnemonicParsing="false" text="1 TB" GridPane.rowIndex="7" />
+                <CheckBox mnemonicParsing="false" text="500 GB or less" GridPane.rowIndex="6" />
+                <CheckBox mnemonicParsing="false" text="1 TB" GridPane.rowIndex="7" />
                 <CheckBox mnemonicParsing="false" text="2 TB" GridPane.rowIndex="8" />
                 <CheckBox mnemonicParsing="false" text="3-5 TB" GridPane.rowIndex="9" />
                 <CheckBox mnemonicParsing="false" text="6 TB or more" GridPane.rowIndex="10" />

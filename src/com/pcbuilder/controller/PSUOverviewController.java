@@ -35,10 +35,12 @@ public class PSUOverviewController implements Initializable {
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         psuData.clear();
-        psuData.add(new ModelPSU("SilentiumPC", "Supremo M2 Gold", "SPC140", "ATX", "80+ GOLD",
-                "Passive/Active", 120, 163, 550, 320, "images/psuImages/big/", "images/psuImages/small/"));
-        psuData.add(new ModelPSU("Corsair", "Corsair VS Series", "CP-9020097-EU", "ATX", "80+",
-                "Passive/Active", 120, 150, 550, 205, "images/psuImages/big/", "images/psuImages/small/"));
+        psuData.add(new ModelPSU("SilentiumPC", "Supremo M2 Gold", "SPC140", "ATX", "80 Plus Gold",
+                "Active with passive mode", "SIP, OPP, OVP, SCP, UVP", 120, 163,
+                true, 550,320, "images/psuImages/big/","images/psuImages/small/"));
+        psuData.add(new ModelPSU("Corsair", "Corsair VS Series", "CP-9020097-EU", "ATX", "80 Plus",
+                "Active with passive mode", "OVP, UVP, OCP, SCP", 120, 150, false, 550, 205,
+                "images/psuImages/big/", "images/psuImages/small/"));
 
 
         Comparator<ModelPSU> comparator = Comparator.comparingInt(ModelPSU::getPrice);
@@ -71,7 +73,16 @@ public class PSUOverviewController implements Initializable {
                                 setGraphic(imageView);
                             }
 
-                            setText(psuItem.getBrand() + ", " + psuItem.getName() + " " + psuItem.getWattage() + "W"
+                            String modular = "";
+                            if (psuItem.getIsModular() == true)
+                                modular = "Modular";
+
+                            String certificate = "";
+                            if (psuItem.getCertificate80Plus().length()==0)
+                                certificate = "no data";
+
+                            setText(psuItem.getBrand() + " " + psuItem.getName() + " " + psuItem.getWattage() + "W " + modular
+                                    + "\nCertificate: " + psuItem.getCertificate80Plus() + ", Protection:  " + psuItem.getProtection()
                                     + "\nPrice: " + psuItem.getPrice() + " PLN");
                         }
                     }

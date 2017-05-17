@@ -35,7 +35,28 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
-
+            <children>
+                <Label text="Producer" />
+                <CheckBox mnemonicParsing="false" text="Antec" GridPane.rowIndex="1" />
+                <CheckBox mnemonicParsing="false" text="Areocool" GridPane.rowIndex="2" />
+                <CheckBox mnemonicParsing="false" text="Be quiet!" GridPane.rowIndex="3" />
+                <CheckBox mnemonicParsing="false" text="Corsair" GridPane.rowIndex="4" />
+                <CheckBox mnemonicParsing="false" text="EVGA" GridPane.rowIndex="5" />
+                <CheckBox mnemonicParsing="false" text="SeaSonic" GridPane.rowIndex="6" />
+                <CheckBox mnemonicParsing="false" text="SilentiumPC" GridPane.rowIndex="7" />
+                <CheckBox mnemonicParsing="false" text="Thermaltake" GridPane.rowIndex="8" />
+                <Label text="Modular cabling" GridPane.rowIndex="9" />
+                <CheckBox mnemonicParsing="false" text="Yes" GridPane.rowIndex="10" />
+                <CheckBox mnemonicParsing="false" text="No" GridPane.rowIndex="11" />
+                <Label text="80 Plus certificate" GridPane.rowIndex="12" />
+                <CheckBox mnemonicParsing="false" text="80 Plus Titanium" GridPane.rowIndex="13" />
+                <CheckBox mnemonicParsing="false" text="80 Plus Platinum" GridPane.rowIndex="14" />
+                <CheckBox mnemonicParsing="false" text="80 Plus Gold" GridPane.rowIndex="15" />
+                <CheckBox mnemonicParsing="false" text="80 Plus Silver" GridPane.rowIndex="16" />
+                <CheckBox mnemonicParsing="false" text="80 Plus Bronze" GridPane.rowIndex="17" />
+                <CheckBox mnemonicParsing="false" text="80 Plus" GridPane.rowIndex="18" />
+                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="335.0" text="Apply Filters" GridPane.rowIndex="19" />
+            </children>
         </GridPane>
         <Pane layoutX="230.0" layoutY="0.0" prefHeight="700.0" prefWidth="970.0">
             <children>

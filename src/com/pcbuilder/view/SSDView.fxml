@@ -44,8 +44,8 @@
                 <CheckBox mnemonicParsing="false" text="Samsung" GridPane.rowIndex="5" />
                 <CheckBox mnemonicParsing="false" text="HyperX" GridPane.rowIndex="6" />
                 <Label text="Capacity" GridPane.rowIndex="7" />
-                <CheckBox fx:id="cbNvidia" mnemonicParsing="false" text="128 GB or less" GridPane.rowIndex="8" />
-                <CheckBox fx:id="cbAmd" mnemonicParsing="false" text="240-275 GB" GridPane.rowIndex="9" />
+                <CheckBox mnemonicParsing="false" text="128 GB or less" GridPane.rowIndex="8" />
+                <CheckBox mnemonicParsing="false" text="240-275 GB" GridPane.rowIndex="9" />
                 <CheckBox mnemonicParsing="false" text="480-525 GB" GridPane.rowIndex="10" />
                 <CheckBox mnemonicParsing="false" text="960 GB or more" GridPane.rowIndex="11" />
                 <Label text="Interface type" GridPane.rowIndex="12" />
