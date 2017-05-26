@@ -1,51 +1,81 @@
 package com.pcbuilder.model;
+import javafx.beans.property.*;
 
 /**
- * Created by Ace on 05.05.2017.
+ * HDD Model Class.
  */
 public class ModelHDD {
-    private String brand;
-    private String serialNumber;
-    private String interfaceType; // like SATA, IDE
-    private String formFactor; // like 2.5", 3.5"
-    private int rotationalSpeed; // like 7200 (rpm)
-    private int capacity;
-    private int readSpeed;
-    private int writeSpeed;
-    private int cacheSize;
-    private int acousticsIdle; // in dB
-    private int acousticsOperation;
-    private int wattage;
+    private final StringProperty brand;
+    private final StringProperty serialNumber;
+    private final StringProperty name;
+    private final StringProperty interfaceType; // like SATA, IDE
+    private final StringProperty formFactor; // like 2.5", 3.5"
+    private final IntegerProperty rotationalSpeed; // like 7200 (rpm)
+    private final IntegerProperty capacity;
+    private final IntegerProperty readSpeed;
+    private final IntegerProperty writeSpeed;
+    private final IntegerProperty cacheSize;
+    private final DoubleProperty acousticsIdle; // in dB
+    private final DoubleProperty acousticsOperation;
+    private final IntegerProperty wattage;
+    private final IntegerProperty price;
+    private final StringProperty imagePath;
+    private final StringProperty smallImagePath;
 
-
-    ModelHDD (String hddBrand, String hddSerialNumber, String hddInterfaceType, String hddFormFactor, int hddRotationalSpeed,
-              int hddCapacity, int hddReadSpeed, int hddWriteSpeed, int hddCacheSize, int hddAcousticsIdle,
-              int hddAcousticsOperation,int hddWattage) {
-        brand = hddBrand;
-        serialNumber = hddSerialNumber;
-        interfaceType = hddInterfaceType;
-        formFactor = hddFormFactor;
-        rotationalSpeed = hddRotationalSpeed;
-        capacity = hddCapacity;
-        readSpeed = hddReadSpeed;
-        writeSpeed = hddWriteSpeed;
-        cacheSize = hddCacheSize;
-        acousticsIdle = hddAcousticsIdle;
-        acousticsOperation = hddAcousticsOperation;
-        wattage = hddWattage;
+    /**
+     * Constructor:
+     * @param hddBrand brand
+     * @param hddSerialNumber manufacturer serial number
+     * @param hddName name
+     * @param hddInterfaceType hdd interface type
+     * @param hddFormFactor hdd form factor
+     * @param hddRotationalSpeed rotational speed [rpm]
+     * @param hddCapacity capacity [GB]
+     * @param hddReadSpeed read speed [MB/s]
+     * @param hddWriteSpeed write speed [MB/s]
+     * @param hddCacheSize cache size [MB]
+     * @param hddAcousticsIdle idle noise [dbA]
+     * @param hddAcousticsOperation stress noise [dbA]
+     * @param hddWattage wattage which is used to calculate PSU requirements [W]
+     * @param hddPrice hdd price
+     * @param hddImagePath path to big image file
+     * @param hddSmallImagePath path to small image file
+     */
+    public ModelHDD (String hddBrand, String hddSerialNumber, String hddName, String hddInterfaceType, String hddFormFactor, int hddRotationalSpeed,
+              int hddCapacity, int hddReadSpeed, int hddWriteSpeed, int hddCacheSize, double hddAcousticsIdle,
+              double hddAcousticsOperation,int hddWattage, int hddPrice, String hddImagePath, String hddSmallImagePath) {
+        brand = new SimpleStringProperty(hddBrand);
+        serialNumber = new SimpleStringProperty(hddSerialNumber);
+        name = new SimpleStringProperty(hddName);
+        interfaceType = new SimpleStringProperty(hddInterfaceType);
+        formFactor = new SimpleStringProperty(hddFormFactor);
+        rotationalSpeed = new SimpleIntegerProperty(hddRotationalSpeed);
+        capacity = new SimpleIntegerProperty(hddCapacity);
+        readSpeed = new SimpleIntegerProperty(hddReadSpeed);
+        writeSpeed = new SimpleIntegerProperty(hddWriteSpeed);
+        cacheSize = new SimpleIntegerProperty(hddCacheSize);
+        acousticsIdle = new SimpleDoubleProperty(hddAcousticsIdle);
+        acousticsOperation = new SimpleDoubleProperty(hddAcousticsOperation);
+        wattage = new SimpleIntegerProperty(hddWattage);
+        price = new SimpleIntegerProperty(hddPrice);
+        imagePath = new SimpleStringProperty(hddImagePath);
+        smallImagePath = new SimpleStringProperty(hddSmallImagePath);
     }
 
-    public String getBrand(){ return brand;}
-    public String getSerialNumber() {return serialNumber;}
-    public String getInterfaceType() {return interfaceType;}
-    public String getFormFactor() {return formFactor;}
-    public int getRotationalSpeed() {return rotationalSpeed;}
-    public int getCapacity() {return capacity;}
-    public int getReadSpeed() {return readSpeed;}
-    public int getWriteSpeed() {return writeSpeed;}
-    public int getCacheSize() {return cacheSize;}
-    public int getAcousticsIdle() {return acousticsIdle;}
-    public int getAcousticsOperation() {return acousticsOperation;}
-    public int getWattage() {return wattage;}
-
+    public String getBrand(){return brand.get();}
+    public String getSerialNumber(){return serialNumber.get();}
+    public String getName(){return name.get();}
+    public String getHddInterfaceType(){return interfaceType.get();}
+    public String getFormFactor(){return formFactor.get();}
+    public int getRotationalSpeed(){return rotationalSpeed.get(); }
+    public int getCapacity(){return capacity.get(); }
+    public int getReadSpeed(){return readSpeed.get(); }
+    public int getWriteSpeed(){return writeSpeed.get(); }
+    public int getCacheSize(){return cacheSize.get(); }
+    public double getAcousticIdle(){return acousticsIdle.get();}
+    public double getAcousticOperation(){return acousticsOperation.get();}
+    public int getWattage(){return wattage.get(); }
+    public int getPrice(){return price.get(); }
+    public String getImagePath(){return imagePath.get();}
+    public String getSmallImagePath(){return smallImagePath.get();}
 }

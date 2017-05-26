@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pcbuilder.controller.CPUOverviewController">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pcbuilder.controller.SSDOverviewController">
     <children>
         <GridPane layoutX="14.0" layoutY="28.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="640.0" prefWidth="176.0">
             <columnConstraints>
@@ -37,31 +37,30 @@
             </rowConstraints>
             <children>
                 <Label text="Producer" />
-                <CheckBox mnemonicParsing="false" text="Intel" GridPane.rowIndex="1" />
-                <CheckBox mnemonicParsing="false" text="AMD" GridPane.rowIndex="2" />
-                <Label text="Number of Cores" GridPane.rowIndex="3" />
-                <CheckBox mnemonicParsing="false" text="2 or less" GridPane.rowIndex="4" />
-                <CheckBox mnemonicParsing="false" prefHeight="0.0" prefWidth="23.0" text="4" GridPane.rowIndex="5" />
-                <CheckBox mnemonicParsing="false" text="6" GridPane.rowIndex="6" />
-                <CheckBox mnemonicParsing="false" text="8 or more" GridPane.rowIndex="7" />
-                <Label text="Socket" GridPane.rowIndex="8" />
-                <CheckBox mnemonicParsing="false" text="LGA 1151" GridPane.rowIndex="9" />
-                <CheckBox mnemonicParsing="false" text="AM4" GridPane.rowIndex="10" />
-                <Label text="Family" GridPane.rowIndex="11" />
-                <CheckBox mnemonicParsing="false" text="Core i3" GridPane.rowIndex="14" />
-                <CheckBox mnemonicParsing="false" text="Core i5" GridPane.rowIndex="13" />
-                <CheckBox mnemonicParsing="false" text="Core i7" GridPane.rowIndex="12" />
-                <CheckBox mnemonicParsing="false" text="Pentium" GridPane.rowIndex="15" />
-                <CheckBox mnemonicParsing="false" text="Ryzen 7" GridPane.rowIndex="16" />
-                <CheckBox mnemonicParsing="false" text="Ryzen 5" GridPane.rowIndex="17" />
-                <CheckBox mnemonicParsing="false" text="Xeon" GridPane.rowIndex="18" />
+                <CheckBox mnemonicParsing="false" text="ADATA" GridPane.rowIndex="1" />
+                <CheckBox mnemonicParsing="false" text="Goodram" GridPane.rowIndex="2" />
+                <CheckBox mnemonicParsing="false" text="Intel" GridPane.rowIndex="3" />
+                <CheckBox mnemonicParsing="false" text="Kingston" GridPane.rowIndex="4" />
+                <CheckBox mnemonicParsing="false" text="Samsung" GridPane.rowIndex="5" />
+                <CheckBox mnemonicParsing="false" text="HyperX" GridPane.rowIndex="6" />
+                <Label text="Capacity" GridPane.rowIndex="7" />
+                <CheckBox mnemonicParsing="false" text="128 GB or less" GridPane.rowIndex="8" />
+                <CheckBox mnemonicParsing="false" text="240-275 GB" GridPane.rowIndex="9" />
+                <CheckBox mnemonicParsing="false" text="480-525 GB" GridPane.rowIndex="10" />
+                <CheckBox mnemonicParsing="false" text="960 GB or more" GridPane.rowIndex="11" />
+                <Label text="Interface type" GridPane.rowIndex="12" />
+                <ComboBox prefWidth="150.0" promptText="Select" GridPane.rowIndex="13" />
+                <Label text="Form factor" GridPane.rowIndex="14" />
+                <ComboBox prefWidth="150.0" promptText="Select" GridPane.rowIndex="15" />
+                <Label text="Memory type" GridPane.rowIndex="16" />
+                <CheckBox mnemonicParsing="false" text="MLC" GridPane.rowIndex="17" />
+                <CheckBox mnemonicParsing="false" text="3D-NAND TLC" GridPane.rowIndex="18" />
                 <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="335.0" text="Apply Filters" GridPane.rowIndex="19" />
-
             </children>
         </GridPane>
         <Pane layoutX="230.0" layoutY="0.0" prefHeight="700.0" prefWidth="970.0">
             <children>
-                <ListView fx:id="cpuListView" layoutX="30.0" layoutY="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="640.0" prefWidth="910.0" />
+                <ListView fx:id="ssdListView" layoutX="30.0" layoutY="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="640.0" prefWidth="910.0" />
             </children>
         </Pane>
     </children>

@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
 import java.net.URL;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 
 public class CPUCoolerOverviewController implements Initializable {
@@ -120,7 +121,8 @@ public class CPUCoolerOverviewController implements Initializable {
                 110, 135, 466, 94.6, 2, 1, 100, 100, 25,
                 800, 2000, 9, 21, 5, "4-Pin PWM",
                 65, "images/cpuCoolerImages/big/","images/cpuCoolerImages/small/"));
-
+        Comparator<ModelCPUCooler> comparator = Comparator.comparingInt(ModelCPUCooler::getPrice);
+        FXCollections.sort(cpuCoolerData, comparator.reversed());
         cpuCoolerListView.setItems(cpuCoolerData);
         cpuCoolerListView.setCellFactory(new Callback<ListView<ModelCPUCooler>, ListCell<ModelCPUCooler>>() {
             @Override
@@ -153,9 +155,9 @@ public class CPUCoolerOverviewController implements Initializable {
                             fans += mainApp.noZeros(cpuCoolerItem.getFanSizeX()) + "x" + mainApp.noZeros(cpuCoolerItem.getFanSizeY()) + "x" + mainApp.noZeros(cpuCoolerItem.getFanSizeHeight()) + "mm";
                             String noise = "";
                             if (cpuCoolerItem.getMinFanNoise() == cpuCoolerItem.getMaxFanNoise())
-                                noise = cpuCoolerItem.getMaxFanNoise()+ "dB(A)";
+                                noise = cpuCoolerItem.getMaxFanNoise()+ "dBA";
                             else
-                                noise = cpuCoolerItem.getMinFanNoise() + "-" + cpuCoolerItem.getMaxFanNoise() + "dB(A)";
+                                noise = cpuCoolerItem.getMinFanNoise() + "-" + cpuCoolerItem.getMaxFanNoise() + "dBA";
                             String fanSpeed = "";
                             if (cpuCoolerItem.getMinFanSpeed() == cpuCoolerItem.getMaxFanSpeed())
                                 fanSpeed = cpuCoolerItem.getMaxFanSpeed() + "rpm";

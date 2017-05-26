@@ -1,7 +1,9 @@
 package com.pcbuilder.model;
-import com.sun.javafx.scene.control.skin.IntegerFieldSkin;
 import javafx.beans.property.*;
 
+/**
+ * CPU-Cooler Model Class.
+ */
 public class ModelCPUCooler {
 
     private final StringProperty brand;
@@ -29,7 +31,33 @@ public class ModelCPUCooler {
     private final StringProperty imagePath;
     private final StringProperty smallImagePath;
 
-
+    /**
+     * Constructor:
+     * @param cpuCoolerBrand cooler brand
+     * @param cpuCoolerName cooler code name
+     * @param cpuCoolerManufacturerCode cooler manufacturer's code
+     * @param cpuCoolerSockets fitting sockets
+     * @param cpuCoolerDesign cooler design (tower cooler / top-blow cooler)
+     * @param cpuCoolerDepth cooler depth [mm]
+     * @param cpuCoolerWidth cooler width [mm]
+     * @param cpuCoolerHeight cooler height [mm]
+     * @param cpuCoolerWeight cooler weight [mm]
+     * @param cpuCoolerAirFlow air flow [m³/h]
+     * @param cpuCoolerHeatPipes number of heat pipes
+     * @param cpuCoolerNumberOfFans number of fans
+     * @param cpuCoolerFanSizeX width of fan(s) [mm]
+     * @param cpuCoolerFanSizeY length of fan(s) [mm]
+     * @param cpuCoolerFanSizeHeight height of fan(s) [mm]
+     * @param cpuCoolerMinFanSpeed fan speed - min [rpm]
+     * @param cpuCoolerMaxFanSpeed fan speed - max [rpm]
+     * @param cpuCoolerMinFanNoise fan noise - min [dBA]
+     * @param cpuCoolerMaxFanNoise fan noise - max [dBA]
+     * @param cpuCoolerWattage wattage which is used to calculate PSU requirements [W]
+     * @param cpuCoolerConnectorType connector type (3-PIN / 4PIN PWM)
+     * @param cpuCoolerPrice cooler price
+     * @param cpuCoolerImagePath path to big image file
+     * @param cpuCoolerSmallImagePath path to small image file
+     */
     public ModelCPUCooler (String cpuCoolerBrand, String cpuCoolerName, String cpuCoolerManufacturerCode, String cpuCoolerSockets,
                            String cpuCoolerDesign, double cpuCoolerDepth, double cpuCoolerWidth, double cpuCoolerHeight, int cpuCoolerWeight,
                            double cpuCoolerAirFlow, int cpuCoolerHeatPipes, int cpuCoolerNumberOfFans, double cpuCoolerFanSizeX, double cpuCoolerFanSizeY,
@@ -63,76 +91,29 @@ public class ModelCPUCooler {
         smallImagePath = new SimpleStringProperty(cpuCoolerSmallImagePath);
     }
 
-    public StringProperty brandProperty() { return brand;}
     public String getBrand(){return brand.get();}
-
-    public StringProperty nameProperty() { return name;}
     public String getName(){return name.get();}
-
-    public StringProperty manufacturerCodeProperty() { return manufacturerCode;}
     public String getManufacturerCode(){return manufacturerCode.get();}
-
-    public StringProperty socketsProperty() {return sockets;}
     public String getSockets(){return sockets.get();}
-
-    public StringProperty designProperty() {return design;}
     public String getDesign(){return design.get();}
-
-    public DoubleProperty depthProperty() {return depth;}
     public double getDepth(){return depth.get(); }
-
-    public DoubleProperty widthProperty() {return width;}
     public double getWidth(){return width.get(); }
-
-    public DoubleProperty heightProperty() {return height;}
     public double getHeight(){return height.get(); }
-
-    public IntegerProperty weightProperty() {return weight;}
     public int getWeight(){return weight.get(); }
-
-    public DoubleProperty airFlowProperty() {return airFlow;}
     public double getAirFlow(){return airFlow.get(); }
-
-    public IntegerProperty heatPipesProperty() {return heatPipes;}
     public int getHeatPipes() {return heatPipes.get();}
-
-    public IntegerProperty numberOfFansProperty() {return numberOfFans;}
     public int getNumberOfFans() {return numberOfFans.get();}
-
-    public DoubleProperty fanSizeXProperty() {return fanSizeX;}
     public double getFanSizeX() {return fanSizeX.get();}
-
-    public DoubleProperty fanSizeYProperty() {return fanSizeY;}
     public double getFanSizeY() {return fanSizeY.get();}
-
-    public DoubleProperty fanSizeHeightProperty() {return fanSizeHeight;}
     public double getFanSizeHeight() {return fanSizeHeight.get();}
-
-    public IntegerProperty minFanSpeedProperty() {return minFanSpeed;}
     public int getMinFanSpeed(){return minFanSpeed.get(); }
-
-    public IntegerProperty maxFanSpeedProperty() {return maxFanSpeed;}
     public int getMaxFanSpeed(){return maxFanSpeed.get(); }
-
-    public IntegerProperty minFanNoiseProperty() {return minFanNoise;}
     public int getMinFanNoise(){return minFanNoise.get(); }
-
-    public IntegerProperty maxFanNoiseProperty() {return maxFanNoise;}
     public int getMaxFanNoise(){return maxFanNoise.get(); }
-
-    public IntegerProperty wattageProperty() {return wattage;}
     public int getWattage(){return wattage.get(); }
-
-    public StringProperty connectorTypeProperty() {return connectorType;}
     public String getConnectorType(){return connectorType.get();}
-
-    public IntegerProperty priceProperty(){return price;}
     public int getPrice(){return price.get(); }
-
-    public StringProperty imagePathProperty(){return imagePath;}
     public String getImagePath(){return imagePath.get();}
-
-    public StringProperty smallImagePathProperty(){return smallImagePath;}
     public String getSmallImagePath(){return smallImagePath.get();}
 
 }

@@ -14,11 +14,9 @@ import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
 import java.net.URL;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 
-/**
- * Created by Ace on 2017-05-14.
- */
 public class CPUOverviewController implements Initializable {
 
     @FXML
@@ -73,6 +71,9 @@ public class CPUOverviewController implements Initializable {
         cpuData.add(new ModelCPU("Intel", "LGA 1151", "G4560", "Pentium", 14, 2, 4, false,
                 3.5, 3.5, 0.5, 3, 54, 40,"box", true, 250,
                 "images/cpuImages/big/pentium-kaby.png","images/cpuImages/small/pentium-kaby_small.png"));
+        Comparator<ModelCPU> comparator = Comparator.comparingInt(ModelCPU::getPrice);
+        FXCollections.sort(cpuData, comparator.reversed());
+
         cpuListView.setItems(cpuData);
 
         cpuListView.setCellFactory(new Callback<ListView<ModelCPU>, ListCell<ModelCPU>>() {

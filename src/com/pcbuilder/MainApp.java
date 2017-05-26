@@ -2,11 +2,8 @@ package com.pcbuilder;
 
 import java.io.IOException;
 
-import com.pcbuilder.controller.CPUCoolerOverviewController;
-import com.pcbuilder.controller.MainViewController;
+import com.pcbuilder.controller.*;
 import com.pcbuilder.model.ModelCPU;
-import com.pcbuilder.controller.CPUOverviewController;
-import com.pcbuilder.controller.GPUOverviewController;
 import com.pcbuilder.model.ModelGPU;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -47,6 +44,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("PC Builder");
+        this.primaryStage.resizableProperty().setValue(false);
         initMainView();
         //showCPUOverview();
     }
@@ -137,6 +135,100 @@ public class MainApp extends Application {
         }
     }
 
+    public void showRAMOverview() {
+        try {
+            // Load ram overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/RAMView.fxml"));
+            AnchorPane ramOverview = (AnchorPane)loader.load();
+
+            // Set ram overview into the center of root layout.
+            mainView.setCenter(ramOverview);
+
+            // Give the controller access to the main app.
+            RAMOverviewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showHDDOverview() {
+        try {
+            // Load hdd overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/HDDView.fxml"));
+            AnchorPane hddOverview = (AnchorPane)loader.load();
+
+            // Set hdd overview into the center of root layout.
+            mainView.setCenter(hddOverview);
+
+            // Give the controller access to the main app.
+            HDDOverviewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showSSDOverview() {
+        try {
+            // Load ssd overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/SSDView.fxml"));
+            AnchorPane ssdOverview = (AnchorPane)loader.load();
+
+            // Set ssd overview into the center of root layout.
+            mainView.setCenter(ssdOverview);
+
+            // Give the controller access to the main app.
+            SSDOverviewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showPSUOverview() {
+        try {
+            // Load psu overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/PSUView.fxml"));
+            AnchorPane psuOverview = (AnchorPane) loader.load();
+
+            // Set psu overview into the center of root layout.
+            mainView.setCenter(psuOverview);
+
+            // Give the controller access to the main app.
+            PSUOverviewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showCaseOverview() {
+        try {
+            // Load case overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/CaseView.fxml"));
+            AnchorPane caseOverview = (AnchorPane)loader.load();
+
+            // Set case overview into the center of root layout.
+            mainView.setCenter(caseOverview);
+
+            // Give the controller access to the main app.
+            CaseOverviewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Returns the main stage.
