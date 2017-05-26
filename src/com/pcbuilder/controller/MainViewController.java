@@ -47,5 +47,8 @@ public class MainViewController {
     @FXML
     private void showPsu() {mainApp.showPSUOverview();}
 
+    @FXML
+    private void showCase() {mainApp.showCaseOverview();}
+
 
 }
