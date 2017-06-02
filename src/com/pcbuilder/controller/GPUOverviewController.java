@@ -4,17 +4,20 @@ import com.pcbuilder.MainApp;
 import com.pcbuilder.model.ModelGPU;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class GPUOverviewController implements Initializable {
 
@@ -50,14 +53,169 @@ public class GPUOverviewController implements Initializable {
     @FXML
     private ListView<ModelGPU> gpuListView;
     private final ObservableList<ModelGPU> gpuData = FXCollections.observableArrayList();
-    private final ObservableList<ModelGPU> finalData = FXCollections.observableArrayList();
+    private FilteredList<ModelGPU> filteredData = new FilteredList<ModelGPU>(gpuData, p->true);
+    private SortedList<ModelGPU> sortedData = new SortedList<ModelGPU>(filteredData);
     private MainApp mainApp;
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
 
-    public void filterButton (ObservableList<ModelGPU> gpuDataList){
+    @FXML
+    Button filterButton;
+    @FXML
+    CheckBox selectNvidia;
+    @FXML
+    CheckBox selectRadeon;
+    @FXML
+    CheckBox selectMSI;
+    @FXML
+    CheckBox selectZotac;
+    @FXML
+    CheckBox selectPalit;
+    @FXML
+    CheckBox selectGigabyte;
+    @FXML
+    CheckBox select1GB;
+    @FXML
+    CheckBox select2GB;
+    @FXML
+    CheckBox select3GB;
+    @FXML
+    CheckBox select4GB;
+    @FXML
+    CheckBox select6GB;
+    @FXML
+    CheckBox select8GB;
+    @FXML
+    CheckBox selectGDDR5X;
+    @FXML
+    CheckBox selectGDDR5;
+    @FXML
+    CheckBox selectDDR3;
 
+    @FXML
+    private void filterButtonClick (ActionEvent event){
+        filteredData.setPredicate(gpu -> true);
+        if (selectNvidia.isSelected()) {
+            filteredData.setPredicate(gpu -> {
+                if (gpu.getChipManufacturer().contains("Nvidia"))
+                    return true;
+                else
+                    return false;
+            });
+        }
+        if (selectRadeon.isSelected()) {
+            filteredData.setPredicate(gpu -> {
+                if (gpu.getChipManufacturer().contains("Radeon"))
+                    return true;
+                else
+                    return false;
+            });
+        }
+        if (select1GB.isSelected()) {
+            filteredData.setPredicate(gpu -> {
+                if (gpu.getmemorySize() <= 1)
+                    return true;
+                else
+                    return false;
+            });
+        }
+        if (select2GB.isSelected()) {
+            filteredData.setPredicate(gpu -> {
+                if (gpu.getmemorySize() == 2)
+                    return true;
+                else
+                    return false;
+            });
+        }
+        if (select3GB.isSelected()) {
+            filteredData.setPredicate(gpu -> {
+                if (gpu.getmemorySize() == 3)
+                    return true;
+                else
+                    return false;
+            });
+        }
+        if (select4GB.isSelected()) {
+            filteredData.setPredicate(gpu -> {
+                if (gpu.getmemorySize() == 4)
+                    return true;
+                else
+                    return false;
+            });
+        }
+        if (select6GB.isSelected()) {
+            filteredData.setPredicate(gpu -> {
+                if (gpu.getmemorySize() == 6)
+                    return true;
+                else
+                    return false;
+            });
+        }
+        if (select8GB.isSelected()) {
+            filteredData.setPredicate(gpu -> {
+                if (gpu.getmemorySize() >= 8)
+                    return true;
+                else
+                    return false;
+            });
+        }
+        if (selectGDDR5X.isSelected()) {
+            filteredData.setPredicate(gpu -> {
+                if (gpu.getMemoryType().equals("GDDR5X"))
+                    return true;
+                else
+                    return false;
+            });
+        }
+        if (selectGDDR5.isSelected()) {
+            filteredData.setPredicate(gpu -> {
+                if (gpu.getMemoryType().equals("GDDR5"))
+                    return true;
+                else
+                    return false;
+            });
+        }
+        if (selectDDR3.isSelected()) {
+            filteredData.setPredicate(gpu -> {
+                if (gpu.getMemoryType().equals("DDR3"))
+                    return true;
+                else
+                    return false;
+            });
+        }
+        if (selectMSI.isSelected()) {
+            filteredData.setPredicate(gpu -> {
+                if (gpu.getManufacturer().equals("MSI"))
+                    return true;
+                else
+                    return false;
+            });
+        }
+        if (selectZotac.isSelected()) {
+            filteredData.setPredicate(gpu -> {
+                if (gpu.getManufacturer().equals("Zotac"))
+                    return true;
+                else
+                    return false;
+            });
+        }
+        if (selectPalit.isSelected()) {
+            filteredData.setPredicate(gpu -> {
+                if (gpu.getManufacturer().equals("Palit"))
+                    return true;
+                else
+                    return false;
+            });
+        }
+        if (selectGigabyte.isSelected()) {
+            filteredData.setPredicate(gpu -> {
+                if (gpu.getManufacturer().equals("Gigabyte"))
+                    return true;
+                else
+                    return false;
+            });
+        }
     }
 
     @FXML
@@ -116,9 +274,7 @@ public class GPUOverviewController implements Initializable {
                 0, 180, 180,false, false, 1820, "images/gpuImages/big/", "images/gpuImages/small/"));
         Comparator<ModelGPU> comparator = Comparator.comparingInt(ModelGPU::getPrice);
         FXCollections.sort(gpuData, comparator.reversed());
-
-        gpuListView.setItems(gpuData);
-
+        gpuListView.setItems(sortedData);
         gpuListView.setCellFactory(new Callback<ListView<ModelGPU>, ListCell<ModelGPU>>() {
 
             @Override
