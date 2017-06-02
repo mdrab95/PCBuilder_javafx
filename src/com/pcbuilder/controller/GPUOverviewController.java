@@ -21,6 +21,68 @@ import java.util.stream.Collectors;
 
 public class GPUOverviewController implements Initializable {
 
+    private void filterChipManufacturer(CheckBox cb, FilteredList<ModelGPU> list, String chipManufacturer){
+        if (cb.isSelected()) {
+            filteredData.setPredicate(gpu -> {
+                if (gpu.getChipManufacturer().contains(chipManufacturer))
+                    return true;
+                else
+                    return false;
+            });
+        }
+    }
+
+    private void filterManufacturer(CheckBox cb, FilteredList<ModelGPU> list, String producer) {
+        if (cb.isSelected()) {
+            list.setPredicate(gpu -> {
+                if (gpu.getManufacturer().equals(producer))
+                    return true;
+                else
+                    return false;
+            });
+        }
+    }
+
+    private void filterMemorySize(CheckBox cb, FilteredList<ModelGPU> list, int memorySize) {
+        if (cb.isSelected()) {
+            if (memorySize >=8)
+            {
+                list.setPredicate(gpu -> {
+                    if (gpu.getmemorySize() >= 8)
+                        return true;
+                    else
+                        return false;
+                });
+            }
+            if (memorySize <=1)
+            {
+                list.setPredicate(gpu -> {
+                    if (gpu.getmemorySize() <=1 )
+                        return true;
+                    else
+                        return false;
+                });
+            }
+            list.setPredicate(gpu -> {
+                if (gpu.getmemorySize() == memorySize)
+                    return true;
+                else
+                    return false;
+            });
+        }
+    }
+
+    private void filterMemoryType(CheckBox cb, FilteredList<ModelGPU> list, String memoryType) {
+        if (cb.isSelected()) {
+            list.setPredicate(gpu -> {
+                if (gpu.getMemoryType().equals(memoryType))
+                    return true;
+                else
+                    return false;
+            });
+        }
+    }
+
     private String memoryConnectors (ModelGPU modelItem){
         String connectors = "";
         if (modelItem.getDviConnectors() > 0) {
@@ -96,126 +158,21 @@ public class GPUOverviewController implements Initializable {
     @FXML
     private void filterButtonClick (ActionEvent event){
         filteredData.setPredicate(gpu -> true);
-        if (selectNvidia.isSelected()) {
-            filteredData.setPredicate(gpu -> {
-                if (gpu.getChipManufacturer().contains("Nvidia"))
-                    return true;
-                else
-                    return false;
-            });
-        }
-        if (selectRadeon.isSelected()) {
-            filteredData.setPredicate(gpu -> {
-                if (gpu.getChipManufacturer().contains("Radeon"))
-                    return true;
-                else
-                    return false;
-            });
-        }
-        if (select1GB.isSelected()) {
-            filteredData.setPredicate(gpu -> {
-                if (gpu.getmemorySize() <= 1)
-                    return true;
-                else
-                    return false;
-            });
-        }
-        if (select2GB.isSelected()) {
-            filteredData.setPredicate(gpu -> {
-                if (gpu.getmemorySize() == 2)
-                    return true;
-                else
-                    return false;
-            });
-        }
-        if (select3GB.isSelected()) {
-            filteredData.setPredicate(gpu -> {
-                if (gpu.getmemorySize() == 3)
-                    return true;
-                else
-                    return false;
-            });
-        }
-        if (select4GB.isSelected()) {
-            filteredData.setPredicate(gpu -> {
-                if (gpu.getmemorySize() == 4)
-                    return true;
-                else
-                    return false;
-            });
-        }
-        if (select6GB.isSelected()) {
-            filteredData.setPredicate(gpu -> {
-                if (gpu.getmemorySize() == 6)
-                    return true;
-                else
-                    return false;
-            });
-        }
-        if (select8GB.isSelected()) {
-            filteredData.setPredicate(gpu -> {
-                if (gpu.getmemorySize() >= 8)
-                    return true;
-                else
-                    return false;
-            });
-        }
-        if (selectGDDR5X.isSelected()) {
-            filteredData.setPredicate(gpu -> {
-                if (gpu.getMemoryType().equals("GDDR5X"))
-                    return true;
-                else
-                    return false;
-            });
-        }
-        if (selectGDDR5.isSelected()) {
-            filteredData.setPredicate(gpu -> {
-                if (gpu.getMemoryType().equals("GDDR5"))
-                    return true;
-                else
-                    return false;
-            });
-        }
-        if (selectDDR3.isSelected()) {
-            filteredData.setPredicate(gpu -> {
-                if (gpu.getMemoryType().equals("DDR3"))
-                    return true;
-                else
-                    return false;
-            });
-        }
-        if (selectMSI.isSelected()) {
-            filteredData.setPredicate(gpu -> {
-                if (gpu.getManufacturer().equals("MSI"))
-                    return true;
-                else
-                    return false;
-            });
-        }
-        if (selectZotac.isSelected()) {
-            filteredData.setPredicate(gpu -> {
-                if (gpu.getManufacturer().equals("Zotac"))
-                    return true;
-                else
-                    return false;
-            });
-        }
-        if (selectPalit.isSelected()) {
-            filteredData.setPredicate(gpu -> {
-                if (gpu.getManufacturer().equals("Palit"))
-                    return true;
-                else
-                    return false;
-            });
-        }
-        if (selectGigabyte.isSelected()) {
-            filteredData.setPredicate(gpu -> {
-                if (gpu.getManufacturer().equals("Gigabyte"))
-                    return true;
-                else
-                    return false;
-            });
-        }
+        filterChipManufacturer(selectRadeon, filteredData, "Nvidia");
+        filterChipManufacturer(selectRadeon, filteredData, "Radeon");
+        filterMemorySize(select1GB, filteredData, 1);
+        filterMemorySize(select2GB, filteredData, 2);
+        filterMemorySize(select3GB, filteredData, 3);
+        filterMemorySize(select4GB, filteredData, 4);
+        filterMemorySize(select6GB, filteredData, 6);
+        filterMemorySize(select8GB, filteredData, 8);
+        filterMemoryType(selectGDDR5X, filteredData, "GDDR5X");
+        filterMemoryType(selectGDDR5, filteredData, "GDDR5");
+        filterMemoryType(selectDDR3, filteredData, "DDR3");
+        filterManufacturer(selectMSI, filteredData, "MSI");
+        filterManufacturer(selectZotac, filteredData, "Zotac");
+        filterManufacturer(selectPalit, filteredData, "Palit");
+        filterManufacturer(selectGigabyte, filteredData, "Gigabyte");
     }
 
     @FXML
