@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
@@ -34,9 +35,10 @@ public class HDDOverviewController implements Initializable {
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         hddData.clear();
-        hddData.add(new ModelHDD("test", "test", "test", "test", "test",
-                0, 0, 0, 0, 0, 0, 0,
-                0, 0, "", ""));
+        DataLoader loader = new DataLoader();
+        try {
+            hddData.addAll(loader.hddDataLoader());
+        } catch (IOException e) {}
 
         Comparator<ModelHDD> comparator = Comparator.comparingInt(ModelHDD::getPrice);
         FXCollections.sort(hddData, comparator.reversed());

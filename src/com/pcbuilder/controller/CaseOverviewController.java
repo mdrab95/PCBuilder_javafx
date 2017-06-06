@@ -12,6 +12,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
@@ -34,15 +36,12 @@ public class CaseOverviewController implements Initializable {
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         caseData.clear();
-        caseData.add(new ModelCase("SilentiumPC", "SPC143", "RG1 Pure Black", "ATX, µATX", "midi-tower",
-                "bottom",44.7, 20.8, 43, 4.4, 160, 2,2,2,
-                0, 3,120, 0, 0, 0, 1,
-                1, 120, 130,"images/caseImages/big/", "images/caseImages/small/" ));
-        Comparator<ModelCase> comparator = Comparator.comparingInt(ModelCase::getPrice);
-        FXCollections.sort(caseData, comparator.reversed());
+        DataLoader loader = new DataLoader();
+        try {
+            caseData.addAll(loader.caseDataLoader());
+        } catch (IOException e) {}
 
         caseListView.setItems(caseData);
-
         caseListView.setCellFactory(new Callback<ListView<ModelCase>, ListCell<ModelCase>>() {
 
             @Override

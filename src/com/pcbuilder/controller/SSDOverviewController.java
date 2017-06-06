@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
@@ -35,11 +36,10 @@ public class SSDOverviewController implements Initializable {
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         ssdData.clear();
-        ssdData.add(new ModelSSD("test", "test", "test", "test", "test", "test",
-                0,0,0, "test", 0, 0, "test", "test",
-                0, false, 0, "", ""));
-        Comparator<ModelSSD> comparator = Comparator.comparingInt(ModelSSD::getPrice);
-        FXCollections.sort(ssdData, comparator.reversed());
+        DataLoader loader = new DataLoader();
+        try {
+            ssdData.addAll(loader.ssdDataLoader());
+        } catch (IOException e) {}
 
         ssdListView.setItems(ssdData);
 

@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
@@ -35,12 +36,9 @@ public class RAMOverviewController implements Initializable {
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         ramData.clear();
-        ramData.add(new ModelRAM("test", "test", "test", "test", 0, 0,
-                0, "test", 0, 0, 0, 0, false, false,
-                0, "", ""));
-
-        Comparator<ModelRAM> comparator = Comparator.comparingInt(ModelRAM::getPrice);
-        FXCollections.sort(ramData, comparator.reversed());
+        DataLoader loader = new DataLoader();
+        try {ramData.addAll(loader.ramDataLoader());}
+        catch(IOException e){};
 
         ramListView.setItems(ramData);
 

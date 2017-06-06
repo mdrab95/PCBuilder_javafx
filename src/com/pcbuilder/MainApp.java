@@ -1,36 +1,22 @@
 package com.pcbuilder;
 
 import java.io.IOException;
-
 import com.pcbuilder.controller.*;
-import com.pcbuilder.model.ModelCPU;
-import com.pcbuilder.model.ModelGPU;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+
 
 public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane mainView;
 
-   // private ObservableList<ModelCPU> cpuData = FXCollections.observableArrayList();
-  //  private ObservableList<ModelGPU> gpuData = FXCollections.observableArrayList();
     public MainApp(){
-        // define cpu, gpu data
     }
-    // public ObservableList<ModelCPU> getCpuData(){
-    //    return cpuData;
-    //}
-    //public ObservableList<ModelGPU> setGpuData() {return gpuData; }
 
     public static String noZeros(double d)
     {
@@ -48,6 +34,7 @@ public class MainApp extends Application {
         initMainView();
         //showCPUOverview();
     }
+
 
     /**
      * Initializes the root layout.
