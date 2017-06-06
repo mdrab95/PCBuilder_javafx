@@ -71,7 +71,7 @@ public class SSDOverviewController implements Initializable {
                             setText(ssdItem.getBrand() + " " + ssdItem.getName() + " " + ssdItem.getCapacity() + " GB"
                                     + "\n" + "Form factor: " + ssdItem.getFormFactor() + ", interface type: " + ssdItem.getInterfaceType() + ", memory type: " + ssdItem.getMemoryType()
                                     + "\nRead: " + ssdItem.getReadSpeed() + "MB/s, write: " + ssdItem.getWriteSpeed() + "MB/s " + ", TBW: " + ssdItem.getTbw() + "TB"
-                                    + "\nPrice: " + ssdItem.getPrice() + "PLN");
+                                    + "\nPrice: " + ssdItem.getPrice() + " PLN");
                         }
                     }
                 };
