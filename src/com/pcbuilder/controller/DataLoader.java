@@ -9,11 +9,18 @@ import java.nio.charset.Charset;
 import java.util.Comparator;
 
 /**
- * Created by Ace on 2017-06-03.
+ * Data loader class.
  */
 public class DataLoader {
-    String path = "src/com/pcbuilder/files/";
+
+    String path = "src/com/pcbuilder/files/"; // default path to 'files' directory
     String name;
+
+    /**
+     * PSU data loader.
+     * @return ModelPSU ObservableList
+     * @throws IOException
+     */
     public ObservableList<ModelPSU> psuDataLoader() throws IOException {
         String line;
         ObservableList <ModelPSU> psuDataList = FXCollections.observableArrayList();
@@ -40,6 +47,12 @@ public class DataLoader {
         catch (IOException e) {}
         return psuDataList;
     }
+
+    /**
+     * GPU data loader.
+     * @return ModelGPU ObservableList
+     * @throws IOException
+     */
     public ObservableList<ModelGPU> gpuDataLoader() throws IOException {
         String line;
         ObservableList <ModelGPU> gpuDataList = FXCollections.observableArrayList();
@@ -74,6 +87,12 @@ public class DataLoader {
         return gpuDataList;
     }
 
+
+    /**
+     * CPU data loader.
+     * @return ModelCPU ObservableList
+     * @throws IOException
+     */
     public ObservableList<ModelCPU> cpuDataLoader() throws IOException {
         String line;
         ObservableList <ModelCPU> cpuDataList = FXCollections.observableArrayList();
@@ -107,6 +126,12 @@ public class DataLoader {
         return cpuDataList;
     }
 
+
+    /**
+     * CPU Cooler data loader.
+     * @return ModelCPUCooler ObservableList
+     * @throws IOException
+     */
     public ObservableList<ModelCPUCooler> cpuCoolerDataLoader() throws IOException {
         String line;
         ObservableList <ModelCPUCooler> cpuCoolerDataList = FXCollections.observableArrayList();
@@ -133,6 +158,11 @@ public class DataLoader {
         return cpuCoolerDataList;
     }
 
+    /**
+     * Case data loader.
+     * @return ModelCase ObservableList
+     * @throws IOException
+     */
     public ObservableList<ModelCase> caseDataLoader() throws IOException {
         String line;
         ObservableList <ModelCase> caseDataList = FXCollections.observableArrayList();
@@ -160,6 +190,11 @@ public class DataLoader {
         return caseDataList;
     }
 
+    /**
+     * HDD data loader.
+     * @return ModelHDD ObservableList
+     * @throws IOException
+     */
     public ObservableList<ModelHDD> hddDataLoader() throws IOException {
         String line;
         ObservableList <ModelHDD> hddDataList = FXCollections.observableArrayList();
@@ -184,6 +219,11 @@ public class DataLoader {
         return hddDataList;
     }
 
+    /**
+     * SSD data loader.
+     * @return ModelSSD ObservableList
+     * @throws IOException
+     */
     public ObservableList<ModelSSD> ssdDataLoader() throws IOException {
         String line;
         ObservableList <ModelSSD> ssdDataList = FXCollections.observableArrayList();
@@ -197,12 +237,12 @@ public class DataLoader {
             while ((line = br.readLine()) != null) {
                 String[]data = line.split(";");
                 boolean hasRadiator = false;
-                if (data[15] == "true")
+                if (data[14] == "true")
                     hasRadiator = true;
 
                 ssdDataList.add(new ModelSSD(data[0], data[1], data[2], data[3], data[4], data[5], Integer.parseInt(data[6]),
-                        Integer.parseInt(data[7]), Integer.parseInt(data[8]), data[9], Integer.parseInt(data[10]), Integer.parseInt(data[11]),
-                        data[12], data[13], Integer.parseInt(data[14]), hasRadiator, Integer.parseInt(data[16]), data[17], data[18]));
+                        Integer.parseInt(data[7]), Integer.parseInt(data[8]), data[9], Integer.parseInt(data[10]),
+                        data[11], data[12], Integer.parseInt(data[13]), hasRadiator, Integer.parseInt(data[15]), data[16], data[17]));
             }
             Comparator<ModelSSD> comparator = Comparator.comparingInt(ModelSSD::getPrice);
             FXCollections.sort(ssdDataList, comparator.reversed());
@@ -211,6 +251,11 @@ public class DataLoader {
         return ssdDataList;
     }
 
+    /**
+     * RAM data loader.
+     * @return ModelRAM ObservableList
+     * @throws IOException
+     */
     public ObservableList<ModelRAM> ramDataLoader() throws IOException {
         String line;
         ObservableList <ModelRAM> ramDataList = FXCollections.observableArrayList();

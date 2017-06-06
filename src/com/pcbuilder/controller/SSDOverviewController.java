@@ -54,7 +54,7 @@ public class SSDOverviewController implements Initializable {
                         super.updateItem(ssdItem, empty);
                         if (ssdItem != null) {
                             try {
-                                Image img = new Image(ssdItem.getSmallImagePath(), true);
+                                Image img = new Image(ssdItem.getSmallImagePath() + ssdItem.getSerialNumber() + ".png", true);
                                 ImageView imageView = new ImageView(img);
                                 imageView.setFitHeight(100);
                                 imageView.setFitWidth(100);
@@ -68,7 +68,10 @@ public class SSDOverviewController implements Initializable {
                                 setGraphic(imageView);
                             }
 
-                            setText(ssdItem.getBrand());
+                            setText(ssdItem.getBrand() + " " + ssdItem.getName() + " " + ssdItem.getCapacity() + " GB"
+                                    + "\n" + "Form factor: " + ssdItem.getFormFactor() + ", interface type: " + ssdItem.getInterfaceType() + ", memory type: " + ssdItem.getMemoryType()
+                                    + "\nRead: " + ssdItem.getReadSpeed() + "MB/s, write: " + ssdItem.getWriteSpeed() + "MB/s " + ", TBW: " + ssdItem.getTbw() + "TB"
+                                    + "\nPrice: " + ssdItem.getPrice() + "PLN");
                         }
                     }
                 };

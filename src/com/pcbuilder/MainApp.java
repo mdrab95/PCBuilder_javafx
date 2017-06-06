@@ -16,6 +16,7 @@ public class MainApp extends Application {
     private BorderPane mainView;
 
     public MainApp(){
+        //...
     }
 
     public static String noZeros(double d)
@@ -84,6 +85,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Shows the cpu cooler overview inside the root layout.
+     */
     public void showCPUCoolerOverview() {
         try {
             // Load cpucooler overview.
@@ -103,6 +107,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Shows the gpu overview inside the root layout.
+     */
     public void showGPUOverview() {
         try {
             // Load gpu overview.
@@ -122,6 +129,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Shows the ram overview inside the root layout.
+     */
     public void showRAMOverview() {
         try {
             // Load ram overview.
@@ -141,6 +151,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Shows the hdd overview inside the root layout.
+     */
     public void showHDDOverview() {
         try {
             // Load hdd overview.
@@ -160,6 +173,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Shows the ssd overview inside the root layout.
+     */
     public void showSSDOverview() {
         try {
             // Load ssd overview.
@@ -179,6 +195,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Shows the psu overview inside the root layout.
+     */
     public void showPSUOverview() {
         try {
             // Load psu overview.
@@ -198,6 +217,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Shows the case overview inside the root layout.
+     */
     public void showCaseOverview() {
         try {
             // Load case overview.
@@ -219,12 +241,16 @@ public class MainApp extends Application {
 
     /**
      * Returns the main stage.
-     * @return
+     * @return primary stage
      */
     public Stage getPrimaryStage() {
         return primaryStage;
     }
 
+    /**
+     * main method
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }

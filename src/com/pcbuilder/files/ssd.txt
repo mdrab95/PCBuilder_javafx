@@ -1,1 +1,8 @@
-test;test;test;test;test;test;0;0;0;test;0;0;test;test;0;false;0; ; 
+Crucial;CT275MX300SSD1;MX300;SATA III;2.5";AHCI;275;530;500;TLC;80;Marvell;88SS1074 Controller with Crucial Custom Firmware;5;false;400;images/ssdImages/big/;images/ssdImages/small/
+Crucial;CT525MX300SSD1;MX300;SATA III;2.5";AHCI;525;530;510;TLC;160;Marvell;88SS1074 Controller with Crucial Custom Firmware;5;false;650;images/ssdImages/big/;images/ssdImages/small/
+Crucial;CT1050MX300SSD1;MX300;SATA III;2.5";AHCI;1024;530;510;TLC;360;Marvell;88SS1074 Controller with Crucial Custom Firmware;5;false;1265;images/ssdImages/big/;images/ssdImages/small/
+Crucial;CT2050MX300SSD1;MX300;SATA III;2.5";AHCI;2048;530;510;TLC;400;Marvell;88SS1074 Controller with Crucial Custom Firmware;5;false;2390;images/ssdImages/big/;images/ssdImages/small/
+Crucial;CT275MX300SSD4;MX300;M.2 2280SS;2.5";AHCI;275;530;500;TLC;80;Marvell;88SS1074 Controller with Crucial Custom Firmware;5;false;400;images/ssdImages/big/;images/ssdImages/small/
+Crucial;CT525MX300SSD4;MX300;M.2 2280SS;2.5";AHCI;525;530;510;TLC;160;Marvell;88SS1074 Controller with Crucial Custom Firmware;5;false;650;images/ssdImages/big/;images/ssdImages/small/
+Crucial;CT1050MX300SSD4;MX300;M.2 2280SS;2.5";AHCI;1024;530;510;TLC;360;Marvell;88SS1074 Controller with Crucial Custom Firmware;5;false;1265;images/ssdImages/big/;images/ssdImages/small/
+Crucial;CT2050MX300SSD4;MX300;M.2 2280SS;2.5";AHCI;2048;530;510;TLC;400;Marvell;88SS1074 Controller with Crucial Custom Firmware;5;false;2390;images/ssdImages/big/;images/ssdImages/small/

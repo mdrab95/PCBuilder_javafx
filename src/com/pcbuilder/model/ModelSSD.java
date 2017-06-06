@@ -16,7 +16,6 @@ public class ModelSSD {
     private final IntegerProperty readSpeed;
     private final IntegerProperty writeSpeed;
     private final StringProperty memoryType; // like TLC, MLC, SLC
-    private final IntegerProperty cacheSize;
     private final IntegerProperty tbw;
     private final StringProperty controllerManufacturer;
     private final StringProperty controllerModel;
@@ -38,7 +37,6 @@ public class ModelSSD {
      * @param ssdReadSpeed read speed [MB/s]
      * @param ssdWriteSpeed write speed [MB/s]
      * @param ssdMemoryType memory type [SLC/MLC/TLC]
-     * @param ssdCacheSize cache size [MB]
      * @param ssdTbw tbw-factor (TeraBytes written)
      * @param ssdControllerManufacturer controller manufacturer
      * @param ssdControllerModel controller model name
@@ -49,7 +47,7 @@ public class ModelSSD {
      * @param ssdSmallImagePath path to small image file
      */
     public ModelSSD (String ssdBrand, String ssdSerialNumber, String ssdName, String ssdInterfaceType, String ssdFormFactor, String ssdProtocol,
-              int ssdCapacity, int ssdReadSpeed, int ssdWriteSpeed, String ssdMemoryType, int ssdCacheSize, int ssdTbw,
+              int ssdCapacity, int ssdReadSpeed, int ssdWriteSpeed, String ssdMemoryType, int ssdTbw,
               String ssdControllerManufacturer, String ssdControllerModel, int ssdWattage, boolean ssdhasRadiator,
               int ssdPrice, String ssdImagePath, String ssdSmallImagePath) {
         brand = new SimpleStringProperty(ssdBrand);
@@ -62,7 +60,6 @@ public class ModelSSD {
         readSpeed = new SimpleIntegerProperty(ssdReadSpeed);
         writeSpeed = new SimpleIntegerProperty(ssdWriteSpeed);
         memoryType = new SimpleStringProperty(ssdMemoryType);
-        cacheSize = new SimpleIntegerProperty(ssdCacheSize);
         tbw = new SimpleIntegerProperty(ssdTbw);
         controllerManufacturer = new SimpleStringProperty(ssdControllerManufacturer);
         controllerModel = new SimpleStringProperty(ssdControllerModel);
@@ -83,7 +80,6 @@ public class ModelSSD {
     public int getReadSpeed(){return readSpeed.get(); }
     public int getWriteSpeed(){return writeSpeed.get(); }
     public String getMemoryType() {return memoryType.get();}
-    public int getCacheSize(){return cacheSize.get(); }
     public int getTbw(){return tbw.get(); }
     public String getControllerManufacturer(){return controllerManufacturer.get(); }
     public String getControllerModel(){return controllerModel.get(); }
