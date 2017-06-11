@@ -13,11 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
-
-import javax.jws.WebParam;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Comparator;
 import java.util.ResourceBundle;
 
 
@@ -145,6 +142,23 @@ public class GPUOverviewController implements Initializable {
         return list;
     }
 
+    private FilteredList<ModelGPU> searchBarFilterMethod(FilteredList<ModelGPU> list, String searchedValue)
+    {
+        list.setPredicate(gpu -> {
+            String tradeName = gpu.getChipManufacturer() + " " + gpu.getManufacturer() + " " + gpu.getseries() + " " + gpu.getName()
+                    + gpu.getManufacturer() + " " + gpu.getName() + " " + gpu.getChipManufacturer() + " " + gpu.getseries();
+            if (tradeName.toUpperCase().contains(searchedValue.toUpperCase()))
+                return true;
+            else
+                return false;
+        });
+        return list;
+    }
+
+    private void searchBarFiltering(){
+        filteredData = searchBarFilterMethod(filteredData, searchBar.getText());
+    }
+
     private String memoryConnectors (ModelGPU modelItem){
         String connectors = "";
         if (modelItem.getDviConnectors() > 0) {
@@ -216,6 +230,8 @@ public class GPUOverviewController implements Initializable {
     CheckBox selectGDDR5;
     @FXML
     CheckBox selectDDR3;
+    @FXML
+    TextField searchBar;
 
     @FXML
     private void filterButtonClick (ActionEvent event){ // do zrobienia - filtrowanie dziala jako ostatnia wykonywana funkcja
@@ -233,6 +249,9 @@ public class GPUOverviewController implements Initializable {
         DataLoader loader = new DataLoader();
         try {gpuData.addAll(loader.gpuDataLoader());}
         catch(IOException e){};
+        searchBar.textProperty().addListener((obs, oldText, newText) -> {
+            searchBarFiltering();
+        });
         gpuListView.setItems(sortedData);
         gpuListView.setCellFactory(new Callback<ListView<ModelGPU>, ListCell<ModelGPU>>() {
 
