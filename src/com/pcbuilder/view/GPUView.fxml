@@ -37,7 +37,7 @@
         </rowConstraints>
          <children>
              <Label text="Chip Producer" />
-             <CheckBox fx:id="selectNvidia" mnemonicParsing="false" text="NVIDIA" GridPane.rowIndex="1" />
+             <CheckBox fx:id="selectNvidia" mnemonicParsing="false" text="Nvidia" GridPane.rowIndex="1" />
              <CheckBox fx:id="selectRadeon" mnemonicParsing="false" text="AMD Radeon" GridPane.rowIndex="2" />
              <Label text="Card producer" GridPane.rowIndex="3" />
              <CheckBox fx:id="selectMSI" mnemonicParsing="false" text="MSI" GridPane.rowIndex="4" />

@@ -16,6 +16,7 @@ public class ModelGPU {
     private final IntegerProperty technology;
     private final StringProperty interfaceType;
     private final IntegerProperty memorySize;
+    private final StringProperty memorySizeClass;
     private final StringProperty memoryType;
     private final IntegerProperty speed;
     private final IntegerProperty boostSpeed;
@@ -81,6 +82,7 @@ public class ModelGPU {
         technology = new SimpleIntegerProperty(gpuTechnology);
         interfaceType = new SimpleStringProperty(gpuInterfaceType);
         memorySize = new SimpleIntegerProperty(gpuMemorySize);
+        memorySizeClass = new SimpleStringProperty(memorySizeClassCreator(gpuMemorySize));
         memoryType = new SimpleStringProperty(gpuMemoryType);
         speed = new SimpleIntegerProperty(gpuSpeed);
         boostSpeed = new SimpleIntegerProperty(gpuBoostSpeed);
@@ -101,6 +103,20 @@ public class ModelGPU {
 
     }
 
+    private String memorySizeClassCreator(int memorySize){
+        String memorySizeClass="1";
+        if (memorySize <= 1 || memorySize >=8) {
+            if (memorySize <=1)
+                memorySizeClass = "1";
+            if (memorySize >= 8)
+                memorySizeClass = "8";
+        }
+        else
+            memorySizeClass = String.valueOf(memorySize);
+
+        return memorySizeClass;
+    }
+
     public String getChipManufacturer(){return chipManufacturer.get();}
     public String getManufacturer(){return manufacturer.get();}
     public String getseries(){return series.get();}
@@ -111,6 +127,7 @@ public class ModelGPU {
     public int getTechnology(){return technology.get(); }
     public String getinterfaceType(){return interfaceType.get(); }
     public int getmemorySize(){return memorySize.get(); }
+    public String getmemorySizeClass(){return memorySizeClass.get(); }
     public String getMemoryType(){return memoryType.get();}
     public int getSpeed(){return speed.get(); }
     public int getBoostSpeed(){return boostSpeed.get(); }

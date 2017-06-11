@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
+import javax.jws.WebParam;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
@@ -22,66 +23,126 @@ import java.util.ResourceBundle;
 
 public class GPUOverviewController implements Initializable {
 
-    private void filterChipManufacturer(CheckBox cb, FilteredList<ModelGPU> list, String chipManufacturer){
-        if (cb.isSelected()) {
-            filteredData.setPredicate(gpu -> {
-                if (gpu.getChipManufacturer().contains(chipManufacturer))
-                    return true;
-                else
-                    return false;
-            });
+    private String getChipManufacturers(CheckBox cb1, CheckBox cb2) {
+        String chipManufacturers = "";
+        if (cb1.isSelected()) {
+            chipManufacturers += cb1.getText();
         }
+        if (cb2.isSelected()) {
+            chipManufacturers += cb2.getText();
+        }
+        return chipManufacturers;
     }
 
-    private void filterManufacturer(CheckBox cb, FilteredList<ModelGPU> list, String producer) {
-        if (cb.isSelected()) {
+    private FilteredList<ModelGPU> filterChipManufacturer(FilteredList<ModelGPU> list, CheckBox cb1, CheckBox cb2) {
+        if (cb1.isSelected() == false && cb2.isSelected() == false){
+        }
+        else {
+            String chipManufacturers = getChipManufacturers(cb1, cb2);
             list.setPredicate(gpu -> {
-                if (gpu.getManufacturer().equals(producer))
+                if (chipManufacturers.contains(gpu.getChipManufacturer()))
                     return true;
                 else
                     return false;
             });
         }
+        return list;
     }
 
-    private void filterMemorySize(CheckBox cb, FilteredList<ModelGPU> list, int memorySize) {
-        if (cb.isSelected()) {
-            if (memorySize >=8)
-            {
-                list.setPredicate(gpu -> {
-                    if (gpu.getmemorySize() >= 8)
-                        return true;
-                    else
-                        return false;
-                });
-            }
-            if (memorySize <=1)
-            {
-                list.setPredicate(gpu -> {
-                    if (gpu.getmemorySize() <=1 )
-                        return true;
-                    else
-                        return false;
-                });
-            }
-            list.setPredicate(gpu -> {
-                if (gpu.getmemorySize() == memorySize)
-                    return true;
-                else
-                    return false;
-            });
+    private String getManufacturers(CheckBox cb1, CheckBox cb2, CheckBox cb3, CheckBox cb4) {
+        String chipManufacturers = "";
+        if (cb1.isSelected()) {
+            chipManufacturers += cb1.getText();
         }
+        if (cb2.isSelected()) {
+            chipManufacturers += cb2.getText();
+        }
+        if (cb3.isSelected()) {
+            chipManufacturers += cb3.getText();
+        }
+        if (cb4.isSelected()) {
+            chipManufacturers += cb4.getText();
+        }
+        return chipManufacturers;
     }
 
-    private void filterMemoryType(CheckBox cb, FilteredList<ModelGPU> list, String memoryType) {
-        if (cb.isSelected()) {
+    private FilteredList<ModelGPU> filterManufacturer(FilteredList<ModelGPU> list, CheckBox cb1, CheckBox cb2, CheckBox cb3, CheckBox cb4) {
+        if (cb1.isSelected() == false && cb2.isSelected() == false && cb3.isSelected() == false && cb4.isSelected() == false){}
+        else {
+            String manufacturers = getManufacturers(cb1, cb2, cb3, cb4);
             list.setPredicate(gpu -> {
-                if (gpu.getMemoryType().equals(memoryType))
+                if (manufacturers.contains(gpu.getManufacturer()))
                     return true;
                 else
                     return false;
             });
         }
+        return list;
+    }
+
+    private String getMemorySizeClass(CheckBox cb1, CheckBox cb2, CheckBox cb3, CheckBox cb4, CheckBox cb5, CheckBox cb6) {
+        String memorySizeClass = "";
+        if (cb1.isSelected()) {
+            memorySizeClass += cb1.getText();
+        }
+        if (cb2.isSelected()) {
+            memorySizeClass += cb2.getText();
+        }
+        if (cb3.isSelected()) {
+            memorySizeClass += cb3.getText();
+        }
+        if (cb4.isSelected()) {
+            memorySizeClass += cb4.getText();
+        }
+        if (cb5.isSelected()) {
+            memorySizeClass += cb5.getText();
+        }
+        if (cb6.isSelected()) {
+            memorySizeClass += cb6.getText();
+        }
+        return memorySizeClass;
+    }
+
+    private FilteredList<ModelGPU> filterMemorySizeClass(FilteredList<ModelGPU> list, CheckBox cb1, CheckBox cb2, CheckBox cb3, CheckBox cb4, CheckBox cb5, CheckBox cb6) {
+        if (cb1.isSelected() == false && cb2.isSelected() == false && cb3.isSelected() == false && cb4.isSelected() == false && cb5.isSelected() == false && cb6.isSelected() == false){}
+        else {
+            String memorySizeClass = getMemorySizeClass(cb1, cb2, cb3, cb4, cb5, cb6);
+            list.setPredicate(gpu -> {
+                if (memorySizeClass.contains(gpu.getmemorySizeClass()))
+                    return true;
+                else
+                    return false;
+            });
+        }
+        return list;
+    }
+
+    private String getMemoryType(CheckBox cb1, CheckBox cb2, CheckBox cb3) {
+        String memoryType = "";
+        if (cb1.isSelected()) {
+            memoryType += cb1.getText();
+        }
+        if (cb2.isSelected()) {
+            memoryType += cb2.getText();
+        }
+        if (cb3.isSelected()) {
+            memoryType += cb3.getText();
+        }
+        return memoryType;
+    }
+
+    private FilteredList<ModelGPU> filterMemoryType(FilteredList<ModelGPU> list, CheckBox cb1, CheckBox cb2, CheckBox cb3) {
+        if (cb1.isSelected() == false && cb2.isSelected() == false && cb3.isSelected() == false){}
+        else {
+            String memoryType = getMemoryType(cb1, cb2, cb3);
+            list.setPredicate(gpu -> {
+                if (memoryType.matches(gpu.getMemoryType()))
+                    return true;
+                else
+                    return false;
+            });
+        }
+        return list;
     }
 
     private String memoryConnectors (ModelGPU modelItem){
@@ -116,7 +177,6 @@ public class GPUOverviewController implements Initializable {
     @FXML
     private ListView<ModelGPU> gpuListView;
     private ObservableList<ModelGPU> gpuData = FXCollections.observableArrayList();
-
     private FilteredList<ModelGPU> filteredData = new FilteredList<ModelGPU>(gpuData, p->true);
     private SortedList<ModelGPU> sortedData = new SortedList<ModelGPU>(filteredData);
     private MainApp mainApp;
@@ -161,21 +221,10 @@ public class GPUOverviewController implements Initializable {
     private void filterButtonClick (ActionEvent event){ // do zrobienia - filtrowanie dziala jako ostatnia wykonywana funkcja
         // filtrowanie w pewnych momentach musi sie nachodzic tworzac zestaw produktow
         filteredData.setPredicate(gpu -> true);
-        filterChipManufacturer(selectNvidia, filteredData, "Nvidia");
-        filterChipManufacturer(selectRadeon, filteredData, "Radeon");
-        filterMemorySize(select1GB, filteredData, 1);
-        filterMemorySize(select2GB, filteredData, 2);
-        filterMemorySize(select3GB, filteredData, 3);
-        filterMemorySize(select4GB, filteredData, 4);
-        filterMemorySize(select6GB, filteredData, 6);
-        filterMemorySize(select8GB, filteredData, 8);
-        filterMemoryType(selectGDDR5X, filteredData, "GDDR5X");
-        filterMemoryType(selectGDDR5, filteredData, "GDDR5");
-        filterMemoryType(selectDDR3, filteredData, "DDR3");
-        filterManufacturer(selectMSI, filteredData, "MSI");
-        filterManufacturer(selectZotac, filteredData, "Zotac");
-        filterManufacturer(selectPalit, filteredData, "Palit");
-        filterManufacturer(selectGigabyte, filteredData, "Gigabyte");
+        filteredData = filterChipManufacturer(filteredData, selectNvidia, selectRadeon);
+        filteredData = filterManufacturer(filteredData, selectMSI, selectZotac, selectPalit, selectGigabyte);
+        filteredData = filterMemorySizeClass(filteredData, select1GB, select2GB, select3GB, select4GB, select6GB, select8GB);
+        filteredData = filterMemoryType(filteredData, selectGDDR5X, selectGDDR5, selectDDR3);
     }
 
     @FXML
