@@ -15,7 +15,7 @@
             <HBox prefHeight="22.0" prefWidth="1268.0">
                <children>
                 <Button mnemonicParsing="false" styleClass="button-menu" text="PC Builder - Your PC" />
-                  <Button mnemonicParsing="false" styleClass="button-menu" text="PC Builder - EZ Mode" />
+                  <Button mnemonicParsing="false" onAction="#showPCBuilderEz" styleClass="button-menu" text="PC Builder - EZ Mode" />
                   <Button mnemonicParsing="false" onAction="#showCpu" styleClass="button-menu" text="Processors (CPUs)" />
                   <Button mnemonicParsing="false" onAction="#showCpuCooler" styleClass="button-menu" text="CPU Coolers" />
                   <Button mnemonicParsing="false" onAction="#showGpu" styleClass="button-menu" text="Graphics Cards (GPUs) " />

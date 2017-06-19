@@ -36,6 +36,27 @@ public class MainApp extends Application {
         //showCPUOverview();
     }
 
+    /**
+     * Initializes the root layout.
+     */
+    public void showPCBuilderEz() {
+        try {
+            // Load pcbuilderez overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/PCBuilderEz.fxml"));
+            AnchorPane pcBuilderEz = (AnchorPane)loader.load();
+
+            // Set cpu overview into the center of root layout.
+            mainView.setCenter(pcBuilderEz);
+
+            // Give the controller access to the main app.
+            PCBuilderEzController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Initializes the root layout.

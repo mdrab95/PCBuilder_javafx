@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pcbuilder.controller.PCBuilderEzController">
+   <children>
+      <GridPane layoutX="14.0" layoutY="14.0" prefHeight="672.0" prefWidth="1170.0" stylesheets="@style.css">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="125.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="125.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="125.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="cpuHeaderLabel" prefHeight="17.0" prefWidth="94.0" text="Add CPU:" />
+            <Label fx:id="cpuCoolerHeaderLabel" styleClass="pcbuilder-disabled" text="Add CPU Cooler:" GridPane.columnIndex="2" />
+            <Label fx:id="moboHeaderLabel" styleClass="pcbuilder-disabled" text="Add Motherboard:" GridPane.columnIndex="4" />
+            <Label text="Add GPU:" GridPane.rowIndex="3" />
+            <Label text="Add RAM:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label text="Add SSD:" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <Label text="Add HDD:" GridPane.rowIndex="6" />
+            <Label text="Add PSU:" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Label text="Add Case:" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+            <ImageView fx:id="cpuImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+            <ImageView fx:id="cpuCoolerImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" styleClass="pcbuilder-disabled" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <ImageView fx:id="moboImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" styleClass="pcbuilder-disabled" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4" />
+            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="7" />
+            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+            <Button fx:id="addCpu" mnemonicParsing="false" onAction="#addCpuButtonAction" prefHeight="25.0" prefWidth="250.0" text="Add" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets right="15.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="addCpuCooler" mnemonicParsing="false" onAction="#addCpuCoolerButtonAction" prefHeight="25.0" prefWidth="250.0" styleClass="pcbuilder-disabled" text="Add" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets right="15.0" />
+               </GridPane.margin></Button>
+            <Button fx:id="addMobo" mnemonicParsing="false" prefHeight="25.0" prefWidth="250.0" styleClass="pcbuilder-disabled" text="Add" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets right="15.0" />
+               </GridPane.margin></Button>
+            <Button mnemonicParsing="false" text="Add" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+            <Button mnemonicParsing="false" text="Add" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+            <Button mnemonicParsing="false" text="Add" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+            <Button mnemonicParsing="false" text="Add" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
+            <Button mnemonicParsing="false" text="Add" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
+            <Button mnemonicParsing="false" text="Add" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
+            <ChoiceBox fx:id="choiceCpu" prefHeight="25.0" prefWidth="250.0" GridPane.columnIndex="1" />
+            <Label fx:id="cpuDesc" styleClass="label-pcbuilder" text="CPU description" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ChoiceBox fx:id="choiceCpuCooler" prefHeight="25.0" prefWidth="250.0" styleClass="pcbuilder-disabled" GridPane.columnIndex="3" />
+            <Label fx:id="cpuCoolerDesc" text="CPU Cooler description" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <styleClass>
+                  <String fx:value="label-pcbuilder" />
+                  <String fx:value="pcbuilder-disabled" />
+               </styleClass></Label>
+            <Button fx:id="backCpuCooler" mnemonicParsing="false" onAction="#backCpuCoolerButtonAction" prefHeight="7.0" prefWidth="100.0" styleClass="pcbuilder-disabled" text="Back" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+            <ChoiceBox fx:id="choiceMobo" prefWidth="250.0" styleClass="pcbuilder-disabled" GridPane.columnIndex="5" />
+            <Label fx:id="moboDesc" text="Motherboard description" GridPane.columnIndex="5" GridPane.rowIndex="1">
+               <styleClass>
+                  <String fx:value="label-pcbuilder" />
+                  <String fx:value="pcbuilder-disabled" />
+               </styleClass>
+            </Label>
+            <Button fx:id="backMobo" mnemonicParsing="false" onAction="#backMoboButtonAction" prefWidth="100.0" styleClass="pcbuilder-disabled" text="Back" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
