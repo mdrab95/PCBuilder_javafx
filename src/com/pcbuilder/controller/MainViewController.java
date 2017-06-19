@@ -20,6 +20,10 @@ public class MainViewController {
         this.mainApp = mainApp;
     }
 
+
+    @FXML
+    private void showPCBuilderEz() {mainApp.showPCBuilderEz();}
+
     @FXML
     private void showCpu(){ mainApp.showCPUOverview();}
 

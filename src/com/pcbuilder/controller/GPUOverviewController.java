@@ -4,19 +4,160 @@ import com.pcbuilder.MainApp;
 import com.pcbuilder.model.ModelGPU;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
+import java.io.IOException;
 import java.net.URL;
-import java.util.Comparator;
 import java.util.ResourceBundle;
 
+
 public class GPUOverviewController implements Initializable {
+
+    private String getChipManufacturers(CheckBox cb1, CheckBox cb2) {
+        String chipManufacturers = "";
+        if (cb1.isSelected()) {
+            chipManufacturers += cb1.getText();
+        }
+        if (cb2.isSelected()) {
+            chipManufacturers += cb2.getText();
+        }
+        return chipManufacturers;
+    }
+
+    private FilteredList<ModelGPU> filterChipManufacturer(FilteredList<ModelGPU> list, CheckBox cb1, CheckBox cb2) {
+        if (cb1.isSelected() == false && cb2.isSelected() == false){
+        }
+        else {
+            String chipManufacturers = getChipManufacturers(cb1, cb2);
+            list.setPredicate(gpu -> {
+                if (chipManufacturers.contains(gpu.getChipManufacturer()))
+                    return true;
+                else
+                    return false;
+            });
+        }
+        return list;
+    }
+
+    private String getManufacturers(CheckBox cb1, CheckBox cb2, CheckBox cb3, CheckBox cb4) {
+        String chipManufacturers = "";
+        if (cb1.isSelected()) {
+            chipManufacturers += cb1.getText();
+        }
+        if (cb2.isSelected()) {
+            chipManufacturers += cb2.getText();
+        }
+        if (cb3.isSelected()) {
+            chipManufacturers += cb3.getText();
+        }
+        if (cb4.isSelected()) {
+            chipManufacturers += cb4.getText();
+        }
+        return chipManufacturers;
+    }
+
+    private FilteredList<ModelGPU> filterManufacturer(FilteredList<ModelGPU> list, CheckBox cb1, CheckBox cb2, CheckBox cb3, CheckBox cb4) {
+        if (cb1.isSelected() == false && cb2.isSelected() == false && cb3.isSelected() == false && cb4.isSelected() == false){}
+        else {
+            String manufacturers = getManufacturers(cb1, cb2, cb3, cb4);
+            list.setPredicate(gpu -> {
+                if (manufacturers.contains(gpu.getManufacturer()))
+                    return true;
+                else
+                    return false;
+            });
+        }
+        return list;
+    }
+
+    private String getMemorySizeClass(CheckBox cb1, CheckBox cb2, CheckBox cb3, CheckBox cb4, CheckBox cb5, CheckBox cb6) {
+        String memorySizeClass = "";
+        if (cb1.isSelected()) {
+            memorySizeClass += cb1.getText();
+        }
+        if (cb2.isSelected()) {
+            memorySizeClass += cb2.getText();
+        }
+        if (cb3.isSelected()) {
+            memorySizeClass += cb3.getText();
+        }
+        if (cb4.isSelected()) {
+            memorySizeClass += cb4.getText();
+        }
+        if (cb5.isSelected()) {
+            memorySizeClass += cb5.getText();
+        }
+        if (cb6.isSelected()) {
+            memorySizeClass += cb6.getText();
+        }
+        return memorySizeClass;
+    }
+
+    private FilteredList<ModelGPU> filterMemorySizeClass(FilteredList<ModelGPU> list, CheckBox cb1, CheckBox cb2, CheckBox cb3, CheckBox cb4, CheckBox cb5, CheckBox cb6) {
+        if (cb1.isSelected() == false && cb2.isSelected() == false && cb3.isSelected() == false && cb4.isSelected() == false && cb5.isSelected() == false && cb6.isSelected() == false){}
+        else {
+            String memorySizeClass = getMemorySizeClass(cb1, cb2, cb3, cb4, cb5, cb6);
+            list.setPredicate(gpu -> {
+                if (memorySizeClass.contains(gpu.getmemorySizeClass()))
+                    return true;
+                else
+                    return false;
+            });
+        }
+        return list;
+    }
+
+    private String getMemoryType(CheckBox cb1, CheckBox cb2, CheckBox cb3) {
+        String memoryType = "";
+        if (cb1.isSelected()) {
+            memoryType += cb1.getText();
+        }
+        if (cb2.isSelected()) {
+            memoryType += cb2.getText();
+        }
+        if (cb3.isSelected()) {
+            memoryType += cb3.getText();
+        }
+        return memoryType;
+    }
+
+    private FilteredList<ModelGPU> filterMemoryType(FilteredList<ModelGPU> list, CheckBox cb1, CheckBox cb2, CheckBox cb3) {
+        if (cb1.isSelected() == false && cb2.isSelected() == false && cb3.isSelected() == false){}
+        else {
+            String memoryType = getMemoryType(cb1, cb2, cb3);
+            list.setPredicate(gpu -> {
+                if (memoryType.matches(gpu.getMemoryType()))
+                    return true;
+                else
+                    return false;
+            });
+        }
+        return list;
+    }
+
+    private FilteredList<ModelGPU> searchBarFilterMethod(FilteredList<ModelGPU> list, String searchedValue)
+    {
+        list.setPredicate(gpu -> {
+            String tradeName = gpu.getChipManufacturer() + " " + gpu.getManufacturer() + " " + gpu.getseries() + " " + gpu.getName()
+                    + gpu.getManufacturer() + " " + gpu.getName() + " " + gpu.getChipManufacturer() + " " + gpu.getseries();
+            if (tradeName.toUpperCase().contains(searchedValue.toUpperCase()))
+                return true;
+            else
+                return false;
+        });
+        return list;
+    }
+
+    private void searchBarFiltering(){
+        filteredData = searchBarFilterMethod(filteredData, searchBar.getText());
+    }
 
     private String memoryConnectors (ModelGPU modelItem){
         String connectors = "";
@@ -49,76 +190,69 @@ public class GPUOverviewController implements Initializable {
 
     @FXML
     private ListView<ModelGPU> gpuListView;
-    private final ObservableList<ModelGPU> gpuData = FXCollections.observableArrayList();
-    private final ObservableList<ModelGPU> finalData = FXCollections.observableArrayList();
+    private ObservableList<ModelGPU> gpuData = FXCollections.observableArrayList();
+    private FilteredList<ModelGPU> filteredData = new FilteredList<ModelGPU>(gpuData, p->true);
+    private SortedList<ModelGPU> sortedData = new SortedList<ModelGPU>(filteredData);
     private MainApp mainApp;
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
 
-    public void filterButton (ObservableList<ModelGPU> gpuDataList){
+    @FXML
+    Button filterButton;
+    @FXML
+    CheckBox selectNvidia;
+    @FXML
+    CheckBox selectRadeon;
+    @FXML
+    CheckBox selectMSI;
+    @FXML
+    CheckBox selectZotac;
+    @FXML
+    CheckBox selectPalit;
+    @FXML
+    CheckBox selectGigabyte;
+    @FXML
+    CheckBox select1GB;
+    @FXML
+    CheckBox select2GB;
+    @FXML
+    CheckBox select3GB;
+    @FXML
+    CheckBox select4GB;
+    @FXML
+    CheckBox select6GB;
+    @FXML
+    CheckBox select8GB;
+    @FXML
+    CheckBox selectGDDR5X;
+    @FXML
+    CheckBox selectGDDR5;
+    @FXML
+    CheckBox selectDDR3;
+    @FXML
+    TextField searchBar;
 
+    @FXML
+    private void filterButtonClick (ActionEvent event){ // do zrobienia - filtrowanie dziala jako ostatnia wykonywana funkcja
+        // filtrowanie w pewnych momentach musi sie nachodzic tworzac zestaw produktow
+        filteredData.setPredicate(gpu -> true);
+        filteredData = filterChipManufacturer(filteredData, selectNvidia, selectRadeon);
+        filteredData = filterManufacturer(filteredData, selectMSI, selectZotac, selectPalit, selectGigabyte);
+        filteredData = filterMemorySizeClass(filteredData, select1GB, select2GB, select3GB, select4GB, select6GB, select8GB);
+        filteredData = filterMemoryType(filteredData, selectGDDR5X, selectGDDR5, selectDDR3);
     }
 
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         gpuData.clear();
-        gpuData.add(new ModelGPU("Nvidia","Zotac", "GeForce GTX 1080", "AMP! extreme", "ZT-P10800B-10P",
-                "Pascal", 325,16, "PCIEe 3.0 x16",8, "GDDR5X",
-                1771, 1911, 10.8, 0, 2, 3,1,1,
-                0, 180, 270,false, true, 2600, "images/gpuImages/big/", "images/gpuImages/small/"));
-        gpuData.add(new ModelGPU("Nvidia","Zotac", "GeForce GTX 1080", "AMP!", "ZT-P10800C-10P",
-                "Pascal", 300, 16, "PCIEe 3.0 x16",8, "GDDR5X", 1683, 1822,
-                10, 0, 2, 3, 1, 1, 0,
-                180, 220, false, true,2450, "images/gpuImages/big/", "images/gpuImages/small/"));
-        gpuData.add(new ModelGPU("Nvidia","Zotac", "GeForce GTX 1080", "Mini", "ZT-P10800H-10P",
-                "Pascal", 211, 16, "PCIEe 3.0 x16",8, "GDDR5X",
-                1620, 1759, 130, 0, 2, 3,1,1,
-                0, 180, 200,false, false, 2600, "images/gpuImages/big/", "images/gpuImages/small/"));
-
-        gpuData.add(new ModelGPU("Nvidia","Zotac", "GeForce GTX 1070", "AMP! extreme", "ZT-P10800B-10P",
-                "Pascal", 300,16, "PCIEe 3.0 x16",8, "GDDR5",
-                1632, 1835, 8.202, 0, 2, 3,1,1,
-                0, 180, 230,false, true, 2100, "images/gpuImages/big/", "images/gpuImages/small/"));
-        gpuData.add(new ModelGPU("Nvidia","Zotac", "GeForce GTX 1070", "AMP!", "ZT-P10800C-10P",
-                "Pascal", 325, 16, "PCIEe 3.0 x16",8, "GDDR5", 1607, 1797,
-                8, 0, 2, 3, 1, 1, 0,
-                180, 200, false, true,2000, "images/gpuImages/big/", "images/gpuImages/small/"));
-        gpuData.add(new ModelGPU("Nvidia","Zotac", "GeForce GTX 1070", "Mini", "ZT-P10800H-10P",
-                "Pascal", 210, 16, "PCIEe 3.0 x16",8, "GDDR5",
-                1518, 1708, 8, 0, 1, 3,1,1,
-                0, 180, 180,false, false, 1850, "images/gpuImages/big/", "images/gpuImages/small/"));
-
-        gpuData.add(new ModelGPU("Nvidia","MSI", "GeForce GTX 1080", "Gaming X", "GTX 1080 GAMING X 8G",
-                "Pascal", 325,16, "PCIEe 3.0 x16",8, "GDDR5X",
-                1607, 1847, 10.108, 1, 1, 3,1,1,
-                0, 180, 230,false, true, 2600, "images/gpuImages/big/", "images/gpuImages/small/"));
-        gpuData.add(new ModelGPU("Nvidia","MSI", "GeForce GTX 1080", "Gaming", "GTX 1080 GAMING 8G",
-                "Pascal", 279, 16, "PCIEe 3.0 x16",8, "GDDR5X", 1632, 1771,
-                10.01, 1, 1, 3, 1, 1, 0,
-                180, 200, false, true,2550, "images/gpuImages/big/", "images/gpuImages/small/"));
-        gpuData.add(new ModelGPU("Nvidia","MSI", "GeForce GTX 1080", "Armor OC", "GTX 1080 ARMOR 8G OC",
-                "Pascal", 279, 16, "PCIEe 3.0 x16",8, "GDDR5X",
-                1657, 1797, 10.01, 1, 1, 3,1,1,
-                0, 180, 200,false, false, 2300, "images/gpuImages/big/", "images/gpuImages/small/"));
-
-        gpuData.add(new ModelGPU("Nvidia","MSI", "GeForce GTX 1070", "Gaming X", "GTX 1070 GAMING X 8G",
-                "Pascal", 300,16, "PCIEe 3.0 x16",8, "GDDR5",
-                1607, 1797, 8.108, 1, 1, 3,1,1,
-                0, 180, 220,false, true, 2050, "images/gpuImages/big/", "images/gpuImages/small/"));
-        gpuData.add(new ModelGPU("Nvidia","MSI", "GeForce GTX 1070", "Gaming", "GTX 1070 GAMING 8G",
-                "Pascal", 279, 16, "PCIEe 3.0 x16",8, "GDDR5", 1531, 1721,
-                8, 1, 1, 3, 1, 1, 0,
-                180, 200, false, true,2000, "images/gpuImages/big/", "images/gpuImages/small/"));
-        gpuData.add(new ModelGPU("Nvidia","MSI", "GeForce GTX 1070", "Armor OC", "GTX 1070 ARMOR 8G OC",
-                "Pascal", 279, 16, "PCIEe 3.0 x16",8, "GDDR5",
-                1556, 1746, 8.008, 0, 1, 3,1,1,
-                0, 180, 180,false, false, 1820, "images/gpuImages/big/", "images/gpuImages/small/"));
-        Comparator<ModelGPU> comparator = Comparator.comparingInt(ModelGPU::getPrice);
-        FXCollections.sort(gpuData, comparator.reversed());
-
-        gpuListView.setItems(gpuData);
-
+        DataLoader loader = new DataLoader();
+        try {gpuData.addAll(loader.gpuDataLoader());}
+        catch(IOException e){};
+        searchBar.textProperty().addListener((obs, oldText, newText) -> {
+            searchBarFiltering();
+        });
+        gpuListView.setItems(sortedData);
         gpuListView.setCellFactory(new Callback<ListView<ModelGPU>, ListCell<ModelGPU>>() {
 
             @Override

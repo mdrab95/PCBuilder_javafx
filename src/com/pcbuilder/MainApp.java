@@ -1,36 +1,23 @@
 package com.pcbuilder;
 
 import java.io.IOException;
-
 import com.pcbuilder.controller.*;
-import com.pcbuilder.model.ModelCPU;
-import com.pcbuilder.model.ModelGPU;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+
 
 public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane mainView;
 
-   // private ObservableList<ModelCPU> cpuData = FXCollections.observableArrayList();
-  //  private ObservableList<ModelGPU> gpuData = FXCollections.observableArrayList();
     public MainApp(){
-        // define cpu, gpu data
+        //...
     }
-    // public ObservableList<ModelCPU> getCpuData(){
-    //    return cpuData;
-    //}
-    //public ObservableList<ModelGPU> setGpuData() {return gpuData; }
 
     public static String noZeros(double d)
     {
@@ -47,6 +34,28 @@ public class MainApp extends Application {
         this.primaryStage.resizableProperty().setValue(false);
         initMainView();
         //showCPUOverview();
+    }
+
+    /**
+     * Initializes the root layout.
+     */
+    public void showPCBuilderEz() {
+        try {
+            // Load pcbuilderez overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/PCBuilderEz.fxml"));
+            AnchorPane pcBuilderEz = (AnchorPane)loader.load();
+
+            // Set cpu overview into the center of root layout.
+            mainView.setCenter(pcBuilderEz);
+
+            // Give the controller access to the main app.
+            PCBuilderEzController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -97,6 +106,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Shows the cpu cooler overview inside the root layout.
+     */
     public void showCPUCoolerOverview() {
         try {
             // Load cpucooler overview.
@@ -116,6 +128,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Shows the gpu overview inside the root layout.
+     */
     public void showGPUOverview() {
         try {
             // Load gpu overview.
@@ -135,6 +150,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Shows the ram overview inside the root layout.
+     */
     public void showRAMOverview() {
         try {
             // Load ram overview.
@@ -154,6 +172,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Shows the hdd overview inside the root layout.
+     */
     public void showHDDOverview() {
         try {
             // Load hdd overview.
@@ -173,6 +194,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Shows the ssd overview inside the root layout.
+     */
     public void showSSDOverview() {
         try {
             // Load ssd overview.
@@ -192,6 +216,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Shows the psu overview inside the root layout.
+     */
     public void showPSUOverview() {
         try {
             // Load psu overview.
@@ -211,6 +238,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Shows the case overview inside the root layout.
+     */
     public void showCaseOverview() {
         try {
             // Load case overview.
@@ -232,12 +262,16 @@ public class MainApp extends Application {
 
     /**
      * Returns the main stage.
-     * @return
+     * @return primary stage
      */
     public Stage getPrimaryStage() {
         return primaryStage;
     }
 
+    /**
+     * main method
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }

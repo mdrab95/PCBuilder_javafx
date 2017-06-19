@@ -36,25 +36,11 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label text="Chip Producer" />
-                <CheckBox mnemonicParsing="false" text="NVIDIA" GridPane.rowIndex="1" />
-                <CheckBox mnemonicParsing="false" text="AMD" GridPane.rowIndex="2" />
-                <Label text="Memory Size" GridPane.rowIndex="3" />
-                <CheckBox mnemonicParsing="false" text="1 GB or less" GridPane.rowIndex="4" />
-                <CheckBox mnemonicParsing="false" text="2 GB" GridPane.rowIndex="5" />
-                <CheckBox mnemonicParsing="false" text="3 GB" GridPane.rowIndex="6" />
-                <CheckBox mnemonicParsing="false" text="4 GB" GridPane.rowIndex="7" />
-                <CheckBox mnemonicParsing="false" text="6 GB" GridPane.rowIndex="8" />
-                <CheckBox mnemonicParsing="false" text="8 GB or more" GridPane.rowIndex="9" />
-                <Label text="Memory Type" GridPane.rowIndex="10" />
-                <CheckBox mnemonicParsing="false" text="GDDR5X" GridPane.rowIndex="11" />
-                <CheckBox mnemonicParsing="false" text="GDDR5" GridPane.rowIndex="12" />
-                <CheckBox mnemonicParsing="false" text="DDR3" GridPane.rowIndex="13" />
-                <Label text="Video Connectors" GridPane.rowIndex="14" />
-                <CheckBox mnemonicParsing="false" text="DVI" GridPane.rowIndex="15" />
-                <CheckBox mnemonicParsing="false" text="HDMI" GridPane.rowIndex="16" />
-                <CheckBox mnemonicParsing="false" text="Display Port" GridPane.rowIndex="17" />
-                <CheckBox mnemonicParsing="false" text="VGA" GridPane.rowIndex="18" />
+                <Label text="Case Producer" />
+                <CheckBox mnemonicParsing="false" text="SilentiumPC" GridPane.rowIndex="1" />
+                <CheckBox mnemonicParsing="false" text="Zalman" GridPane.rowIndex="2" />
+                <CheckBox mnemonicParsing="false" text="Phanteks" GridPane.rowIndex="3" />
+                <CheckBox mnemonicParsing="false" text="Corsair" GridPane.rowIndex="4" />
                 <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="335.0" text="Apply Filters" GridPane.rowIndex="19" />
             </children>
         </GridPane>

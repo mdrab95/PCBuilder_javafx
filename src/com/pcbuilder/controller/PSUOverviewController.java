@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
@@ -21,8 +22,7 @@ public class PSUOverviewController implements Initializable {
 
     @FXML
     private ListView<ModelPSU> psuListView;
-    private final ObservableList<ModelPSU> psuData = FXCollections.observableArrayList();
-    private final ObservableList<ModelPSU> finalData = FXCollections.observableArrayList();
+    private ObservableList<ModelPSU> psuData = FXCollections.observableArrayList();
     private MainApp mainApp;
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
@@ -35,16 +35,9 @@ public class PSUOverviewController implements Initializable {
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         psuData.clear();
-        psuData.add(new ModelPSU("SilentiumPC", "Supremo M2 Gold", "SPC140", "ATX", "80 Plus Gold",
-                "Active with passive mode", "SIP, OPP, OVP, SCP, UVP", 120, 163,
-                true, 550,320, "images/psuImages/big/","images/psuImages/small/"));
-        psuData.add(new ModelPSU("Corsair", "Corsair VS Series", "CP-9020097-EU", "ATX", "80 Plus",
-                "Active with passive mode", "OVP, UVP, OCP, SCP", 120, 150, false, 550, 205,
-                "images/psuImages/big/", "images/psuImages/small/"));
-
-
-        Comparator<ModelPSU> comparator = Comparator.comparingInt(ModelPSU::getPrice);
-        FXCollections.sort(psuData, comparator.reversed());
+        DataLoader loader = new DataLoader();
+        try {psuData.addAll(loader.psuDataLoader());}
+        catch(IOException e){};
 
         psuListView.setItems(psuData);
 
