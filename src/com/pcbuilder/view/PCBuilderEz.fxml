@@ -97,7 +97,6 @@
             <Button fx:id="backMobo" mnemonicParsing="false" onAction="#backMoboButtonAction" prefWidth="100.0" styleClass="pcbuilder-disabled" text="Back" GridPane.columnIndex="4" GridPane.rowIndex="2" />
             <Button fx:id="backGpu" mnemonicParsing="false" onAction="#backGpuButtonAction" prefHeight="25.0" prefWidth="100.0" styleClass="pcbuilder-disabled" text="Back" GridPane.rowIndex="5" />
             <Button fx:id="backRam" mnemonicParsing="false" onAction="#backRamButtonAction" prefHeight="25.0" prefWidth="100.0" styleClass="pcbuilder-disabled" text="Back" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <Button fx:id="startButton" mnemonicParsing="false" onAction="#startButtonAcction" prefHeight="25.0" prefWidth="111.0" text="Start" GridPane.columnIndex="3" GridPane.rowIndex="5" />
             <Button fx:id="backSsd" mnemonicParsing="false" onAction="#backSsdButtonAction" prefHeight="25.0" prefWidth="100.0" styleClass="pcbuilder-disabled" text="Back" GridPane.columnIndex="4" GridPane.rowIndex="5" />
             <Button fx:id="backHdd" mnemonicParsing="false" onAction="#backHddButtonAction" prefHeight="25.0" prefWidth="100.0" styleClass="pcbuilder-disabled" text="Back" GridPane.rowIndex="8" />
             <Button fx:id="backPsu" mnemonicParsing="false" onAction="#backPsuButtonAction" prefHeight="25.0" prefWidth="100.0" styleClass="pcbuilder-disabled" text="Back" GridPane.columnIndex="2" GridPane.rowIndex="8" />
@@ -195,5 +194,6 @@
             <String fx:value="pcbuilder-disabled" />
          </styleClass>
       </Label>
+      <Button fx:id="startButton" layoutX="580.0" layoutY="337.0" mnemonicParsing="false" onAction="#startButtonAcction" prefHeight="25.0" prefWidth="100.0" text="Start" />
    </children>
 </AnchorPane>
