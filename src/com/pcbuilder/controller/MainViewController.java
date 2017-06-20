@@ -54,5 +54,7 @@ public class MainViewController {
     @FXML
     private void showCase() {mainApp.showCaseOverview();}
 
+    @FXML
+    private void showMobo() {mainApp.showMoboOverview();}
 
 }

@@ -20,7 +20,7 @@
                   <Button mnemonicParsing="false" onAction="#showCpuCooler" styleClass="button-menu" text="CPU Coolers" />
                   <Button mnemonicParsing="false" onAction="#showGpu" styleClass="button-menu" text="Graphics Cards (GPUs) " />
                   <Button mnemonicParsing="false" onAction="#showRam" styleClass="button-menu" text="RAM Memory" />
-                  <Button mnemonicParsing="false" styleClass="button-menu" text="Motherboards" />
+                  <Button mnemonicParsing="false" onAction="#showMobo" styleClass="button-menu" text="Motherboards" />
                   <Button mnemonicParsing="false" onAction="#showSsd" styleClass="button-menu" text="Solid State Drives (SSDs)" />
                   <Button mnemonicParsing="false" onAction="#showHdd" styleClass="button-menu" text="Hard Drives (HDDs)" />
                   <Button mnemonicParsing="false" onAction="#showPsu" styleClass="button-menu" text="Power Supplies" />

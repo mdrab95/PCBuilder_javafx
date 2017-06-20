@@ -285,4 +285,31 @@ public class DataLoader {
         catch (IOException e) {}
         return ramDataList;
     }
+
+    /**
+     * PSU data loader.
+     * @return ModelPSU ObservableList
+     * @throws IOException
+     */
+    public ObservableList<ModelMOBO> moboDataLoader() throws IOException {
+        String line;
+        ObservableList <ModelMOBO> moboDataList = FXCollections.observableArrayList();
+        moboDataList.clear();
+        try {
+            name = "mobo.txt";
+            File file = new File (path + name);
+            InputStream fis = new FileInputStream(file);
+            InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
+            BufferedReader br = new BufferedReader(isr);
+            while ((line = br.readLine()) != null) {
+                String[]data = line.split(";");
+                moboDataList.add(new ModelMOBO(data[0], data[1], data[2], data[3], data[4], data[5], data[6],Integer.parseInt(data[7]),Integer.parseInt(data[8]),
+                        Integer.parseInt(data[9]), data[10], data[11], Integer.parseInt(data[12]), data[13], data[14]));
+            }
+            Comparator<ModelMOBO> comparator = Comparator.comparingInt(ModelMOBO::getPrice);
+            FXCollections.sort(moboDataList, comparator.reversed());
+        }
+        catch (IOException e) {}
+        return moboDataList;
+    }
 }

@@ -1,9 +1,7 @@
 package com.pcbuilder.controller;
 
 import com.pcbuilder.MainApp;
-import com.pcbuilder.model.ModelCPU;
-import com.pcbuilder.model.ModelCPUCooler;
-import com.pcbuilder.model.ModelMOBO;
+import com.pcbuilder.model.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -93,14 +91,16 @@ public class PCBuilderEzController implements Initializable{
     //endregion
 
     private final ObservableList<ModelCPU> cpuList= FXCollections.observableArrayList();
-    private final ObservableList gpuList= FXCollections.observableArrayList();
+    private final ObservableList<ModelGPU> gpuList= FXCollections.observableArrayList();
     private final ObservableList<ModelCPUCooler> cpuCoolerList= FXCollections.observableArrayList();
-    private final ObservableList moboList= FXCollections.observableArrayList();
-    private final ObservableList ssdList= FXCollections.observableArrayList();
-    private final ObservableList hddList= FXCollections.observableArrayList();
-    private final ObservableList ramList= FXCollections.observableArrayList();
-    private final ObservableList psuList= FXCollections.observableArrayList();
-    private final ObservableList caseList= FXCollections.observableArrayList();
+    private final ObservableList<ModelMOBO> moboList= FXCollections.observableArrayList();
+    private final ObservableList<ModelSSD> ssdList= FXCollections.observableArrayList();
+    private final ObservableList<ModelHDD> hddList= FXCollections.observableArrayList();
+    private final ObservableList<ModelRAM> ramList= FXCollections.observableArrayList();
+    private final ObservableList<ModelPSU> psuList= FXCollections.observableArrayList();
+    private final ObservableList<ModelCase> caseList= FXCollections.observableArrayList();
+    ObservableList cpuCoolerNames = FXCollections.observableArrayList();
+    ObservableList moboNames = FXCollections.observableArrayList();
 
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
@@ -131,9 +131,9 @@ public class PCBuilderEzController implements Initializable{
         try {
             caseList.addAll(dataLoader.caseDataLoader());
         } catch (IOException e) {}
-     /*   try {
-            motherboardList.addAll(dataLoader.motherboardDataLoader());
-        } catch (IOException e) {}*/
+        try {
+            moboList.addAll(dataLoader.moboDataLoader());
+        } catch (IOException e) {}
         //--------------------------------------
         //endregion
 
@@ -190,7 +190,6 @@ public class PCBuilderEzController implements Initializable{
 
         //region CPUCooler init
         // --------------------------------------
-            ObservableList cpuCoolerNames = FXCollections.observableArrayList();
             cpuCoolerNames.add("BOX Cooler");
             for (int i=0; i<cpuCoolerList.size(); i++){
                 String cpuCoolerName = cpuCoolerList.get(i).getBrand() + " " + cpuCoolerList.get(i).getName();
@@ -257,10 +256,9 @@ public class PCBuilderEzController implements Initializable{
 
         //region MOBO init
         // --------------------------------------
-        /*
-        ObservableList moboNames = FXCollections.observableArrayList();
+
         for (int i=0; i<moboList.size(); i++){
-            String moboName = moboList.get(i).getBrand() + " " + moboList.get(i).getName();
+            String moboName = moboList.get(i).getBrand() + " " + moboList.get(i).getChipset() + " " + moboList.get(i).getName();
             moboNames.add(moboName);
         }
         choiceMobo.setItems(moboNames);
@@ -271,22 +269,29 @@ public class PCBuilderEzController implements Initializable{
                         System.out.println(newValue);
                         for (int i=0; i< moboList.size(); i++)
                         {
-                            String moboItemName = moboList.get(i).getBrand() + " " + moboList.get(i).getName();
-                            if (newValue.matches(moboItemName))
+                            String selectedMoboName = moboList.get(i).getBrand() + " " + moboList.get(i).getChipset() + " " + moboList.get(i).getName();
+                            if (newValue.matches(selectedMoboName))
                             {
                                 selectedMobo = moboList.get(i);
                             }
                         }
-                        moboImg = new Image(selectedMobo.getSmallImagePath() + selectedMobo.getManufacturerCode() + ".png", true);
-                        moboImageView.setFitHeight(100);
-                        moboImageView.setFitWidth(100);
-                        moboImageView.setImage(moboImg);
+                        try {
+                            moboImg = new Image(selectedMobo.getSmallImagePath() + selectedMobo.getSerialNumber() + ".png", true);
+                            moboImageView.setFitHeight(100);
+                            moboImageView.setFitWidth(100);
+                            moboImageView.setImage(moboImg);
+                        }
+                        catch (Exception ex){System.out.println("DUPAAA");}
 
-                        String moboDescription = "opic";
-                        cpuCoolerDesc.setText(moboDescription);
+                        String moboDescription = selectedMobo.getBrand() + " " + selectedMobo.getChipset() + " " + selectedMobo.getName()
+                                + "\n" + "Socket: " + selectedMobo.getSocket() + ", form factor: " + selectedMobo.getFormFactor()
+                                + "\nRAM standard: " + selectedMobo.getRamStandard() + ", Max RAM speed: " + selectedMobo.getMaxRamSpeed() + " MHz"
+                                + "\nMax RAM capacity: " + selectedMobo.getMaxRam() + "GB, in " + selectedMobo.getRamSlots() + " slots."
+                                + "\nPrice: " + selectedMobo.getPrice() + " PLN";
+                        moboDesc.setText(moboDescription);
                     }
                 });
-        */
+
         moboImg = new Image("images/no_img.png");
         moboImageView.setFitHeight(100);
         moboImageView.setFitWidth(100);
@@ -309,6 +314,22 @@ public class PCBuilderEzController implements Initializable{
         cpuHeaderLabel.setText("Your CPU:");
         addCpu.getStyleClass().add("pcbuilder-disabled");
         choiceCpu.getStyleClass().add("pcbuilder-disabled");
+        cpuCoolerNames.clear();
+        cpuCoolerDesc.setText(null);
+        cpuCoolerImg = new Image("images/no_img.png");
+        cpuCoolerImageView.setImage(cpuCoolerImg);
+            if (selectedCpu.getBoxCooler()==true) {
+                cpuCoolerNames.add("BOX Cooler");
+            }
+            for (int i=0; i<cpuCoolerList.size(); i++){
+                String cpuCoolerName = cpuCoolerList.get(i).getBrand() + " " + cpuCoolerList.get(i).getName();
+                String sockets = cpuCoolerList.get(i).getSockets();
+                if (sockets.contains(selectedCpu.getSocket())) {
+                    cpuCoolerNames.add(cpuCoolerName);
+                }
+            }
+            choiceCpuCooler.setItems(cpuCoolerNames);
+
         }
     }
     @FXML
@@ -324,6 +345,12 @@ public class PCBuilderEzController implements Initializable{
         cpuHeaderLabel.setText("SelectCPU:");
         addCpu.getStyleClass().remove("pcbuilder-disabled");
         choiceCpu.getStyleClass().remove("pcbuilder-disabled");
+        cpuCoolerNames.clear();
+        selectedCpuCooler = null;
+        cpuCoolerDesc.setText(null);
+        cpuCoolerImg = new Image("images/no_img.png");
+        cpuCoolerImageView.setImage(cpuCoolerImg);
+
     }
     @FXML
     private void addCpuCoolerButtonAction() {
@@ -349,6 +376,14 @@ public class PCBuilderEzController implements Initializable{
             cpuCoolerDesc.setText("BOX Cooler");
             Image boxCoolerImg = new Image(selectedCpu.getSmallImagePath());
             cpuCoolerImageView.setImage(boxCoolerImg);
+            moboNames.clear();
+            for (int i=0; i<moboList.size(); i++){
+                String moboName = moboList.get(i).getBrand() + " " + moboList.get(i).getChipset() + " " + moboList.get(i).getName();
+                if (moboList.get(i).getSocket().equals(selectedCpu.getSocket())) {
+                    moboNames.add(moboName);
+                }
+            }
+            choiceMobo.setItems(moboNames);
         }
         if (selectedCpu.getBoxCooler() == false && selectedCpuCooler != null || selectedCpu.getBoxCooler() == true && selectedCpuCooler != null)
         {
@@ -364,6 +399,14 @@ public class PCBuilderEzController implements Initializable{
             addCpuCooler.getStyleClass().remove("pcbuilder-enabled");
             cpuCoolerHeaderLabel.setText("Your CPU Cooler:");
             backCpuCooler.getStyleClass().remove("pcbuilder-enabled");
+            moboNames.clear();
+            for (int i=0; i<moboList.size(); i++){
+                String moboName = moboList.get(i).getBrand() + " " + moboList.get(i).getChipset() + " " + moboList.get(i).getName();
+                if (moboList.get(i).getSocket().equals(selectedCpu.getSocket())) {
+                    moboNames.add(moboName);
+                }
+            }
+            choiceMobo.setItems(moboNames);
         }
     }
 

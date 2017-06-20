@@ -36,27 +36,6 @@ public class MainApp extends Application {
         //showCPUOverview();
     }
 
-    /**
-     * Initializes the root layout.
-     */
-    public void showPCBuilderEz() {
-        try {
-            // Load pcbuilderez overview.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/PCBuilderEz.fxml"));
-            AnchorPane pcBuilderEz = (AnchorPane)loader.load();
-
-            // Set cpu overview into the center of root layout.
-            mainView.setCenter(pcBuilderEz);
-
-            // Give the controller access to the main app.
-            PCBuilderEzController controller = loader.getController();
-            controller.setMainApp(this);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Initializes the root layout.
@@ -78,6 +57,28 @@ public class MainApp extends Application {
 
             primaryStage.show();
 
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Shows the pcbuilder-ez mode overview inside the root layout.
+     */
+    public void showPCBuilderEz() {
+        try {
+            // Load pcbuilderez overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/PCBuilderEz.fxml"));
+            AnchorPane pcBuilderEz = (AnchorPane)loader.load();
+
+            // Set pcbuilderez overview into the center of root layout.
+            mainView.setCenter(pcBuilderEz);
+
+            // Give the controller access to the main app.
+            PCBuilderEzController controller = loader.getController();
+            controller.setMainApp(this);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -231,6 +232,28 @@ public class MainApp extends Application {
 
             // Give the controller access to the main app.
             PSUOverviewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Shows the mobo overview inside the root layout.
+     */
+    public void showMoboOverview() {
+        try {
+            // Load mobo overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/MOBOView.fxml"));
+            AnchorPane moboOverview = (AnchorPane) loader.load();
+
+            // Set mobo overview into the center of root layout.
+            mainView.setCenter(moboOverview);
+
+            // Give the controller access to the main app.
+            MOBOOverviewController controller = loader.getController();
             controller.setMainApp(this);
 
         } catch (IOException e) {
