@@ -59,6 +59,9 @@ public class PCBuilderEzController implements Initializable {
     private double recommendedPsu = 0;
     private double totalPrice = 0;
     private DecimalFormat df = new DecimalFormat();
+    private DecimalFormat df2 = new DecimalFormat("0.00");
+    @FXML
+    private Label labelSaved;
     //--------------------------------------
     //endregion
 
@@ -774,7 +777,7 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsu = 1.4 * maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice += selectedCase.getPrice();
-            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
             saveBuildButton.getStyleClass().add("pcbuilder-enabled");
         }
     }
@@ -860,7 +863,7 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsu = 1.4 * maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice += selectedCpu.getPrice();
-            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
         }
     }
 
@@ -875,7 +878,7 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsu = 1.4 * maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice -= selectedCpu.getPrice();
-            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
             saveBuildButton.getStyleClass().add("pcbuilder-enabled");
         }
     }
@@ -915,7 +918,7 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsu = 1.4 * maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice += selectedCpuCooler.getPrice();
-            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
         }
     }
 
@@ -930,7 +933,7 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsu = 1.4 * maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice -= selectedCpuCooler.getPrice();
-            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
             saveBuildButton.getStyleClass().add("pcbuilder-enabled");
         }
     }
@@ -945,7 +948,7 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsu = 1.4 * maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice += selectedMobo.getPrice();
-            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
         }
     }
 
@@ -960,7 +963,7 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsu = 1.4 * maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice -= selectedMobo.getPrice();
-            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
             saveBuildButton.getStyleClass().add("pcbuilder-enabled");
         }
     }
@@ -975,7 +978,7 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsu = 1.4 * maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice += selectedGpu.getPrice();
-            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
         }
     }
 
@@ -990,7 +993,7 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsu = 1.4 * maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice -= selectedGpu.getPrice();
-            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
             saveBuildButton.getStyleClass().add("pcbuilder-enabled");
         }
     }
@@ -1005,7 +1008,7 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsu = 1.4 * maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice += selectedRam.getPrice();
-            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
         }
     }
 
@@ -1020,7 +1023,7 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsu = 1.4 * maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice -= selectedRam.getPrice();
-            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
             saveBuildButton.getStyleClass().add("pcbuilder-enabled");
         }
     }
@@ -1035,7 +1038,7 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsu = 1.4 * maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice += selectedSsd.getPrice();
-            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
         }
     }
 
@@ -1050,7 +1053,7 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsu = 1.4 * maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice -= selectedSsd.getPrice();
-            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
             saveBuildButton.getStyleClass().add("pcbuilder-enabled");
         }
     }
@@ -1065,7 +1068,7 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsu = 1.4 * maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice += selectedHdd.getPrice();
-            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
         }
     }
 
@@ -1080,7 +1083,7 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsu = 1.4 * maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice -= selectedHdd.getPrice();
-            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
             saveBuildButton.getStyleClass().add("pcbuilder-enabled");
         }
     }
@@ -1091,7 +1094,7 @@ public class PCBuilderEzController implements Initializable {
             addButtonUniversal("addHddButtonName", addCase, backCase, caseDesc, caseHeaderLabel, caseImageView, caseImg, choiceCase, caseNames,
                     addPsu, backPsu, choicePsu, psuHeaderLabel, "Your PSU:");
             totalPrice += selectedPsu.getPrice();
-            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
         }
     }
 
@@ -1101,16 +1104,17 @@ public class PCBuilderEzController implements Initializable {
                 addPsu, backPsu, psuHeaderLabel, choicePsu, psuNames, "PSU");
         if (selectedPsu != null) {
             totalPrice -= selectedPsu.getPrice();
-            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
             saveBuildButton.getStyleClass().add("pcbuilder-enabled");
         }
         if (selectedCase != null) {
             totalPrice -= selectedCase.getPrice();
-            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
             saveBuildButton.getStyleClass().add("pcbuilder-enabled");
         }
         selectedCase = null;
         selectedPsu = null;
+        labelSaved.getStyleClass().remove("pcbuild-enabled");
     }
 
     @FXML
@@ -1127,41 +1131,42 @@ public class PCBuilderEzController implements Initializable {
 
     private String createTextToSave(String currentDate){
         String savedString = "This file has been generated on " + currentDate
-                + "\r\n-------------------------------------------------------------------------"
-                + "\r\nYour build:"
-                + "\r\n-------------------------------------";
+                + "\r\n----------------------------------------------------------------------------"
+                + "\r\n" + padRight("Your build", 13) + " " + padLeft("Price",62)
+                + "\r\n----------------------------------------------------------------------------";
         savedString += "\r\n" + padRight("CPU:", 13) + padRight(selectedCpu.getBrand() + " " + selectedCpu.getFamily()
-                + " " + selectedCpu.getName(), 50) + " " + padRight(String.valueOf(selectedCpu.getPrice()), 5) + " PLN";
+                + " " + selectedCpu.getName(), 50) + " " + padRight(String.valueOf(selectedCpu.getPrice()), 8) + " PLN";
         if (selectedCpuCooler != null) {
             savedString += "\r\n" + padRight("CPU Cooler:", 13) + padRight(selectedCpuCooler.getBrand() + " "
-                    + selectedCpuCooler.getName(), 50) + " " + padRight(String.valueOf(selectedCpuCooler.getPrice()),5) + " PLN";
+                    + selectedCpuCooler.getName(), 50) + " " + padRight(String.valueOf(selectedCpuCooler.getPrice()),8) + " PLN";
         }
         else {
-            savedString += "\r\n" + padRight("CPU Cooler:", 13) + padRight("BOX Cooler", 50) + padRight("0",5) +" PLN";
+            savedString += "\r\n" + padRight("CPU Cooler:", 13) + " " + padRight("BOX Cooler", 50) + padRight("0",8) +" PLN";
         }
         savedString += "\r\n"+ padRight("Motherboard:", 13) + padRight(selectedMobo.getBrand() + " "
-                + selectedMobo.getName(),50) + " " + padRight(String.valueOf(selectedMobo.getPrice()),5) + " PLN";
+                + selectedMobo.getName(),50) + " " + padRight(String.valueOf(selectedMobo.getPrice()),8) + " PLN";
         savedString += "\r\n"+ padRight("GPU:", 13)+  padRight(selectedGpu.getChipManufacturer() + " "
-                + selectedGpu.getseries() + " " + selectedGpu.getName(),50) + " " + padRight(String.valueOf(selectedMobo.getPrice()),5) + " PLN";
+                + selectedGpu.getseries() + " " + selectedGpu.getName(),50) + " " + padRight(String.valueOf(selectedMobo.getPrice()),8) + " PLN";
         savedString += "\r\n"+ padRight("RAM:", 13) + padRight(selectedRam.getBrand() + " " + selectedRam.getName()
                 + " " + selectedRam.getRamType() + " " +
                 selectedRam.getMemorySize() + "GB " + selectedRam.getMemoryClock() + "MHz CL " + selectedRam.getCasLatency(),50)
-                + " " + padRight(String.valueOf(selectedRam.getPrice()),5) + " PLN";
+                + " " + padRight(String.valueOf(selectedRam.getPrice()),8) + " PLN";
         savedString += "\r\n"+ padRight("SSD:", 13) + padRight(selectedSsd.getBrand() + " " + selectedSsd.getName() + " "
-                + selectedSsd.getCapacity() + "GB " + selectedSsd.getMemoryType(),50) + " " + padRight(String.valueOf(selectedSsd.getPrice()),5) + " PLN";
+                + selectedSsd.getCapacity() + "GB " + selectedSsd.getMemoryType(),50) + " " + padRight(String.valueOf(selectedSsd.getPrice()),8) + " PLN";
         savedString += "\r\n"+ padRight("HDD:", 13) + padRight(selectedHdd.getBrand() + " " + selectedHdd.getName() + " "
-                + selectedHdd.getCapacity() + "GB " + selectedHdd.getRotationalSpeed() + "rpm",50) + " " + padRight(String.valueOf(selectedHdd.getPrice()),5) + " PLN";
+                + selectedHdd.getCapacity() + "GB " + selectedHdd.getRotationalSpeed() + "rpm",50) + " " + padRight(String.valueOf(selectedHdd.getPrice()),8) + " PLN";
         savedString += "\r\n"+ padRight("PSU:", 13) + padRight(selectedPsu.getBrand() + " " + selectedPsu.getName() + " "
-                + selectedPsu.getWattage() + "W" + selectedPsu.getCertificate80Plus(),50) + " " + padRight(String.valueOf(selectedPsu.getPrice()),5) + " PLN";
+                + selectedPsu.getWattage() + "W" + selectedPsu.getCertificate80Plus(),50) + " " + padRight(String.valueOf(selectedPsu.getPrice()),8) + " PLN";
         savedString += "\r\n"+ padRight("Case:", 13) + padRight(selectedCase.getBrand() + " " + selectedCase.getName() + " "
-                + selectedCase.getFormFactor(),50) + " " + padRight(String.valueOf(selectedCase.getPrice()),5) + " PLN";
-        savedString += "\r\n-------------------------------------";
-        savedString += "\r\n"+ padRight("Max load:", 28)  + maxLoadCounter.getText();
-        savedString += "\r\n"+ padRight("Recommended PSU wattage: ", 28) + recommendedPsuCounter.getText();
-        savedString += "\r\n" + padRight("Total price", 28) + totalPriceCounter.getText();
-        savedString += "\r\n-------------------------------------";
+                + selectedCase.getFormFactor(),50) + " " + padRight(String.valueOf(selectedCase.getPrice()),8) + " PLN";
+        savedString += "\r\n----------------------------------------------------------------------------";
+        savedString += "\r\n" + padRight("Total price:", 64) +  padRight(String.valueOf(df2.format(totalPrice)), 9) + "PLN";
+        savedString += "\r\n----------------------------------------------------------------------------";
+        savedString += "\r\n"+ padRight("Max load:", 70)  + padRight(String.valueOf(maxLoad), 5) + "W";
+        savedString += "\r\n"+ padRight("Recommended PSU wattage: ", 70) + padRight(String.valueOf(df.format(recommendedPsu)), 5) + "W";
+        savedString += "\r\n----------------------------------------------------------------------------";
         savedString += "\r\nPCBuilder - made by Michał Drab";
-        savedString += "\r\n-------------------------------------------------------------------------";
+        savedString += "\r\n----------------------------------------------------------------------------";
         return savedString;
     }
 
@@ -1184,6 +1189,8 @@ public class PCBuilderEzController implements Initializable {
             bw = new BufferedWriter(fw);
             bw.write(savedString);
             System.out.println("saved to " + fileNameAndPath);
+            labelSaved.setText("saved to " + fileNameAndPath);
+            labelSaved.getStyleClass().add("pcbuilder-enabled");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         } finally {

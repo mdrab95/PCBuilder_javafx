@@ -183,11 +183,17 @@
                   <Label fx:id="recommendedPsuCounter" styleClass="pcbuilder-disabled" text="0 W" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label fx:id="totalPriceLabel" styleClass="pcbuilder-disabled" text="Total price:" GridPane.rowIndex="2" />
                   <Label fx:id="totalPriceCounter" styleClass="pcbuilder-disabled" text="0 PLN" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Button fx:id="saveBuildButton" onAction="#saveBuildButtonAction" mnemonicParsing="false" styleClass="pcbuilder-disabled" text="Save your build" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                  <Button fx:id="saveBuildButton" mnemonicParsing="false" onAction="#saveBuildButtonAction" styleClass="pcbuilder-disabled" text="Save your build" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                </children>
             </GridPane>
 
          </children>
       </GridPane>
+      <Label fx:id="labelSaved" alignment="BOTTOM_LEFT" layoutX="25.0" layoutY="660.0">
+         <styleClass>
+            <String fx:value="label-pcbuilder" />
+            <String fx:value="pcbuilder-disabled" />
+         </styleClass>
+      </Label>
    </children>
 </AnchorPane>

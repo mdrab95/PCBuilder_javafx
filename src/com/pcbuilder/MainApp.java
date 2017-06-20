@@ -33,7 +33,7 @@ public class MainApp extends Application {
         this.primaryStage.setTitle("PC Builder");
         this.primaryStage.resizableProperty().setValue(false);
         initMainView();
-        //showCPUOverview();
+        showPCBuilderEz();
     }
 
 
