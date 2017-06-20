@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 /**
@@ -30,8 +31,31 @@ public class PCBuilderEzController implements Initializable{
 
     DataLoader dataLoader = new DataLoader();
 
+    //region GENERAL
+    //--------------------------------------
     @FXML
     private Button startButton;
+    @FXML
+    private Label maxLoadLabel;
+    @FXML
+    private Label maxLoadCounter;
+    @FXML
+    private Label recommendedPsuLabel;
+    @FXML
+    private Label recommendedPsuCounter;
+    @FXML
+    private Label totalPriceLabel;
+    @FXML
+    private Label totalPriceCounter;
+    @FXML
+    private Button saveBuildButton;
+    private int maxLoad =0;
+    private double recommendedPsu =0;
+    private double totalPrice =0;
+    private DecimalFormat df = new DecimalFormat();
+    //--------------------------------------
+    //endregion
+
 
     //region CPU
     //--------------------------------------
@@ -137,6 +161,86 @@ public class PCBuilderEzController implements Initializable{
     //--------------------------------------
     //endregion
 
+    //region SSD
+    //--------------------------------------
+    @FXML
+    private ChoiceBox choiceSsd;
+    @FXML
+    private ImageView ssdImageView;
+    @FXML
+    private Label ssdHeaderLabel;
+    @FXML
+    private Label ssdDesc;
+    @FXML
+    private Button addSsd;
+    @FXML
+    private Button backSsd;
+
+    private ModelSSD selectedSsd;
+    private Image ssdImg;
+    //--------------------------------------
+    //endregion
+
+    //region HDD
+    //--------------------------------------
+    @FXML
+    private ChoiceBox choiceHdd;
+    @FXML
+    private ImageView hddImageView;
+    @FXML
+    private Label hddHeaderLabel;
+    @FXML
+    private Label hddDesc;
+    @FXML
+    private Button addHdd;
+    @FXML
+    private Button backHdd;
+
+    private ModelHDD selectedHdd;
+    private Image hddImg;
+    //--------------------------------------
+    //endregion
+
+    //region PSU
+    //--------------------------------------
+    @FXML
+    private ChoiceBox choicePsu;
+    @FXML
+    private ImageView psuImageView;
+    @FXML
+    private Label psuHeaderLabel;
+    @FXML
+    private Label psuDesc;
+    @FXML
+    private Button addPsu;
+    @FXML
+    private Button backPsu;
+
+    private ModelPSU selectedPsu;
+    private Image psuImg;
+    //--------------------------------------
+    //endregion
+
+    //region Case
+    //--------------------------------------
+    @FXML
+    private ChoiceBox choiceCase;
+    @FXML
+    private ImageView caseImageView;
+    @FXML
+    private Label caseHeaderLabel;
+    @FXML
+    private Label caseDesc;
+    @FXML
+    private Button addCase;
+    @FXML
+    private Button backCase;
+
+    private ModelCase selectedCase;
+    private Image caseImg;
+    //--------------------------------------
+    //endregion
+
     private final ObservableList<ModelCPU> cpuList= FXCollections.observableArrayList();
     private final ObservableList<ModelGPU> gpuList= FXCollections.observableArrayList();
     private final ObservableList<ModelCPUCooler> cpuCoolerList= FXCollections.observableArrayList();
@@ -151,6 +255,10 @@ public class PCBuilderEzController implements Initializable{
     ObservableList gpuNames = FXCollections.observableArrayList();
     ObservableList cpuNames = FXCollections.observableArrayList();
     ObservableList ramNames = FXCollections.observableArrayList();
+    ObservableList ssdNames = FXCollections.observableArrayList();
+    ObservableList hddNames = FXCollections.observableArrayList();
+    ObservableList psuNames = FXCollections.observableArrayList();
+    ObservableList caseNames = FXCollections.observableArrayList();
 
     private String memoryConnectors (ModelGPU modelItem){
         String connectors = "";
@@ -183,7 +291,7 @@ public class PCBuilderEzController implements Initializable{
 
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
-
+        df.setMaximumFractionDigits(0);
         //region Data Loader
         // --------------------------------------
         try {
@@ -435,7 +543,7 @@ public class PCBuilderEzController implements Initializable{
                             ramImg = new Image(selectedRam.getSmallImagePath() + selectedRam.getSerialNumber() + ".png", true);
                             setImg(ramImg, ramImageView);
                         }
-                        catch (Exception ex){System.out.println("Can't load GPU img!");}
+                        catch (Exception ex){System.out.println("Can't load RAM img!");}
 
 
                         String ramDescription = selectedRam.getBrand() + " " + selectedRam.getName() + " " +  selectedRam.getStandard() + " " + selectedRam.getMemorySize() + "GB " + selectedRam.getMemoryClock() + "MHz"
@@ -449,6 +557,175 @@ public class PCBuilderEzController implements Initializable{
         setNoImg(ramImg, ramImageView);
         //--------------------------------------
         //endregion
+
+        //region SSD init
+        // --------------------------------------
+
+        for (int i=0; i<ssdList.size(); i++){
+            String ssdName = ssdList.get(i).getBrand() + " " + ssdList.get(i).getName() + " " + ssdList.get(i).getCapacity() + "GB";
+            ssdNames.add(ssdName);
+        }
+        choiceSsd.setItems(ssdNames);
+        choiceSsd.getSelectionModel().selectedItemProperty()
+                .addListener(new ChangeListener<String>() {
+                    public void changed(ObservableValue<? extends String> observable,
+                                        String oldValue, String newValue) {
+                        System.out.println(newValue);
+                        for (int i=0; i< ssdList.size(); i++)
+                        {
+                            String selectedSsdName = ssdList.get(i).getBrand() + " " + ssdList.get(i).getName() + " " + ssdList.get(i).getCapacity() + "GB";
+                            if (newValue.matches(selectedSsdName))
+                            {
+                                selectedSsd = ssdList.get(i);
+                            }
+                        }
+                        try {
+                            ssdImg = new Image(selectedSsd.getSmallImagePath() + selectedSsd.getSerialNumber() + ".png", true);
+                            setImg(ssdImg, ssdImageView);
+                        }
+                        catch (Exception ex){System.out.println("Can't load SSD img!");}
+
+
+                        String ssdDescription = selectedSsd.getBrand() + " " + selectedSsd.getName() + " " + selectedSsd.getCapacity() + " GB"
+                                + "\n" + "Form factor: " + selectedSsd.getFormFactor() + ", interface type: " + selectedSsd.getInterfaceType() + ", memory type: " + selectedSsd.getMemoryType()
+                                + "\nRead: " + selectedSsd.getReadSpeed() + "MB/s, write: " + selectedSsd.getWriteSpeed() + "MB/s " + ", TBW: " + selectedSsd.getTbw() + "TB"
+                                + "\nPrice: " + selectedSsd.getPrice() + " PLN";
+                        ssdDesc.setText(ssdDescription);
+                    }
+                });
+
+        setNoImg(ssdImg, ssdImageView);
+        //--------------------------------------
+        //endregion
+
+        //region HDD init
+        // --------------------------------------
+
+        for (int i=0; i<hddList.size(); i++){
+            String hddName = hddList.get(i).getBrand() + " " + hddList.get(i).getName() + " " + hddList.get(i).getCapacity() + "GB";
+                    hddNames.add(hddName);
+        }
+        choiceHdd.setItems(hddNames);
+        choiceHdd.getSelectionModel().selectedItemProperty()
+                .addListener(new ChangeListener<String>() {
+                    public void changed(ObservableValue<? extends String> observable,
+                                        String oldValue, String newValue) {
+                        System.out.println(newValue);
+                        for (int i=0; i< hddList.size(); i++)
+                        {
+                            String selectedHddName = hddList.get(i).getBrand() + " " + hddList.get(i).getName() + " " + hddList.get(i).getCapacity() + "GB";
+                            if (newValue.matches(selectedHddName))
+                            {
+                                selectedHdd = hddList.get(i);
+                            }
+                        }
+                        try {
+                            hddImg = new Image(selectedHdd.getSmallImagePath() + selectedHdd.getSerialNumber() + ".png", true);
+                            setImg(hddImg, hddImageView);
+                        }
+                        catch (Exception ex){System.out.println("Can't load HDD img!");}
+
+
+                        String hddDescription = selectedHdd.getBrand() + " " + selectedHdd.getName() + " " +  selectedHdd.getCapacity() + "GB "
+                                + "\nInterface type: " + selectedHdd.getHddInterfaceType() + ", form factor: " + selectedHdd.getFormFactor()
+                                + "\nRotational speed: " + selectedHdd.getRotationalSpeed() + "rpm"
+                                + "\nPrice: " + selectedHdd.getPrice() + " PLN";
+                        hddDesc.setText(hddDescription);
+                    }
+                });
+
+        setNoImg(hddImg, hddImageView);
+        //--------------------------------------
+        //endregion
+
+        //region PSU init
+        // --------------------------------------
+
+        for (int i=0; i<psuList.size(); i++){
+            String psuName = psuList.get(i).getBrand() + " " + psuList.get(i).getName() + " " + psuList.get(i).getWattage() + "W";
+            psuNames.add(psuName);
+        }
+        choicePsu.setItems(psuNames);
+        choicePsu.getSelectionModel().selectedItemProperty()
+                .addListener(new ChangeListener<String>() {
+                    public void changed(ObservableValue<? extends String> observable,
+                                        String oldValue, String newValue) {
+                        System.out.println(newValue);
+                        for (int i=0; i< psuList.size(); i++)
+                        {
+                            String selectedPsuName = psuList.get(i).getBrand() + " " + psuList.get(i).getName() + " " + psuList.get(i).getWattage() + "W";
+                            if (newValue.matches(selectedPsuName))
+                            {
+                                selectedPsu = psuList.get(i);
+                            }
+                        }
+                        try {
+                            psuImg = new Image(selectedPsu.getSmallImagePath() + selectedPsu.getManufacturerCode() + ".png", true);
+                            setImg(psuImg, psuImageView);
+                        }
+                        catch (Exception ex){System.out.println("Can't load PSU img!");}
+
+                        String modular = "";
+                        if (selectedPsu.getIsModular() == true)
+                            modular = "Modular";
+
+                        String certificate = "";
+                        if (selectedPsu.getCertificate80Plus().length()==0)
+                            certificate = "no data";
+                        else
+                            certificate = selectedPsu.getCertificate80Plus();
+
+                        String psuDescription = selectedPsu.getBrand() + " " + selectedPsu.getName() + " " + selectedPsu.getWattage() + "W " + modular
+                                + "\nCertificate: " + certificate + ", Protection:  " + selectedPsu.getProtection()
+                                + "\nPrice: " + selectedPsu.getPrice() + " PLN";
+                        psuDesc.setText(psuDescription);
+                    }
+                });
+
+        setNoImg(psuImg, psuImageView);
+        //--------------------------------------
+        //endregion
+
+        //region Case init
+        // --------------------------------------
+
+        for (int i=0; i<caseList.size(); i++){
+            String caseName = caseList.get(i).getBrand() + " " + caseList.get(i).getName();
+            caseNames.add(caseName);
+        }
+        choiceCase.setItems(caseNames);
+        choiceCase.getSelectionModel().selectedItemProperty()
+                .addListener(new ChangeListener<String>() {
+                    public void changed(ObservableValue<? extends String> observable,
+                                        String oldValue, String newValue) {
+                        System.out.println(newValue);
+                        for (int i=0; i< caseList.size(); i++)
+                        {
+                            String selectedCaseName = caseList.get(i).getBrand() + " " + caseList.get(i).getName();
+                            if (newValue.matches(selectedCaseName))
+                            {
+                                selectedCase = caseList.get(i);
+                            }
+                        }
+                        try {
+                            caseImg = new Image(selectedCase.getSmallImagePath() + selectedCase.getSerialNumber() + ".png", true);
+                            setImg(caseImg, caseImageView);
+                        }
+                        catch (Exception ex){System.out.println("Can't load Case img!");}
+
+
+                        String caseDescription = selectedCase.getBrand() + " " + selectedCase.getName()
+                                + "\nCompatibility: " + selectedCase.getFormFactor() + ", Type: " + selectedCase.getType()
+                                + "\nPrice: " + selectedCase.getPrice() + " PLN";
+                        caseDesc.setText(caseDescription);
+                    }
+                });
+
+        setNoImg(caseImg, caseImageView);
+        //--------------------------------------
+        //endregion
+        
+        
     }
 
     private void setNoImg(Image image, ImageView imageView)
@@ -474,11 +751,34 @@ public class PCBuilderEzController implements Initializable{
         cpuImageView.getStyleClass().add("pcbuilder-enabled");
         choiceCpu.getStyleClass().add("pcbuilder-enabled");
         startButton.getStyleClass().add("pcbuilder-disabled");
+        maxLoadLabel.getStyleClass().add("pcbuilder-enabled");
+        maxLoadCounter.getStyleClass().add("pcbuilder-enabled");
+        recommendedPsuLabel.getStyleClass().add("pcbuilder-enabled");
+        recommendedPsuCounter.getStyleClass().add("pcbuilder-enabled");
+        totalPriceLabel.getStyleClass().add("pcbuilder-enabled");
+        totalPriceCounter.getStyleClass().add("pcbuilder-enabled");
     }
+
+    @FXML
+    private void lastButtonAction(){
+        if (selectedCase != null) {
+            choiceCase.getStyleClass().remove("pcbuilder-enabled");
+            addCase.getStyleClass().remove("pcbuilder-enabled");
+            caseHeaderLabel.setText("Your Case:");
+            maxLoad += 0;
+            maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
+            recommendedPsu = 1.4*maxLoad;
+            recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
+            totalPrice += selectedCase.getPrice();
+            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            saveBuildButton.getStyleClass().add("pcbuilder-enabled");
+        }
+    }
+
 
     private void backButtonCpu(String buttonName, Button currentAdd, Button currentBack, Label currentDesc, Label currentHeader,
                                      ImageView currentImageView, Image currentImage, ChoiceBox currentChoice, Button previousAdd,
-                                     Label previousHeader, ChoiceBox previousChoice, ObservableList currentNames){
+                                     Label previousHeader, ChoiceBox previousChoice, ObservableList currentNames, String selectWhat){
         System.out.println(buttonName + " clicked");
         currentAdd.getStyleClass().remove("pcbuilder-enabled");
         currentBack.getStyleClass().remove("pcbuilder-enabled");
@@ -488,7 +788,7 @@ public class PCBuilderEzController implements Initializable{
         currentChoice.getStyleClass().remove("pcbuilder-enabled");
 
         previousAdd.getStyleClass().add("pcbuilder-enabled");
-        previousHeader.setText("Select CPU Cooler:");
+        previousHeader.setText("Add " +  selectWhat + ":");
         previousChoice.getStyleClass().add("pcbuilder-enabled");
 
 
@@ -499,14 +799,12 @@ public class PCBuilderEzController implements Initializable{
 
     private void backButtonUniversal(String buttonName, Button currentAdd, Button currentBack, Label currentDesc, Label currentHeader,
                                      ImageView currentImageView, Image currentImage, ChoiceBox currentChoice, Button previousAdd, Button previousBack,
-                                     Label previousHeader, ChoiceBox previousChoice, ObservableList currentNames){
+                                     Label previousHeader, ChoiceBox previousChoice, ObservableList currentNames, String selectWhat){
 
         backButtonCpu(buttonName, currentAdd, currentBack, currentDesc, currentHeader, currentImageView, currentImage, currentChoice,
-                previousAdd, previousHeader, previousChoice, currentNames);
+                previousAdd, previousHeader, previousChoice, currentNames, selectWhat);
 
         previousBack.getStyleClass().add("pcbuilder-enabled");
-        currentNames.clear();
-
     }
 
     private void addButtonCpu(String buttonName, Button nextAdd, Button nextBack, Label nextDesc, Label nextHeader, ImageView nextImageView,
@@ -553,17 +851,31 @@ public class PCBuilderEzController implements Initializable{
                 }
             }
             choiceCpuCooler.setItems(cpuCoolerNames);
-
+            maxLoad += selectedCpu.getWattage();
+            maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
+            recommendedPsu = 1.4*maxLoad;
+            recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
+            totalPrice += selectedCpu.getPrice();
+            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
         }
     }
+
     @FXML
     private void backCpuCoolerButtonAction(){
         backButtonCpu("backCpuCoolerButtonAction", addCpuCooler, backCpuCooler, cpuCoolerDesc, cpuCoolerHeaderLabel,
-                cpuCoolerImageView, cpuCoolerImg, choiceCpuCooler, addCpu, cpuHeaderLabel, choiceCpu, cpuNames);
+                cpuCoolerImageView, cpuCoolerImg, choiceCpuCooler, addCpu, cpuHeaderLabel, choiceCpu, cpuNames, "CPU");
         selectedCpuCooler = null;
-
-
+        if(selectedCpu!=null){
+            maxLoad -= selectedCpu.getWattage();
+            maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
+            recommendedPsu = 1.4*maxLoad;
+            recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
+            totalPrice -= selectedCpu.getPrice();
+            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            saveBuildButton.getStyleClass().add("pcbuilder-enabled");
+        }
     }
+
     @FXML
     private void addCpuCoolerButtonAction() {
         if (selectedCpu.getBoxCooler() == false && selectedCpuCooler == null) {
@@ -595,39 +907,205 @@ public class PCBuilderEzController implements Initializable{
                 }
             }
             choiceMobo.setItems(moboNames);
+            maxLoad += selectedCpuCooler.getWattage();
+            maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
+            recommendedPsu = 1.4*maxLoad;
+            recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
+            totalPrice += selectedCpuCooler.getPrice();
+            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
         }
     }
 
     @FXML
     private void backMoboButtonAction() {
-        backButtonUniversal("backMoboButtonAction", addMobo, backMobo, moboDesc, moboHeaderLabel, moboImageView,
-                moboImg, choiceMobo, addCpuCooler, backCpuCooler, cpuCoolerHeaderLabel, choiceCpuCooler, moboNames);
+        backButtonUniversal("backMoboButtonAction", addMobo, backMobo, moboDesc, moboHeaderLabel, moboImageView, moboImg, choiceMobo,
+                addCpuCooler, backCpuCooler, cpuCoolerHeaderLabel, choiceCpuCooler, moboNames, "Cpu cooler");
         selectedMobo = null;
+        if(selectedCpuCooler!=null){
+            maxLoad -= selectedCpuCooler.getWattage();
+            maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
+            recommendedPsu = 1.4*maxLoad;
+            recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
+            totalPrice -= selectedCpuCooler.getPrice();
+            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            saveBuildButton.getStyleClass().add("pcbuilder-enabled");
+        }
     }
 
     @FXML
     private void addMoboButtonAction(){
-        addButtonUniversal("addMoboButtonAction", addGpu, backGpu, gpuDesc, gpuHeaderLabel, gpuImageView, gpuImg, choiceGpu, gpuNames,
-                addMobo, backMobo, choiceMobo, moboHeaderLabel, "Your Motherboard: ");
+        if (selectedMobo != null) {
+            addButtonUniversal("addMoboButtonAction", addGpu, backGpu, gpuDesc, gpuHeaderLabel, gpuImageView, gpuImg, choiceGpu, gpuNames,
+                    addMobo, backMobo, choiceMobo, moboHeaderLabel, "Your Motherboard: ");
+            maxLoad += selectedMobo.getWattage();
+            maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
+            recommendedPsu = 1.4*maxLoad;
+            recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
+            totalPrice += selectedMobo.getPrice();
+            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+        }
     }
 
     @FXML
     private void backGpuButtonAction() {
-        backButtonUniversal("backGpuButtonAction", addGpu, backGpu, gpuDesc, gpuHeaderLabel, gpuImageView, gpuImg,
-                choiceGpu, addMobo, backMobo, moboHeaderLabel, choiceMobo, moboNames);
+        backButtonUniversal("backGpuButtonAction", addGpu, backGpu, gpuDesc, gpuHeaderLabel, gpuImageView, gpuImg, choiceGpu,
+                addMobo, backMobo, moboHeaderLabel, choiceMobo, moboNames, "Motherboard");
         selectedGpu = null;
+        if(selectedMobo!=null){
+            maxLoad -= selectedMobo.getWattage();
+            maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
+            recommendedPsu = 1.4*maxLoad;
+            recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
+            totalPrice -= selectedMobo.getPrice();
+            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            saveBuildButton.getStyleClass().add("pcbuilder-enabled");
+        }
     }
 
     @FXML
     private void addGpuButtonAction(){
-        addButtonUniversal("addGpuButtonName", addRam, backRam, ramDesc, ramHeaderLabel, ramImageView, ramImg, choiceRam, ramNames,
-                addGpu, backGpu, choiceGpu, gpuHeaderLabel, "Your Graphic card:");
+        if (selectedGpu != null) {
+            addButtonUniversal("addGpuButtonName", addRam, backRam, ramDesc, ramHeaderLabel, ramImageView, ramImg, choiceRam, ramNames,
+                    addGpu, backGpu, choiceGpu, gpuHeaderLabel, "Your Graphic card:");
+            maxLoad += selectedGpu.getWattage();
+            maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
+            recommendedPsu = 1.4*maxLoad;
+            recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
+            totalPrice += selectedGpu.getPrice();
+            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+        }
     }
 
     @FXML
     private void backRamButtonAction() {
-        backButtonUniversal("backRamButtonAction", addRam, backRam, ramDesc, ramHeaderLabel, ramImageView, ramImg,
-                choiceRam, addGpu, backGpu, gpuHeaderLabel, choiceGpu, gpuNames);
+        backButtonUniversal("backRamButtonAction", addRam, backRam, ramDesc, ramHeaderLabel, ramImageView, ramImg, choiceRam,
+                addGpu, backGpu, gpuHeaderLabel, choiceGpu, gpuNames, "GPU");
         selectedRam = null;
+        if(selectedGpu!=null){
+            maxLoad -= selectedGpu.getWattage();
+            maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
+            recommendedPsu = 1.4*maxLoad;
+            recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
+            totalPrice -= selectedGpu.getPrice();
+            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            saveBuildButton.getStyleClass().add("pcbuilder-enabled");
+        }
+    }
+
+    @FXML
+    private void addRamButtonAction(){
+        if (selectedRam != null) {
+            addButtonUniversal("addRamButtonName", addSsd, backSsd, ssdDesc, ssdHeaderLabel, ssdImageView, ssdImg, choiceSsd, ssdNames,
+                    addRam, backRam, choiceRam, ramHeaderLabel, "Your RAM:");
+            maxLoad += selectedRam.getWattage();
+            maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
+            recommendedPsu = 1.4*maxLoad;
+            recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
+            totalPrice += selectedRam.getPrice();
+            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+        }
+    }
+
+    @FXML
+    private void backSsdButtonAction() {
+        backButtonUniversal("backSsdButtonAction", addSsd, backSsd, ssdDesc, ssdHeaderLabel, ssdImageView, ssdImg, choiceSsd,
+                addRam, backRam, ramHeaderLabel, choiceRam, ramNames, "RAM");
+        selectedSsd = null;
+        if(selectedRam!=null){
+            maxLoad -= selectedRam.getWattage();
+            maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
+            recommendedPsu = 1.4*maxLoad;
+            recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
+            totalPrice -= selectedRam.getPrice();
+            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            saveBuildButton.getStyleClass().add("pcbuilder-enabled");
+        }
+    }
+
+    @FXML
+    private void addSsdButtonAction(){
+        if (selectedSsd != null) {
+            addButtonUniversal("addSsdButtonName", addHdd, backHdd, hddDesc, hddHeaderLabel, hddImageView, hddImg, choiceHdd, hddNames,
+                    addSsd, backSsd, choiceSsd, ssdHeaderLabel, "Your SSD:");
+            maxLoad += selectedSsd.getWattage();
+            maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
+            recommendedPsu = 1.4*maxLoad;
+            recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
+            totalPrice += selectedSsd.getPrice();
+            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+        }
+    }
+
+    @FXML
+    private void backHddButtonAction() {
+        backButtonUniversal("backHddButtonAction", addHdd, backHdd, hddDesc, hddHeaderLabel, hddImageView, hddImg, choiceHdd,
+                addSsd, backSsd, ssdHeaderLabel, choiceSsd, ssdNames, "SSD");
+        selectedHdd = null;
+        if(selectedSsd!=null){
+            maxLoad -= selectedSsd.getWattage();
+            maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
+            recommendedPsu = 1.4*maxLoad;
+            recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
+            totalPrice -= selectedSsd.getPrice();
+            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            saveBuildButton.getStyleClass().add("pcbuilder-enabled");
+        }
+    }
+
+    @FXML
+    private void addHddButtonAction(){
+        if (selectedHdd != null) {
+            addButtonUniversal("addHddButtonName", addPsu, backPsu, psuDesc, psuHeaderLabel, psuImageView, psuImg, choicePsu, psuNames,
+                    addHdd, backHdd, choiceHdd, hddHeaderLabel, "Your HDD:");
+            maxLoad += selectedHdd.getWattage();
+            maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
+            recommendedPsu = 1.4*maxLoad;
+            recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
+            totalPrice += selectedHdd.getPrice();
+            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+        }
+    }
+
+    @FXML
+    private void backPsuButtonAction() {
+        backButtonUniversal("backPsuButtonAction", addPsu, backPsu, psuDesc, psuHeaderLabel, psuImageView, psuImg, choicePsu,
+                addHdd, backHdd, hddHeaderLabel, choiceHdd, hddNames, "HDD");
+        selectedHdd = null;
+        if(selectedHdd!=null){
+            maxLoad -= selectedHdd.getWattage();
+            maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
+            recommendedPsu = 1.4*maxLoad;
+            recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
+            totalPrice -= selectedHdd.getPrice();
+            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            saveBuildButton.getStyleClass().add("pcbuilder-enabled");
+        }
+    }
+
+    @FXML
+    private void addPsuButtonAction(){
+        if (selectedPsu != null) {
+            addButtonUniversal("addHddButtonName", addCase, backCase, caseDesc, caseHeaderLabel, caseImageView, caseImg, choiceCase, caseNames,
+                    addPsu, backPsu, choicePsu, psuHeaderLabel, "Your PSU:");
+            totalPrice += selectedPsu.getPrice();
+            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+        }
+    }
+
+    @FXML
+    private void backCaseButtonAction() {
+        backButtonUniversal("backHddButtonAction", addCase, backCase, caseDesc, caseHeaderLabel, caseImageView, caseImg, choiceCase,
+                addPsu, backPsu, psuHeaderLabel, choicePsu, psuNames, "PSU");
+        selectedHdd = null;
+        if(selectedPsu!=null){
+            totalPrice -= selectedPsu.getPrice();
+            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            saveBuildButton.getStyleClass().add("pcbuilder-enabled");
+        }
+        if(selectedCase!=null){
+            totalPrice -= selectedPsu.getPrice();
+            totalPriceCounter.setText(String.valueOf(totalPrice) + "PLN");
+            saveBuildButton.getStyleClass().add("pcbuilder-enabled");
+        }
     }
 }

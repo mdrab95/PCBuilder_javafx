@@ -73,9 +73,11 @@ public class PSUOverviewController implements Initializable {
                             String certificate = "";
                             if (psuItem.getCertificate80Plus().length()==0)
                                 certificate = "no data";
+                            else
+                                certificate = psuItem.getCertificate80Plus();
 
                             setText(psuItem.getBrand() + " " + psuItem.getName() + " " + psuItem.getWattage() + "W " + modular
-                                    + "\nCertificate: " + psuItem.getCertificate80Plus() + ", Protection:  " + psuItem.getProtection()
+                                    + "\nCertificate: " + certificate + ", Protection:  " + psuItem.getProtection()
                                     + "\nPrice: " + psuItem.getPrice() + " PLN");
                         }
                     }
