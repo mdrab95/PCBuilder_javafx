@@ -34,25 +34,25 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="cpuHeaderLabel" prefHeight="17.0" prefWidth="94.0" text="Add CPU:" />
+            <Label fx:id="cpuHeaderLabel" prefHeight="17.0" prefWidth="94.0" styleClass="pcbuilder-disabled" text="Add CPU:" />
             <Label fx:id="cpuCoolerHeaderLabel" styleClass="pcbuilder-disabled" text="Add CPU Cooler:" GridPane.columnIndex="2" />
             <Label fx:id="moboHeaderLabel" styleClass="pcbuilder-disabled" text="Add Motherboard:" GridPane.columnIndex="4" />
-            <Label text="Add GPU:" GridPane.rowIndex="3" />
-            <Label text="Add RAM:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="gpuHeaderLabel" styleClass="pcbuilder-disabled" text="Add GPU:" GridPane.rowIndex="3" />
+            <Label fx:id="ramHeaderLabel" styleClass="pcbuilder-disabled" text="Add RAM:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <Label text="Add SSD:" GridPane.columnIndex="4" GridPane.rowIndex="3" />
             <Label text="Add HDD:" GridPane.rowIndex="6" />
             <Label text="Add PSU:" GridPane.columnIndex="2" GridPane.rowIndex="6" />
             <Label text="Add Case:" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-            <ImageView fx:id="cpuImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+            <ImageView fx:id="cpuImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" styleClass="pcbuilder-disabled" GridPane.rowIndex="1" />
             <ImageView fx:id="cpuCoolerImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" styleClass="pcbuilder-disabled" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <ImageView fx:id="moboImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" styleClass="pcbuilder-disabled" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4" />
-            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <ImageView fx:id="gpuImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" styleClass="pcbuilder-disabled" GridPane.rowIndex="4" />
+            <ImageView fx:id="ramImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" styleClass="pcbuilder-disabled" GridPane.columnIndex="2" GridPane.rowIndex="4" />
             <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="4" />
             <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="7" />
             <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="7" />
             <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-            <Button fx:id="addCpu" mnemonicParsing="false" onAction="#addCpuButtonAction" prefHeight="25.0" prefWidth="250.0" text="Add" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+            <Button fx:id="addCpu" mnemonicParsing="false" onAction="#addCpuButtonAction" prefHeight="25.0" prefWidth="250.0" styleClass="pcbuilder-disabled" text="Add" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="15.0" />
                </GridPane.margin>
@@ -61,18 +61,28 @@
                <GridPane.margin>
                   <Insets right="15.0" />
                </GridPane.margin></Button>
-            <Button fx:id="addMobo" mnemonicParsing="false" prefHeight="25.0" prefWidth="250.0" styleClass="pcbuilder-disabled" text="Add" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+            <Button fx:id="addMobo" mnemonicParsing="false" onAction="#addMoboButtonAction" prefHeight="25.0" prefWidth="250.0" styleClass="pcbuilder-disabled" text="Add" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="15.0" />
                </GridPane.margin></Button>
-            <Button mnemonicParsing="false" text="Add" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-            <Button mnemonicParsing="false" text="Add" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+            <Button fx:id="addGpu" mnemonicParsing="false" onAction="#addGpuButtonAction" prefHeight="25.0" prefWidth="250.0" styleClass="pcbuilder-disabled" text="Add" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets right="15.0" />
+               </GridPane.margin></Button>
+            <Button fx:id="addRam" mnemonicParsing="false" prefHeight="25.0" prefWidth="250.0" styleClass="pcbuilder-disabled" text="Add" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets right="15.0" />
+               </GridPane.margin></Button>
             <Button mnemonicParsing="false" text="Add" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
             <Button mnemonicParsing="false" text="Add" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
             <Button mnemonicParsing="false" text="Add" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
             <Button mnemonicParsing="false" text="Add" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
-            <ChoiceBox fx:id="choiceCpu" prefHeight="25.0" prefWidth="250.0" GridPane.columnIndex="1" />
-            <Label fx:id="cpuDesc" styleClass="label-pcbuilder" text="CPU description" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ChoiceBox fx:id="choiceCpu" prefHeight="25.0" prefWidth="250.0" styleClass="pcbuilder-disabled" GridPane.columnIndex="1" />
+            <Label fx:id="cpuDesc" text="CPU description" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <styleClass>
+                  <String fx:value="label-pcbuilder" />
+                  <String fx:value="pcbuilder-disabled" />
+               </styleClass></Label>
             <ChoiceBox fx:id="choiceCpuCooler" prefHeight="25.0" prefWidth="250.0" styleClass="pcbuilder-disabled" GridPane.columnIndex="3" />
             <Label fx:id="cpuCoolerDesc" text="CPU Cooler description" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <styleClass>
@@ -88,6 +98,23 @@
                </styleClass>
             </Label>
             <Button fx:id="backMobo" mnemonicParsing="false" onAction="#backMoboButtonAction" prefWidth="100.0" styleClass="pcbuilder-disabled" text="Back" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <Label fx:id="gpuDesc" style="pcbuilder-disabled" text="GPU description" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <styleClass>
+                  <String fx:value="label-pcbuilder" />
+                  <String fx:value="pcbuilder-disabled" />
+               </styleClass>
+            </Label>
+            <Button fx:id="backGpu" mnemonicParsing="false" onAction="#backGpuButtonAction" prefHeight="25.0" prefWidth="100.0" styleClass="pcbuilder-disabled" text="Back" GridPane.rowIndex="5" />
+            <ChoiceBox fx:id="choiceGpu" prefWidth="250.0" styleClass="pcbuilder-disabled" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ChoiceBox fx:id="choiceRam" prefHeight="25.0" prefWidth="250.0" styleClass="pcbuilder-disabled" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label fx:id="ramDesc" text="RAM description" styleClass="pcbuilder-disabled" GridPane.columnIndex="3" GridPane.rowIndex="4">
+               <styleClass>
+                  <String fx:value="label-pcbuilder" />
+                  <String fx:value="pcbuilder-disabled" />
+               </styleClass>
+            </Label>
+            <Button fx:id="backRam" onAction="#backRamButtonAction" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" styleClass="pcbuilder-disabled" text="Back" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Button fx:id="startButton" onAction="#startButtonAcction" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Start" GridPane.columnIndex="3" GridPane.rowIndex="5" />
          </children>
       </GridPane>
    </children>

@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
+import javafx.scene.image.Image;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,6 +30,9 @@ public class PCBuilderEzController implements Initializable{
 
     DataLoader dataLoader = new DataLoader();
 
+    @FXML
+    private Button startButton;
+
     //region CPU
     //--------------------------------------
 
@@ -41,6 +45,9 @@ public class PCBuilderEzController implements Initializable{
 
     @FXML
     private Button addCpu;
+
+    @FXML
+    private Button backCpu;
 
     @FXML
     private Label cpuHeaderLabel;
@@ -90,6 +97,46 @@ public class PCBuilderEzController implements Initializable{
     //--------------------------------------
     //endregion
 
+    //region GPU
+    //--------------------------------------
+    @FXML
+    private ChoiceBox choiceGpu;
+    @FXML
+    private ImageView gpuImageView;
+    @FXML
+    private Label gpuHeaderLabel;
+    @FXML
+    private Label gpuDesc;
+    @FXML
+    private Button addGpu;
+    @FXML
+    private Button backGpu;
+
+    private ModelGPU selectedGpu;
+    private Image gpuImg;
+    //--------------------------------------
+    //endregion
+
+    //region RAM
+    //--------------------------------------
+    @FXML
+    private ChoiceBox choiceRam;
+    @FXML
+    private ImageView ramImageView;
+    @FXML
+    private Label ramHeaderLabel;
+    @FXML
+    private Label ramDesc;
+    @FXML
+    private Button addRam;
+    @FXML
+    private Button backRam;
+
+    private ModelRAM selectedRam;
+    private Image ramImg;
+    //--------------------------------------
+    //endregion
+
     private final ObservableList<ModelCPU> cpuList= FXCollections.observableArrayList();
     private final ObservableList<ModelGPU> gpuList= FXCollections.observableArrayList();
     private final ObservableList<ModelCPUCooler> cpuCoolerList= FXCollections.observableArrayList();
@@ -101,6 +148,38 @@ public class PCBuilderEzController implements Initializable{
     private final ObservableList<ModelCase> caseList= FXCollections.observableArrayList();
     ObservableList cpuCoolerNames = FXCollections.observableArrayList();
     ObservableList moboNames = FXCollections.observableArrayList();
+    ObservableList gpuNames = FXCollections.observableArrayList();
+    ObservableList cpuNames = FXCollections.observableArrayList();
+    ObservableList ramNames = FXCollections.observableArrayList();
+
+    private String memoryConnectors (ModelGPU modelItem){
+        String connectors = "";
+        if (modelItem.getDviConnectors() > 0) {
+            if (modelItem.getDviConnectors() == 1)
+                connectors += "DVI ";
+            else
+                connectors += modelItem.getDviConnectors() + "x DVI";
+        }
+        if (modelItem.getHdmiConnectors() > 0) {
+            if (modelItem.getHdmiConnectors() == 1)
+                connectors += "HDMI ";
+            else
+                connectors += modelItem.getHdmiConnectors() + "x HDMI";
+        }
+        if (modelItem.getDpConnectors() > 0) {
+            if (modelItem.getDpConnectors() == 1)
+                connectors += "DP ";
+            else
+                connectors += modelItem.getDpConnectors() + "x DP";
+        }
+        if (modelItem.getVgaConnectors() > 0) {
+            if (modelItem.getVgaConnectors() == 1)
+                connectors += "VGA ";
+            else
+                connectors += modelItem.getVgaConnectors() + "x VGA";
+        }
+        return connectors;
+    }
 
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
@@ -139,7 +218,6 @@ public class PCBuilderEzController implements Initializable{
 
         //region CPU init
         // --------------------------------------
-        ObservableList cpuNames = FXCollections.observableArrayList();
         for (int i=0; i<cpuList.size(); i++){
             String cpuName = cpuList.get(i).getBrand() + " " + cpuList.get(i).getFamily() + " " + cpuList.get(i).getName();
             cpuNames.add(cpuName);
@@ -159,9 +237,8 @@ public class PCBuilderEzController implements Initializable{
                         }
                     }
                     cpuImg = new Image(selectedCpu.getSmallImagePath());
-                    cpuImageView.setFitHeight(100);
-                    cpuImageView.setFitWidth(100);
-                    cpuImageView.setImage(cpuImg);
+                    setImg(cpuImg, cpuImageView);
+
                     String howItIsPacked = selectedCpu.getPackageType();
                     String spaceInName = " ";
                     if (selectedCpu.getFamily().contains("Core"))
@@ -181,10 +258,7 @@ public class PCBuilderEzController implements Initializable{
                     cpuDesc.setText(cpuDescription);
                 }
             });
-        cpuImg = new Image("images/no_img.png");
-        cpuImageView.setFitHeight(100);
-        cpuImageView.setFitWidth(100);
-        cpuImageView.setImage(cpuImg);
+        setNoImg(cpuImg, cpuImageView);
         //--------------------------------------
         //endregion
 
@@ -205,12 +279,12 @@ public class PCBuilderEzController implements Initializable{
                             if (selectedCpu.getBoxCooler() == false) {
                                 selectedCpuCooler = null;
                                 cpuCoolerImg = new Image("images/error.png");
-                                cpuCoolerImageView.setImage(cpuCoolerImg);
+                                setImg(cpuCoolerImg, cpuCoolerImageView);
                                 cpuCoolerDesc.setText("There is no box cooler included!");
                             }
                             else {
                                 cpuCoolerImg = new Image(selectedCpu.getSmallImagePath());
-                                cpuCoolerImageView.setImage(cpuCoolerImg);
+                                setImg(cpuCoolerImg, cpuCoolerImageView);
                                 cpuCoolerDesc.setText("BOX Cooler");
                             }
                         } else {
@@ -221,9 +295,8 @@ public class PCBuilderEzController implements Initializable{
                                 }
                             }
                             cpuCoolerImg = new Image(selectedCpuCooler.getSmallImagePath() + selectedCpuCooler.getManufacturerCode() + ".png", true);
-                            cpuCoolerImageView.setFitHeight(100);
-                            cpuCoolerImageView.setFitWidth(100);
-                            cpuCoolerImageView.setImage(cpuCoolerImg);
+                            setImg(cpuCoolerImg, cpuCoolerImageView);
+
                             String dimensions = mainApp.noZeros(selectedCpuCooler.getWidth()) + "x" + mainApp.noZeros(selectedCpuCooler.getHeight()) + "x" + mainApp.noZeros(selectedCpuCooler.getDepth()) + "mm";
                             String fans = "";
                             if (selectedCpuCooler.getNumberOfFans() > 1)
@@ -247,10 +320,7 @@ public class PCBuilderEzController implements Initializable{
                         }
                     }
                 });
-        cpuCoolerImg = new Image("images/no_img.png");
-        cpuCoolerImageView.setFitHeight(100);
-        cpuCoolerImageView.setFitWidth(100);
-        cpuCoolerImageView.setImage(cpuImg);
+        setNoImg(cpuCoolerImg, cpuCoolerImageView);
         //--------------------------------------
         //endregion
 
@@ -277,11 +347,9 @@ public class PCBuilderEzController implements Initializable{
                         }
                         try {
                             moboImg = new Image(selectedMobo.getSmallImagePath() + selectedMobo.getSerialNumber() + ".png", true);
-                            moboImageView.setFitHeight(100);
-                            moboImageView.setFitWidth(100);
-                            moboImageView.setImage(moboImg);
+                            setImg(moboImg, moboImageView);
                         }
-                        catch (Exception ex){System.out.println("DUPAAA");}
+                        catch (Exception ex){System.out.println("Cant load mobo img!");}
 
                         String moboDescription = selectedMobo.getBrand() + " " + selectedMobo.getChipset() + " " + selectedMobo.getName()
                                 + "\n" + "Socket: " + selectedMobo.getSocket() + ", form factor: " + selectedMobo.getFormFactor()
@@ -292,32 +360,188 @@ public class PCBuilderEzController implements Initializable{
                     }
                 });
 
-        moboImg = new Image("images/no_img.png");
-        moboImageView.setFitHeight(100);
-        moboImageView.setFitWidth(100);
-        moboImageView.setImage(moboImg);
+        setNoImg(moboImg, moboImageView);
         //--------------------------------------
         //endregion
 
+        //region GPU init
+        // --------------------------------------
+
+        for (int i=0; i<gpuList.size(); i++){
+            String gpuName = gpuList.get(i).getChipManufacturer() + " " + gpuList.get(i).getseries() + " " + gpuList.get(i).getName();
+            gpuNames.add(gpuName);
+        }
+        choiceGpu.setItems(gpuNames);
+        choiceGpu.getSelectionModel().selectedItemProperty()
+                .addListener(new ChangeListener<String>() {
+                    public void changed(ObservableValue<? extends String> observable,
+                                        String oldValue, String newValue) {
+                        System.out.println(newValue);
+                        for (int i=0; i< gpuList.size(); i++)
+                        {
+                            String selectedGpuName = gpuList.get(i).getChipManufacturer() + " " + gpuList.get(i).getseries() + " " + gpuList.get(i).getName();
+                            if (newValue.matches(selectedGpuName))
+                            {
+                                selectedGpu = gpuList.get(i);
+                            }
+                        }
+                        try {
+                            gpuImg = new Image(selectedGpu.getSmallImagePath() + selectedGpu.getManufacturerCode() + ".png", true);
+                            setImg(gpuImg, gpuImageView);
+                        }
+                        catch (Exception ex){System.out.println("Can't load GPU img!");}
+
+                        String speed = "";
+                        if (selectedGpu.getSpeed() == selectedGpu.getBoostSpeed())
+                            speed = selectedGpu.getSpeed() + "MHz";
+                        else
+                            speed = selectedGpu.getSpeed() + "-" + selectedGpu.getBoostSpeed() + "MHz";
+                        String videoConnectors = memoryConnectors(selectedGpu);
+
+                        String gpuDescription = selectedGpu.getManufacturer() + " " + selectedGpu.getseries() + " " +  selectedGpu.getName() + " " + selectedGpu.getmemorySize() + "GB " + selectedGpu.getMemoryType()
+                                + "\nVideo connectors: " + videoConnectors
+                                + "\nCore speed: " + speed + ", Memory speed: " + mainApp.noZeros(selectedGpu.getMemorySpeed()) + " GHz"
+                                + "\nPrice: " + selectedGpu.getPrice() + " PLN";
+                        gpuDesc.setText(gpuDescription);
+                    }
+                });
+
+        setNoImg(gpuImg, gpuImageView);
+        //--------------------------------------
+        //endregion
+
+        //region RAM init
+        // --------------------------------------
+
+        for (int i=0; i<ramList.size(); i++){
+            String ramName = ramList.get(i).getBrand() + " " + ramList.get(i).getName() + " " + ramList.get(i).getStandard() + " " + ramList.get(i).getMemorySize() + "GB, " + ramList.get(i).getMemoryClock() + "MHz";
+            ramNames.add(ramName);
+        }
+        choiceRam.setItems(ramNames);
+        choiceRam.getSelectionModel().selectedItemProperty()
+                .addListener(new ChangeListener<String>() {
+                    public void changed(ObservableValue<? extends String> observable,
+                                        String oldValue, String newValue) {
+                        System.out.println(newValue);
+                        for (int i=0; i< ramList.size(); i++)
+                        {
+                            String selectedRamName = ramList.get(i).getBrand() + " " + ramList.get(i).getName() + " " + ramList.get(i).getStandard() + " " + ramList.get(i).getMemorySize() + "GB, " + ramList.get(i).getMemoryClock() + "MHz";
+                            if (newValue.matches(selectedRamName))
+                            {
+                                selectedRam = ramList.get(i);
+                            }
+                        }
+                        try {
+                            ramImg = new Image(selectedRam.getSmallImagePath() + selectedRam.getSerialNumber() + ".png", true);
+                            setImg(ramImg, ramImageView);
+                        }
+                        catch (Exception ex){System.out.println("Can't load GPU img!");}
+
+
+                        String ramDescription = selectedRam.getBrand() + " " + selectedRam.getName() + " " +  selectedRam.getStandard() + " " + selectedRam.getMemorySize() + "GB " + selectedRam.getMemoryClock() + "MHz"
+                                + "\nNumber of modules: " + selectedRam.getNumberOfModules() + ", module size: " + selectedRam.getSingleModuleSize() + "GB"
+                                + "\nCAS Latency: " + selectedRam.getCasLatency()
+                                + "\nPrice: " + selectedRam.getPrice() + " PLN";
+                        ramDesc.setText(ramDescription);
+                    }
+                });
+
+        setNoImg(ramImg, ramImageView);
+        //--------------------------------------
+        //endregion
     }
+
+    private void setNoImg(Image image, ImageView imageView)
+    {
+        image = new Image ("images/no_img.png");
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(100);
+        imageView.setImage(image);
+    }
+
+    private void setImg(Image image, ImageView imageView)
+    {
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(100);
+        imageView.setImage(image);
+    }
+    @FXML
+    private void startButtonAcction(){
+        System.out.println("start button clicked");
+        addCpu.getStyleClass().add("pcbuilder-enabled");
+        cpuDesc.getStyleClass().add("pcbuilder-enabled");
+        cpuHeaderLabel.getStyleClass().add("pcbuilder-enabled");
+        cpuImageView.getStyleClass().add("pcbuilder-enabled");
+        choiceCpu.getStyleClass().add("pcbuilder-enabled");
+        startButton.getStyleClass().add("pcbuilder-disabled");
+    }
+
+    private void backButtonCpu(String buttonName, Button currentAdd, Button currentBack, Label currentDesc, Label currentHeader,
+                                     ImageView currentImageView, Image currentImage, ChoiceBox currentChoice, Button previousAdd,
+                                     Label previousHeader, ChoiceBox previousChoice, ObservableList currentNames){
+        System.out.println(buttonName + " clicked");
+        currentAdd.getStyleClass().remove("pcbuilder-enabled");
+        currentBack.getStyleClass().remove("pcbuilder-enabled");
+        currentDesc.getStyleClass().remove("pcbuilder-enabled");
+        currentHeader.getStyleClass().remove("pcbuilder-enabled");
+        currentImageView.getStyleClass().remove("pcbuilder-enabled");
+        currentChoice.getStyleClass().remove("pcbuilder-enabled");
+
+        previousAdd.getStyleClass().add("pcbuilder-enabled");
+        previousHeader.setText("Select CPU Cooler:");
+        previousChoice.getStyleClass().add("pcbuilder-enabled");
+
+
+        currentDesc.setText(null);
+        currentImage = new Image("images/no_img.png");
+        currentImageView.setImage(currentImage);
+    }
+
+    private void backButtonUniversal(String buttonName, Button currentAdd, Button currentBack, Label currentDesc, Label currentHeader,
+                                     ImageView currentImageView, Image currentImage, ChoiceBox currentChoice, Button previousAdd, Button previousBack,
+                                     Label previousHeader, ChoiceBox previousChoice, ObservableList currentNames){
+
+        backButtonCpu(buttonName, currentAdd, currentBack, currentDesc, currentHeader, currentImageView, currentImage, currentChoice,
+                previousAdd, previousHeader, previousChoice, currentNames);
+
+        previousBack.getStyleClass().add("pcbuilder-enabled");
+        currentNames.clear();
+
+    }
+
+    private void addButtonCpu(String buttonName, Button nextAdd, Button nextBack, Label nextDesc, Label nextHeader, ImageView nextImageView,
+                                    ChoiceBox nextChoice, Button currentAdd, ChoiceBox currentChoice, Label currentHeader, String currentLabel,
+                              ObservableList nextNames,Image nextImage){
+        System.out.println(buttonName + " clicked");
+        nextAdd.getStyleClass().add("pcbuilder-enabled");
+        nextBack.getStyleClass().add("pcbuilder-enabled");
+        nextDesc.getStyleClass().add("pcbuilder-enabled");
+        nextHeader.getStyleClass().add("pcbuilder-enabled");
+        nextImageView.getStyleClass().add("pcbuilder-enabled");
+        nextChoice.getStyleClass().add("pcbuilder-enabled");
+
+        currentAdd.getStyleClass().remove("pcbuilder-enabled");
+        currentChoice.getStyleClass().remove("pcbuilder-enabled");
+        currentHeader.setText(currentLabel);
+
+        nextDesc.setText(null);
+        nextImage = new Image("images/no_img.png");
+        nextImageView.setImage(nextImage);
+
+    }
+
+    private void addButtonUniversal(String buttonName, Button nextAdd, Button nextBack, Label nextDesc, Label nextHeader, ImageView nextImageView, Image nextImage,
+                                    ChoiceBox nextChoice, ObservableList nextNames, Button currentAdd, Button currentBack, ChoiceBox currentChoice, Label currentHeader, String currentLabel ){
+        addButtonCpu(buttonName, nextAdd, nextBack, nextDesc, nextHeader, nextImageView, nextChoice, currentAdd, currentChoice, currentHeader, currentLabel, nextNames, nextImage);
+        currentBack.getStyleClass().remove("pcbuilder-enabled");
+    }
+
     @FXML
     private void addCpuButtonAction(){
         if (selectedCpu != null) {
-        System.out.println("addCpuButton clicked");
-        choiceCpuCooler.getStyleClass().add("pcbuilder-enabled");
-        cpuCoolerImageView.getStyleClass().add("pcbuilder-enabled");
-        cpuCoolerDesc.getStyleClass().add("pcbuilder-enabled");
-        addCpuCooler.getStyleClass().add("pcbuilder-enabled");
-        cpuCoolerHeaderLabel.getStyleClass().add("pcbuilder-enabled");
-        backCpuCooler.getStyleClass().add("pcbuilder-enabled");
-
-        cpuHeaderLabel.setText("Your CPU:");
-        addCpu.getStyleClass().add("pcbuilder-disabled");
-        choiceCpu.getStyleClass().add("pcbuilder-disabled");
-        cpuCoolerNames.clear();
-        cpuCoolerDesc.setText(null);
-        cpuCoolerImg = new Image("images/no_img.png");
-        cpuCoolerImageView.setImage(cpuCoolerImg);
+            addButtonCpu("addCpuButton", addCpuCooler, backCpuCooler, cpuCoolerDesc, cpuCoolerHeaderLabel, cpuCoolerImageView, choiceCpuCooler, addCpu, choiceCpu,
+                     cpuHeaderLabel, "Your CPU:", cpuCoolerNames, cpuCoolerImg);
+            cpuCoolerNames.clear();
             if (selectedCpu.getBoxCooler()==true) {
                 cpuCoolerNames.add("BOX Cooler");
             }
@@ -334,22 +558,10 @@ public class PCBuilderEzController implements Initializable{
     }
     @FXML
     private void backCpuCoolerButtonAction(){
-        System.out.println("backCpuCoolerButton clicked");
-        choiceCpuCooler.getStyleClass().remove("pcbuilder-enabled");
-        cpuCoolerImageView.getStyleClass().remove("pcbuilder-enabled");
-        cpuCoolerDesc.getStyleClass().remove("pcbuilder-enabled");
-        addCpuCooler.getStyleClass().remove("pcbuilder-enabled");
-        cpuCoolerHeaderLabel.getStyleClass().remove("pcbuilder-enabled");
-        backCpuCooler.getStyleClass().remove("pcbuilder-enabled");
-
-        cpuHeaderLabel.setText("SelectCPU:");
-        addCpu.getStyleClass().remove("pcbuilder-disabled");
-        choiceCpu.getStyleClass().remove("pcbuilder-disabled");
-        cpuCoolerNames.clear();
+        backButtonCpu("backCpuCoolerButtonAction", addCpuCooler, backCpuCooler, cpuCoolerDesc, cpuCoolerHeaderLabel,
+                cpuCoolerImageView, cpuCoolerImg, choiceCpuCooler, addCpu, cpuHeaderLabel, choiceCpu, cpuNames);
         selectedCpuCooler = null;
-        cpuCoolerDesc.setText(null);
-        cpuCoolerImg = new Image("images/no_img.png");
-        cpuCoolerImageView.setImage(cpuCoolerImg);
+
 
     }
     @FXML
@@ -360,22 +572,8 @@ public class PCBuilderEzController implements Initializable{
             cpuCoolerImageView.setImage(boxCoolerImg);
         }
         if (selectedCpu.getBoxCooler() == true && selectedCpuCooler == null) {
-            System.out.println("addCpuCoolerButton clicked");
-            addMobo.getStyleClass().add("pcbuilder-enabled");
-            moboDesc.getStyleClass().add("pcbuilder-enabled");
-            moboHeaderLabel.getStyleClass().add("pcbuilder-enabled");
-            moboImageView.getStyleClass().add("pcbuilder-enabled");
-            backMobo.getStyleClass().add("pcbuilder-enabled");
-            choiceMobo.getStyleClass().add("pcbuilder-enabled");
-
-            choiceCpuCooler.getStyleClass().remove("pcbuilder-enabled");
-            addCpuCooler.getStyleClass().remove("pcbuilder-enabled");
-            cpuCoolerHeaderLabel.setText("Your CPU Cooler:");
-            backCpuCooler.getStyleClass().remove("pcbuilder-enabled");
-
-            cpuCoolerDesc.setText("BOX Cooler");
-            Image boxCoolerImg = new Image(selectedCpu.getSmallImagePath());
-            cpuCoolerImageView.setImage(boxCoolerImg);
+            addButtonUniversal("addCpuCoolerButtonAction", addMobo, backMobo, moboDesc, moboHeaderLabel, moboImageView, moboImg,
+                    choiceMobo, moboNames, addCpuCooler, backCpuCooler, choiceCpuCooler, cpuCoolerHeaderLabel, "Your CPU Cooler:");
             moboNames.clear();
             for (int i=0; i<moboList.size(); i++){
                 String moboName = moboList.get(i).getBrand() + " " + moboList.get(i).getChipset() + " " + moboList.get(i).getName();
@@ -387,18 +585,8 @@ public class PCBuilderEzController implements Initializable{
         }
         if (selectedCpu.getBoxCooler() == false && selectedCpuCooler != null || selectedCpu.getBoxCooler() == true && selectedCpuCooler != null)
         {
-            System.out.println("addCpuCoolerButton clicked");
-            addMobo.getStyleClass().add("pcbuilder-enabled");
-            moboDesc.getStyleClass().add("pcbuilder-enabled");
-            moboHeaderLabel.getStyleClass().add("pcbuilder-enabled");
-            moboImageView.getStyleClass().add("pcbuilder-enabled");
-            backMobo.getStyleClass().add("pcbuilder-enabled");
-            choiceMobo.getStyleClass().add("pcbuilder-enabled");
-
-            choiceCpuCooler.getStyleClass().remove("pcbuilder-enabled");
-            addCpuCooler.getStyleClass().remove("pcbuilder-enabled");
-            cpuCoolerHeaderLabel.setText("Your CPU Cooler:");
-            backCpuCooler.getStyleClass().remove("pcbuilder-enabled");
+            addButtonUniversal("addCpuCoolerButtonAction", addMobo, backMobo, moboDesc, moboHeaderLabel, moboImageView, moboImg,
+                    choiceMobo, moboNames, addCpuCooler, backCpuCooler, choiceCpuCooler, cpuCoolerHeaderLabel, "Your CPU Cooler:");
             moboNames.clear();
             for (int i=0; i<moboList.size(); i++){
                 String moboName = moboList.get(i).getBrand() + " " + moboList.get(i).getChipset() + " " + moboList.get(i).getName();
@@ -412,17 +600,34 @@ public class PCBuilderEzController implements Initializable{
 
     @FXML
     private void backMoboButtonAction() {
-        System.out.println("backMoboButton clicked");
-        addMobo.getStyleClass().remove("pcbuilder-enabled");
-        moboDesc.getStyleClass().remove("pcbuilder-enabled");
-        moboHeaderLabel.getStyleClass().remove("pcbuilder-enabled");
-        moboImageView.getStyleClass().remove("pcbuilder-enabled");
-        backMobo.getStyleClass().remove("pcbuilder-enabled");
-        choiceMobo.getStyleClass().remove("pcbuilder-enabled");
+        backButtonUniversal("backMoboButtonAction", addMobo, backMobo, moboDesc, moboHeaderLabel, moboImageView,
+                moboImg, choiceMobo, addCpuCooler, backCpuCooler, cpuCoolerHeaderLabel, choiceCpuCooler, moboNames);
+        selectedMobo = null;
+    }
 
-        cpuCoolerHeaderLabel.setText("Select CPU Cooler:");
-        addCpuCooler.getStyleClass().add("pcbuilder-enabled");
-        choiceCpuCooler.getStyleClass().add("pcbuilder-enabled");
-        backCpuCooler.getStyleClass().add("pcbuilder-enabled");
+    @FXML
+    private void addMoboButtonAction(){
+        addButtonUniversal("addMoboButtonAction", addGpu, backGpu, gpuDesc, gpuHeaderLabel, gpuImageView, gpuImg, choiceGpu, gpuNames,
+                addMobo, backMobo, choiceMobo, moboHeaderLabel, "Your Motherboard: ");
+    }
+
+    @FXML
+    private void backGpuButtonAction() {
+        backButtonUniversal("backGpuButtonAction", addGpu, backGpu, gpuDesc, gpuHeaderLabel, gpuImageView, gpuImg,
+                choiceGpu, addMobo, backMobo, moboHeaderLabel, choiceMobo, moboNames);
+        selectedGpu = null;
+    }
+
+    @FXML
+    private void addGpuButtonAction(){
+        addButtonUniversal("addGpuButtonName", addRam, backRam, ramDesc, ramHeaderLabel, ramImageView, ramImg, choiceRam, ramNames,
+                addGpu, backGpu, choiceGpu, gpuHeaderLabel, "Your Graphic card:");
+    }
+
+    @FXML
+    private void backRamButtonAction() {
+        backButtonUniversal("backRamButtonAction", addRam, backRam, ramDesc, ramHeaderLabel, ramImageView, ramImg,
+                choiceRam, addGpu, backGpu, gpuHeaderLabel, choiceGpu, gpuNames);
+        selectedRam = null;
     }
 }
