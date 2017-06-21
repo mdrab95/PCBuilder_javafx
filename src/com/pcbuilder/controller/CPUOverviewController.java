@@ -78,10 +78,14 @@ public class CPUOverviewController implements Initializable {
                                 speed = cpuItem.getSpeed() + "GHz";
                             else
                                 speed = cpuItem.getSpeed() + "-" + cpuItem.getBoostSpeed() + "GHz";
+                            String integratedGraphic = "no";
+                            if (cpuItem.getHasIntegratedGraphic() == true)
+                                integratedGraphic = "yes";
 
                             setText(cpuItem.getBrand() + " " + cpuItem.getFamily() + spaceInName +  cpuItem.getName() + " (" + howItIsPacked + ")"
                                     + "\n" + cpuItem.getNumberOfCores() + "C/" + cpuItem.getNumberOfThreads() + "T, " + speed + ", " + mainApp.noZeros(cpuItem.getCacheL3()) + " MB" + ", "
                                     + cpuItem.getTdp() + "W TDP"
+                                    + "\nIntegrated graphic card: " + integratedGraphic
                                     + "\nPrice: " + cpuItem.getPrice() + " PLN");
                         }
                     }

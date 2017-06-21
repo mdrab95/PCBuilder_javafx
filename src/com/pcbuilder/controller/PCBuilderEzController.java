@@ -384,10 +384,14 @@ public class PCBuilderEzController implements Initializable {
                             speed = selectedCpu.getSpeed() + "GHz";
                         else
                             speed = selectedCpu.getSpeed() + "-" + selectedCpu.getBoostSpeed() + "GHz";
+                        String integratedGraphic = "no";
+                        if (selectedCpu.getHasIntegratedGraphic() == true)
+                            integratedGraphic = "yes";
 
                         String cpuDescription = (selectedCpu.getBrand() + " " + selectedCpu.getFamily() + spaceInName + selectedCpu.getName() + " (" + howItIsPacked + ")"
                                 + "\n" + selectedCpu.getNumberOfCores() + "C/" + selectedCpu.getNumberOfThreads() + "T, " + speed + ", " + mainApp.noZeros(selectedCpu.getCacheL3()) + " MB" + ", "
                                 + selectedCpu.getTdp() + "W TDP"
+                                + "\nIntegrated graphic card: " + integratedGraphic
                                 + "\nPrice: " + selectedCpu.getPrice() + " PLN");
                         cpuDesc.setText(cpuDescription);
                     }
@@ -414,6 +418,7 @@ public class PCBuilderEzController implements Initializable {
                                     cpuCoolerImg = new Image(selectedCpu.getSmallImagePath());
                                     setImg(cpuCoolerImg, cpuCoolerImageView);
                                     cpuCoolerDesc.setText("BOX Cooler");
+                                    selectedCpuCooler = null;
                                 }
                             } else {
                                 for (int i = 0; i < cpuCoolerList.size(); i++) {
@@ -498,31 +503,45 @@ public class PCBuilderEzController implements Initializable {
                                         String oldValue, String newValue) {
                         if (gpuNames.size() > 0) {
                             System.out.println(newValue);
-                            for (int i = 0; i < gpuList.size(); i++) {
-                                String selectedGpuName = gpuList.get(i).getChipManufacturer() + " " + gpuList.get(i).getseries() + " " + gpuList.get(i).getName();
-                                if (newValue.matches(selectedGpuName)) {
-                                    selectedGpu = gpuList.get(i);
+                            if (newValue.equals("CPU Integrated graphic card")) {
+                                if (selectedCpu.getHasIntegratedGraphic() == false) {
+                                    selectedGpu = null;
+                                    gpuImg = new Image("images/error.png");
+                                    setImg(gpuImg, gpuImageView);
+                                    gpuDesc.setText("There is no integrated graphic card!");
+                                } else {
+                                    gpuImg = new Image(selectedCpu.getSmallImagePath());
+                                    setImg(gpuImg, gpuImageView);
+                                    gpuDesc.setText("Integrated graphic card");
+                                    selectedGpu = null;
                                 }
-                            }
-                            try {
-                                gpuImg = new Image(selectedGpu.getSmallImagePath() + selectedGpu.getManufacturerCode() + ".png", true);
-                                setImg(gpuImg, gpuImageView);
-                            } catch (Exception ex) {
-                                System.out.println("Can't load GPU img!");
-                            }
+                            } else {
+                                for (int i = 0; i < gpuList.size(); i++) {
+                                    String selectedGpuName = gpuList.get(i).getChipManufacturer() + " " + gpuList.get(i).getseries() + " " + gpuList.get(i).getName();
+                                    if (newValue.matches(selectedGpuName)) {
+                                        selectedGpu = gpuList.get(i);
+                                    }
+                                }
+                                try {
+                                    gpuImg = new Image(selectedGpu.getSmallImagePath() + selectedGpu.getManufacturerCode() + ".png", true);
+                                    setImg(gpuImg, gpuImageView);
+                                } catch (Exception ex) {
+                                    System.out.println("Can't load GPU img!");
+                                }
 
-                            String speed = "";
-                            if (selectedGpu.getSpeed() == selectedGpu.getBoostSpeed())
-                                speed = selectedGpu.getSpeed() + "MHz";
-                            else
-                                speed = selectedGpu.getSpeed() + "-" + selectedGpu.getBoostSpeed() + "MHz";
-                            String videoConnectors = memoryConnectors(selectedGpu);
+                                String speed = "";
+                                if (selectedGpu.getSpeed() == selectedGpu.getBoostSpeed())
+                                    speed = selectedGpu.getSpeed() + "MHz";
+                                else
+                                    speed = selectedGpu.getSpeed() + "-" + selectedGpu.getBoostSpeed() + "MHz";
+                                String videoConnectors = memoryConnectors(selectedGpu);
 
-                            String gpuDescription = selectedGpu.getManufacturer() + " " + selectedGpu.getseries() + " " + selectedGpu.getName() + " " + selectedGpu.getmemorySize() + "GB " + selectedGpu.getMemoryType()
-                                    + "\nVideo connectors: " + videoConnectors
-                                    + "\nCore speed: " + speed + ", Memory speed: " + mainApp.noZeros(selectedGpu.getMemorySpeed()) + " GHz"
-                                    + "\nPrice: " + selectedGpu.getPrice() + " PLN";
-                            gpuDesc.setText(gpuDescription);
+                                String gpuDescription = selectedGpu.getManufacturer() + " " + selectedGpu.getseries() + " " + selectedGpu.getName() + " " + selectedGpu.getmemorySize() + "GB " + selectedGpu.getMemoryType()
+                                        + "\nVideo connectors: " + videoConnectors
+                                        + "\nCore speed: " + speed + ", Memory speed: " + mainApp.noZeros(selectedGpu.getMemorySpeed()) + " GHz"
+                                        + "\nPrice: " + selectedGpu.getPrice() + " PLN";
+                                gpuDesc.setText(gpuDescription);
+                            }
                         }
                     }
                 });
@@ -577,26 +596,32 @@ public class PCBuilderEzController implements Initializable {
                                         String oldValue, String newValue) {
                         if (ssdNames.size() > 0) {
                             System.out.println(newValue);
-                            for (int i = 0; i < ssdList.size(); i++) {
-                                String selectedSsdName = ssdList.get(i).getBrand() + " " + ssdList.get(i).getName() + " " + ssdList.get(i).getCapacity() + "GB";
-                                if (newValue.matches(selectedSsdName)) {
-                                    selectedSsd = ssdList.get(i);
+                            if (newValue.equals("Select nothing")) {
+                                setNoImg(ssdImg, ssdImageView);
+                                ssdDesc.setText("No SSD selected.");
+                                selectedSsd = null;
+                            } else {
+                                    for (int i = 0; i < ssdList.size(); i++) {
+                                        String selectedSsdName = ssdList.get(i).getBrand() + " " + ssdList.get(i).getName() + " " + ssdList.get(i).getCapacity() + "GB";
+                                        if (newValue.matches(selectedSsdName)) {
+                                            selectedSsd = ssdList.get(i);
+                                        }
+                                    }
+                                    try {
+                                        ssdImg = new Image(selectedSsd.getSmallImagePath() + selectedSsd.getSerialNumber() + ".png", true);
+                                        setImg(ssdImg, ssdImageView);
+                                    } catch (Exception ex) {
+                                        System.out.println("Can't load SSD img!");
+                                    }
+
+
+                                    String ssdDescription = selectedSsd.getBrand() + " " + selectedSsd.getName() + " " + selectedSsd.getCapacity() + " GB"
+                                            + "\n" + "Form factor: " + selectedSsd.getFormFactor() + ", interface type: " + selectedSsd.getInterfaceType() + ", memory type: " + selectedSsd.getMemoryType()
+                                            + "\nRead: " + selectedSsd.getReadSpeed() + "MB/s, write: " + selectedSsd.getWriteSpeed() + "MB/s " + ", TBW: " + selectedSsd.getTbw() + "TB"
+                                            + "\nPrice: " + selectedSsd.getPrice() + " PLN";
+                                    ssdDesc.setText(ssdDescription);
                                 }
                             }
-                            try {
-                                ssdImg = new Image(selectedSsd.getSmallImagePath() + selectedSsd.getSerialNumber() + ".png", true);
-                                setImg(ssdImg, ssdImageView);
-                            } catch (Exception ex) {
-                                System.out.println("Can't load SSD img!");
-                            }
-
-
-                            String ssdDescription = selectedSsd.getBrand() + " " + selectedSsd.getName() + " " + selectedSsd.getCapacity() + " GB"
-                                    + "\n" + "Form factor: " + selectedSsd.getFormFactor() + ", interface type: " + selectedSsd.getInterfaceType() + ", memory type: " + selectedSsd.getMemoryType()
-                                    + "\nRead: " + selectedSsd.getReadSpeed() + "MB/s, write: " + selectedSsd.getWriteSpeed() + "MB/s " + ", TBW: " + selectedSsd.getTbw() + "TB"
-                                    + "\nPrice: " + selectedSsd.getPrice() + " PLN";
-                            ssdDesc.setText(ssdDescription);
-                        }
                     }
                 });
 
@@ -613,35 +638,41 @@ public class PCBuilderEzController implements Initializable {
                                         String oldValue, String newValue) {
                         if (hddNames.size() > 0) {
                             System.out.println(newValue);
-                            for (int i = 0; i < hddList.size(); i++) {
-                                String capacity = "";
-                                if (hddList.get(i).getCapacity() >= 1000)
-                                    capacity = String.valueOf(hddList.get(i).getCapacity() / 1000) + "TB";
-                                else
-                                    capacity = hddList.get(i).getCapacity() + "GB";
-                                String selectedHddName = hddList.get(i).getBrand() + " " + hddList.get(i).getName() + " " + capacity;
-                                if (newValue.matches(selectedHddName)) {
-                                    selectedHdd = hddList.get(i);
+                            if (newValue.equals("Select nothing")) {
+                                setNoImg(hddImg, hddImageView);
+                                hddDesc.setText("No HDD selected.");
+                                selectedHdd = null;
+                            } else {
+                                for (int i = 0; i < hddList.size(); i++) {
+                                    String capacity = "";
+                                    if (hddList.get(i).getCapacity() >= 1000)
+                                        capacity = String.valueOf(hddList.get(i).getCapacity() / 1000) + "TB";
+                                    else
+                                        capacity = hddList.get(i).getCapacity() + "GB";
+                                    String selectedHddName = hddList.get(i).getBrand() + " " + hddList.get(i).getName() + " " + capacity;
+                                    if (newValue.matches(selectedHddName)) {
+                                        selectedHdd = hddList.get(i);
+                                    }
                                 }
-                            }
-                            try {
-                                hddImg = new Image(selectedHdd.getSmallImagePath() + selectedHdd.getSerialNumber() + ".png", true);
-                                setImg(hddImg, hddImageView);
-                            } catch (Exception ex) {
-                                System.out.println("Can't load HDD img!");
-                            }
+                                try {
+                                    hddImg = new Image(selectedHdd.getSmallImagePath() + selectedHdd.getSerialNumber() + ".png", true);
+                                    setImg(hddImg, hddImageView);
+                                } catch (Exception ex) {
+                                    System.out.println("Can't load HDD img!");
+                                }
 
-                            String capacity = "";
-                            if (selectedHdd.getCapacity() >= 1000)
-                                capacity = String.valueOf(selectedHdd.getCapacity() / 1000) + "TB";
-                            else
-                                capacity = selectedHdd.getCapacity() + "GB";
+                                String capacity = "";
+                                if (selectedHdd.getCapacity() >= 1000)
+                                    capacity = String.valueOf(selectedHdd.getCapacity() / 1000) + "TB";
+                                else
+                                    capacity = selectedHdd.getCapacity() + "GB";
 
-                            String hddDescription = selectedHdd.getBrand() + " " + selectedHdd.getName() + " " + capacity
-                                    + "\nInterface type: " + selectedHdd.getHddInterfaceType() + ", form factor: " + selectedHdd.getFormFactor()
-                                    + "\nRotational speed: " + selectedHdd.getRotationalSpeed() + "rpm, cache size: " + selectedHdd.getCacheSize() + "MB"
-                                    + "\nPrice: " + selectedHdd.getPrice() + "PLN";
-                            hddDesc.setText(hddDescription);
+                                String hddDescription = selectedHdd.getBrand() + " " + selectedHdd.getName() + " " + capacity
+                                        + "\nInterface type: " + selectedHdd.getHddInterfaceType() + ", form factor: " + selectedHdd.getFormFactor()
+                                        + "\nRotational speed: " + selectedHdd.getRotationalSpeed() + "rpm, cache size: " + selectedHdd.getCacheSize() + "MB"
+                                        + "\nPrice: " + selectedHdd.getPrice() + "PLN";
+                                hddDesc.setText(hddDescription);
+                            }
                         }
                     }
                 });
@@ -1053,6 +1084,9 @@ public class PCBuilderEzController implements Initializable {
             totalPrice += selectedMobo.getPrice();
             totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
             gpuNames.clear();
+            if (selectedCpu.getHasIntegratedGraphic() == true) {
+                gpuNames.add("CPU Integrated graphic card");
+            }
             for (int i = 0; i < gpuList.size(); i++) {
                 String gpuName = gpuList.get(i).getChipManufacturer() + " " + gpuList.get(i).getseries() + " " + gpuList.get(i).getName();
                 gpuNames.add(gpuName);
@@ -1085,19 +1119,38 @@ public class PCBuilderEzController implements Initializable {
      */
     @FXML
     private void addGpuButtonAction() {
+        boolean canGo = false;
+        if (selectedCpu.getHasIntegratedGraphic() == true && selectedGpu == null) {
+            gpuImg = new Image(selectedCpu.getSmallImagePath());
+            setImg(gpuImg, gpuImageView);
+            gpuDesc.setText("Integrated graphic card");
+            canGo = true;
+        }
         if (selectedGpu != null) {
-            addButtonUniversal("addGpuButtonName", addRam, backRam, ramDesc, ramHeaderLabel, ramImageView, ramImg, choiceRam, ramNames,
-                    addGpu, backGpu, choiceGpu, gpuHeaderLabel, "Your Graphic card:");
             maxLoad += selectedGpu.getWattage();
             maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
             recommendedPsu = 1.4 * maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice += selectedGpu.getPrice();
             totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
+            canGo = true;
+        }
+        if (canGo == true) {
+            addButtonUniversal("addGpuButtonName", addRam, backRam, ramDesc, ramHeaderLabel, ramImageView, ramImg, choiceRam, ramNames,
+                    addGpu, backGpu, choiceGpu, gpuHeaderLabel, "Your Graphic card:");
             ramNames.clear();
             for (int i = 0; i < ramList.size(); i++) {
-                String ramName = ramList.get(i).getBrand() + " " + ramList.get(i).getName() + " " + ramList.get(i).getMemorySize() + "GB (" + ramList.get(i).getNumberOfModules() + "x" + ramList.get(i).getSingleModuleSize() + "GB) " + ramList.get(i).getStandard() + " " + ramList.get(i).getMemoryClock() + "MHz (" + ramList.get(i).getSerialNumber() + ")";
-                ramNames.add(ramName);
+                if (selectedMobo.getRamStandard().equals(ramList.get(i).getStandard())) {
+                    if (selectedMobo.getChipset().equals("Z270") || selectedMobo.getChipset().equals("Z170")) {
+                        String ramName = ramList.get(i).getBrand() + " " + ramList.get(i).getName() + " " + ramList.get(i).getMemorySize() + "GB (" + ramList.get(i).getNumberOfModules() + "x" + ramList.get(i).getSingleModuleSize() + "GB) " + ramList.get(i).getStandard() + " " + ramList.get(i).getMemoryClock() + "MHz (" + ramList.get(i).getSerialNumber() + ")";
+                        ramNames.add(ramName);
+                    } else {
+                        if (ramList.get(i).getMemoryClock() <= 2400) {
+                            String ramName = ramList.get(i).getBrand() + " " + ramList.get(i).getName() + " " + ramList.get(i).getMemorySize() + "GB (" + ramList.get(i).getNumberOfModules() + "x" + ramList.get(i).getSingleModuleSize() + "GB) " + ramList.get(i).getStandard() + " " + ramList.get(i).getMemoryClock() + "MHz (" + ramList.get(i).getSerialNumber() + ")";
+                            ramNames.add(ramName);
+                        }
+                    }
+                }
             }
             choiceRam.setItems(ramNames);
         }
@@ -1137,9 +1190,18 @@ public class PCBuilderEzController implements Initializable {
             totalPrice += selectedRam.getPrice();
             totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
             ssdNames.clear();
+            ssdNames.add("Select nothing");
             for (int i = 0; i < ssdList.size(); i++) {
-                String ssdName = ssdList.get(i).getBrand() + " " + ssdList.get(i).getName() + " " + ssdList.get(i).getCapacity() + "GB";
-                ssdNames.add(ssdName);
+               if (selectedMobo.getConnectors().contains("M.2 slot")) {
+                   String ssdName = ssdList.get(i).getBrand() + " " + ssdList.get(i).getName() + " " + ssdList.get(i).getCapacity() + "GB";
+                   ssdNames.add(ssdName);
+               }
+               else {
+                   if (ssdList.get(i).getFormFactor().contains("M.2") == false){
+                       String ssdName = ssdList.get(i).getBrand() + " " + ssdList.get(i).getName() + " " + ssdList.get(i).getCapacity() + "GB";
+                       ssdNames.add(ssdName);
+                   }
+               }
             }
             choiceSsd.setItems(ssdNames);
         }
@@ -1169,16 +1231,28 @@ public class PCBuilderEzController implements Initializable {
      */
     @FXML
     private void addSsdButtonAction() {
+        Boolean canGo = false;
         if (selectedSsd != null) {
-            addButtonUniversal("addSsdButtonName", addHdd, backHdd, hddDesc, hddHeaderLabel, hddImageView, hddImg, choiceHdd, hddNames,
-                    addSsd, backSsd, choiceSsd, ssdHeaderLabel, "Your SSD:");
             maxLoad += selectedSsd.getWattage();
             maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
             recommendedPsu = 1.4 * maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice += selectedSsd.getPrice();
             totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
+            canGo = true;
             hddNames.clear();
+            hddNames.add("Select nothing");
+        }
+        else {
+            setNoImg(ssdImg, ssdImageView);
+            ssdDesc.setText("No SSD selected");
+            selectedSsd = null;
+            canGo = true;
+            hddNames.clear();
+        }
+        if (canGo == true) {
+            addButtonUniversal("addSsdButtonName", addHdd, backHdd, hddDesc, hddHeaderLabel, hddImageView, hddImg, choiceHdd, hddNames,
+                    addSsd, backSsd, choiceSsd, ssdHeaderLabel, "Your SSD:");
             for (int i = 0; i < hddList.size(); i++) {
                 String capacity = "";
                 if (hddList.get(i).getCapacity() >= 1000)
@@ -1216,16 +1290,27 @@ public class PCBuilderEzController implements Initializable {
      */
     @FXML
     private void addHddButtonAction() {
+        boolean canGo = false;
         if (selectedHdd != null) {
-            addButtonUniversal("addHddButtonName", addPsu, backPsu, psuDesc, psuHeaderLabel, psuImageView, psuImg, choicePsu, psuNames,
-                    addHdd, backHdd, choiceHdd, hddHeaderLabel, "Your HDD:");
             maxLoad += selectedHdd.getWattage();
             maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
             recommendedPsu = 1.4 * maxLoad;
-            double minimalPsu = 1.2*maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice += selectedHdd.getPrice();
             totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
+            canGo = true;
+        }
+        else {
+            setNoImg(hddImg, hddImageView);
+            hddDesc.setText("No HDD selected");
+            selectedHdd = null;
+            canGo = true;
+            hddNames.clear();
+        }
+        if (canGo == true) {
+            addButtonUniversal("addHddButtonName", addPsu, backPsu, psuDesc, psuHeaderLabel, psuImageView, psuImg, choicePsu, psuNames,
+                    addHdd, backHdd, choiceHdd, hddHeaderLabel, "Your HDD:");
+            double minimalPsu = 1.2*maxLoad;
             psuNames.clear();
             for (int i = 0; i < psuList.size(); i++) {
                 if(psuList.get(i).getWattage() >= minimalPsu) {
@@ -1268,8 +1353,10 @@ public class PCBuilderEzController implements Initializable {
             totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
             caseNames.clear();
             for (int i = 0; i < caseList.size(); i++) {
-                String caseName = caseList.get(i).getBrand() + " " + caseList.get(i).getName();
-                caseNames.add(caseName);
+                if (caseList.get(i).getFormFactor().contains(selectedMobo.getFormFactor())){
+                    String caseName = caseList.get(i).getBrand() + " " + caseList.get(i).getName();
+                    caseNames.add(caseName);
+                }
             }
             choiceCase.setItems(caseNames);
         }
@@ -1296,7 +1383,7 @@ public class PCBuilderEzController implements Initializable {
             saveBuildButton.getStyleClass().add("pcbuilder-enabled");
             selectedCase = null;
         }
-        labelSaved.getStyleClass().remove("pcbuild-enabled");
+        labelSaved.getStyleClass().remove("pcbuilder-enabled");
     }
 
     /**
@@ -1331,20 +1418,34 @@ public class PCBuilderEzController implements Initializable {
                     + selectedCpuCooler.getName(), 50) + " " + padRight(String.valueOf(selectedCpuCooler.getPrice()),8) + " PLN";
         }
         else {
-            savedString += "\r\n" + padRight("CPU Cooler:", 13) + " " + padRight("BOX Cooler", 50) + padRight("0",8) +" PLN";
+            savedString += "\r\n" + padRight("CPU Cooler:", 13)  + padRight("BOX Cooler", 51) + padRight("0",8) +" PLN";
         }
         savedString += "\r\n"+ padRight("Motherboard:", 13) + padRight(selectedMobo.getBrand() + " "
                 + selectedMobo.getName(),50) + " " + padRight(String.valueOf(selectedMobo.getPrice()),8) + " PLN";
-        savedString += "\r\n"+ padRight("GPU:", 13)+  padRight(selectedGpu.getChipManufacturer() + " "
-                + selectedGpu.getseries() + " " + selectedGpu.getName(),50) + " " + padRight(String.valueOf(selectedMobo.getPrice()),8) + " PLN";
+        if (selectedGpu != null) {
+            savedString += "\r\n"+ padRight("GPU:", 13)+  padRight(selectedGpu.getChipManufacturer() + " "
+                    + selectedGpu.getseries() + " " + selectedGpu.getName(),50) + " " + padRight(String.valueOf(selectedMobo.getPrice()),8) + " PLN";
+        } else {
+            savedString += "\r\n" + padRight("GPU:", 13) + padRight("Integrated graphic card", 51) + padRight("0",8) +" PLN";
+        }
         savedString += "\r\n"+ padRight("RAM:", 13) + padRight(selectedRam.getBrand() + " " + selectedRam.getName()
                 + " " + selectedRam.getRamType() + " " +
                 selectedRam.getMemorySize() + "GB " + selectedRam.getMemoryClock() + "MHz CL " + selectedRam.getCasLatency(),50)
                 + " " + padRight(String.valueOf(selectedRam.getPrice()),8) + " PLN";
-        savedString += "\r\n"+ padRight("SSD:", 13) + padRight(selectedSsd.getBrand() + " " + selectedSsd.getName() + " "
-                + selectedSsd.getCapacity() + "GB " + selectedSsd.getMemoryType(),50) + " " + padRight(String.valueOf(selectedSsd.getPrice()),8) + " PLN";
-        savedString += "\r\n"+ padRight("HDD:", 13) + padRight(selectedHdd.getBrand() + " " + selectedHdd.getName() + " "
-                + selectedHdd.getCapacity() + "GB " + selectedHdd.getRotationalSpeed() + "rpm",50) + " " + padRight(String.valueOf(selectedHdd.getPrice()),8) + " PLN";
+        if (selectedSsd != null) {
+            savedString += "\r\n" + padRight("SSD:", 13) + padRight(selectedSsd.getBrand() + " " + selectedSsd.getName() + " "
+                    + selectedSsd.getCapacity() + "GB " + selectedSsd.getFormFactor() + " " + selectedSsd.getInterfaceType() + " " + selectedSsd.getMemoryType(), 50) + " "
+                    + padRight(String.valueOf(selectedSsd.getPrice()), 8) + " PLN";
+        } else {
+            savedString += "\r\n" + padRight("SSD:", 13) + padRight("No SSD selected", 51) + padRight("0",8) +" PLN";
+        }
+        if (selectedHdd != null) {
+            savedString += "\r\n" + padRight("HDD:", 13) + padRight(selectedHdd.getBrand() + " " + selectedHdd.getName() + " "
+                    + selectedHdd.getCapacity() + "GB, " + selectedHdd.getFormFactor() + " " + selectedHdd.getRotationalSpeed() + "rpm", 50) + " "
+                    + padRight(String.valueOf(selectedHdd.getPrice()), 8) + " PLN";
+        } else {
+            savedString += "\r\n" + padRight("HDD:", 13) + padRight("No HDD selected", 51) + padRight("0",8) +" PLN";
+        }
         savedString += "\r\n"+ padRight("PSU:", 13) + padRight(selectedPsu.getBrand() + " " + selectedPsu.getName() + " "
                 + selectedPsu.getWattage() + "W " + selectedPsu.getCertificate80Plus(),50) + " " + padRight(String.valueOf(selectedPsu.getPrice()),8) + " PLN";
         savedString += "\r\n"+ padRight("Case:", 13) + padRight(selectedCase.getBrand() + " " + selectedCase.getName() + " ",50) +

@@ -112,53 +112,53 @@
             <ChoiceBox fx:id="choicePsu" prefHeight="25.0" prefWidth="250.0" styleClass="pcbuilder-disabled" GridPane.columnIndex="3" GridPane.rowIndex="6" />
             <ChoiceBox fx:id="choiceCase" prefHeight="25.0" prefWidth="250.0" styleClass="pcbuilder-disabled" GridPane.columnIndex="5" GridPane.rowIndex="6" />
 
-            <Label fx:id="cpuCoolerDesc" text="CPU Cooler description" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <Label fx:id="cpuCoolerDesc" maxWidth="250.0" text="CPU Cooler description" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <styleClass>
                   <String fx:value="label-pcbuilder" />
                   <String fx:value="pcbuilder-disabled" />
                </styleClass></Label>
-            <Label fx:id="cpuDesc" text="CPU description" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label fx:id="cpuDesc" maxWidth="250.0" text="CPU description" GridPane.columnIndex="1" GridPane.rowIndex="1">
                  <styleClass>
                      <String fx:value="label-pcbuilder" />
                      <String fx:value="pcbuilder-disabled" />
                  </styleClass></Label>
-            <Label fx:id="moboDesc" text="Motherboard description" GridPane.columnIndex="5" GridPane.rowIndex="1">
+            <Label fx:id="moboDesc" maxWidth="250.0" text="Motherboard description" GridPane.columnIndex="5" GridPane.rowIndex="1">
                <styleClass>
                   <String fx:value="label-pcbuilder" />
                   <String fx:value="pcbuilder-disabled" />
                </styleClass>
             </Label>
-            <Label fx:id="gpuDesc" style="pcbuilder-disabled" text="GPU description" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Label fx:id="gpuDesc" maxWidth="250.0" style="pcbuilder-disabled" text="GPU description" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <styleClass>
                   <String fx:value="label-pcbuilder" />
                   <String fx:value="pcbuilder-disabled" />
                </styleClass>
             </Label>
-            <Label fx:id="ramDesc" styleClass="pcbuilder-disabled" text="RAM description" GridPane.columnIndex="3" GridPane.rowIndex="4">
+            <Label fx:id="ramDesc" maxWidth="250.0" styleClass="pcbuilder-disabled" text="RAM description" GridPane.columnIndex="3" GridPane.rowIndex="4">
                <styleClass>
                   <String fx:value="label-pcbuilder" />
                   <String fx:value="pcbuilder-disabled" />
                </styleClass>
             </Label>
-            <Label fx:id="ssdDesc" text="SSD description" GridPane.columnIndex="5" GridPane.rowIndex="4">
+            <Label fx:id="ssdDesc" maxWidth="250.0" text="SSD description" GridPane.columnIndex="5" GridPane.rowIndex="4">
                <styleClass>
                   <String fx:value="label-pcbuilder" />
                   <String fx:value="pcbuilder-disabled" />
                </styleClass>
             </Label>
-            <Label fx:id="hddDesc" text="HDD description" GridPane.columnIndex="1" GridPane.rowIndex="7">
+            <Label fx:id="hddDesc" maxWidth="250.0" text="HDD description" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <styleClass>
                   <String fx:value="label-pcbuilder" />
                   <String fx:value="pcbuilder-disabled" />
                </styleClass>
             </Label>
-            <Label fx:id="psuDesc" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="7">
+            <Label fx:id="psuDesc" maxWidth="250.0" text="PSU description" GridPane.columnIndex="3" GridPane.rowIndex="7">
                <styleClass>
                   <String fx:value="label-pcbuilder" />
                   <String fx:value="pcbuilder-disabled" />
                </styleClass>
             </Label>
-            <Label fx:id="caseDesc" text="Label" GridPane.columnIndex="5" GridPane.rowIndex="7">
+            <Label fx:id="caseDesc" maxWidth="250.0" text="Case description" GridPane.columnIndex="5" GridPane.rowIndex="7">
                <styleClass>
                   <String fx:value="label-pcbuilder" />
                   <String fx:value="pcbuilder-disabled" />

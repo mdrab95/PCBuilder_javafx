@@ -109,18 +109,24 @@ public class DataLoader {
                 String cpuIsUnlockedString = data[7];
                 if (cpuIsUnlockedString.equals("true"))
                     cpuIsUnlocked = true;
+                boolean cpuHasIntegratedGraphicCard = false;
+                String cpuHasIntegratedGraphicCardString = data[8];
+                if (cpuHasIntegratedGraphicCardString.equals("true"))
+                    cpuHasIntegratedGraphicCard = true;
                 boolean cpuIsTheCpuCoolerIncluded = false;
-                String cpuIsTheCpuCoolerIncludedString = data[15];
+                String cpuIsTheCpuCoolerIncludedString = data[16];
                 if (cpuIsTheCpuCoolerIncludedString.equals("true"))
                     cpuIsTheCpuCoolerIncluded = true;
-
-                cpuDataList.add(new ModelCPU(data[0], data[1], data[2], data[3], Integer.parseInt(data[4]), Integer.parseInt(data[5]), Integer.parseInt(data[6]),
-                        cpuIsUnlocked, Double.parseDouble(data[8]), Double.parseDouble(data[9]), Double.parseDouble(data[10]), Double.parseDouble(data[11]),
-                        Integer.parseInt(data[12]), Integer.parseInt(data[13]), data[14],
-                        cpuIsTheCpuCoolerIncluded, Integer.parseInt(data[16]), data[17], data[18]));
+                try {
+                    cpuDataList.add(new ModelCPU(data[0], data[1], data[2], data[3], Integer.parseInt(data[4]), Integer.parseInt(data[5]), Integer.parseInt(data[6]),
+                            cpuIsUnlocked, cpuHasIntegratedGraphicCard, Double.parseDouble(data[9]), Double.parseDouble(data[10]), Double.parseDouble(data[11]), Double.parseDouble(data[12]),
+                            Integer.parseInt(data[13]), Integer.parseInt(data[14]), data[15],
+                            cpuIsTheCpuCoolerIncluded, Integer.parseInt(data[17]), data[18], data[19]));
+                } catch (Exception ex) { System.out.println("Bad cpu data: " + line);}
             }
             Comparator<ModelCPU> comparator = Comparator.comparingInt(ModelCPU::getPrice);
             FXCollections.sort(cpuDataList, comparator.reversed());
+            System.out.println("CPU data loaded.");
         }
         catch (IOException e) {}
         return cpuDataList;
@@ -144,15 +150,17 @@ public class DataLoader {
             BufferedReader br = new BufferedReader(isr);
             while ((line = br.readLine()) != null) {
                 String[]data = line.split(";");
-
-                cpuCoolerDataList.add(new ModelCPUCooler(data[0], data[1], data[2], data[3], data[4], Double.parseDouble(data[5]), Double.parseDouble(data[6]),
-                        Double.parseDouble(data[7]), Integer.parseInt(data[8]), Double.parseDouble(data[9]), Integer.parseInt(data[10]), Integer.parseInt(data[11]),
-                        Double.parseDouble(data[12]), Double.parseDouble(data[13]), Double.parseDouble(data[14]), Integer.parseInt(data[15]),
-                        Integer.parseInt(data[16]), Integer.parseInt(data[17]), Integer.parseInt(data[18]), Integer.parseInt(data[19]),
-                        data[20], Integer.parseInt(data[21]), data[22], data[23] ));
+                try {
+                    cpuCoolerDataList.add(new ModelCPUCooler(data[0], data[1], data[2], data[3], data[4], Double.parseDouble(data[5]), Double.parseDouble(data[6]),
+                            Double.parseDouble(data[7]), Integer.parseInt(data[8]), Double.parseDouble(data[9]), Integer.parseInt(data[10]), Integer.parseInt(data[11]),
+                            Double.parseDouble(data[12]), Double.parseDouble(data[13]), Double.parseDouble(data[14]), Integer.parseInt(data[15]),
+                            Integer.parseInt(data[16]), Integer.parseInt(data[17]), Integer.parseInt(data[18]), Integer.parseInt(data[19]),
+                            data[20], Integer.parseInt(data[21]), data[22], data[23]));
+                } catch (Exception ex) { System.out.println("Bad cpu cooler data: " + line);}
             }
             Comparator<ModelCPUCooler> comparator = Comparator.comparingInt(ModelCPUCooler::getPrice);
             FXCollections.sort(cpuCoolerDataList, comparator.reversed());
+            System.out.println("CPU Cooler data loaded.");
         }
         catch (IOException e) {}
         return cpuCoolerDataList;
@@ -175,16 +183,18 @@ public class DataLoader {
             BufferedReader br = new BufferedReader(isr);
             while ((line = br.readLine()) != null) {
                 String[]data = line.split(";");
-
+                try {
                 caseDataList.add(new ModelCase(data[0], data[1], data[2], data[3], data[4], data[5], Double.parseDouble(data[6]),
                         Double.parseDouble(data[7]), Double.parseDouble(data[8]), Double.parseDouble(data[9]), Double.parseDouble(data[10]), Integer.parseInt(data[11]),
                         Integer.parseInt(data[12]), Integer.parseInt(data[13]), Integer.parseInt(data[14]), Integer.parseInt(data[15]),
                         Integer.parseInt(data[16]), Integer.parseInt(data[17]), Integer.parseInt(data[18]), Integer.parseInt(data[19]),
                         Integer.parseInt(data[20]), Integer.parseInt(data[21]), Integer.parseInt(data[22]), Integer.parseInt(data[23]),
                         data[24], data[25]));
+                } catch (Exception ex) { System.out.println("Bad case data: " + line);}
             }
             Comparator<ModelCase> comparator = Comparator.comparingInt(ModelCase::getPrice);
             FXCollections.sort(caseDataList, comparator.reversed());
+            System.out.println("Case data loaded.");
         }
         catch (IOException e) {}
         return caseDataList;
@@ -207,13 +217,15 @@ public class DataLoader {
             BufferedReader br = new BufferedReader(isr);
             while ((line = br.readLine()) != null) {
                 String[]data = line.split(";");
-
+                try {
                 hddDataList.add(new ModelHDD(data[0], data[1], data[2], data[3], data[4], Integer.parseInt(data[5]), Integer.parseInt(data[6]),
                         Integer.parseInt(data[7]), Integer.parseInt(data[8]), Integer.parseInt(data[9]),
                         Integer.parseInt(data[10]), Integer.parseInt(data[11]), data[12], data[13]));
+                } catch (Exception ex) { System.out.println("Bad hdd data: " + line);}
             }
             Comparator<ModelHDD> comparator = Comparator.comparingInt(ModelHDD::getPrice);
             FXCollections.sort(hddDataList, comparator.reversed());
+            System.out.println("HDD data loaded.");
         }
         catch (IOException e) {}
         return hddDataList;
@@ -239,13 +251,15 @@ public class DataLoader {
                 boolean hasRadiator = false;
                 if (data[14] == "true")
                     hasRadiator = true;
-
+                try {
                 ssdDataList.add(new ModelSSD(data[0], data[1], data[2], data[3], data[4], data[5], Integer.parseInt(data[6]),
                         Integer.parseInt(data[7]), Integer.parseInt(data[8]), data[9], Integer.parseInt(data[10]),
                         data[11], data[12], Integer.parseInt(data[13]), hasRadiator, Integer.parseInt(data[15]), data[16], data[17]));
+                } catch (Exception ex) { System.out.println("Bad ssd data: " + line);}
             }
             Comparator<ModelSSD> comparator = Comparator.comparingInt(ModelSSD::getPrice);
             FXCollections.sort(ssdDataList, comparator.reversed());
+            System.out.println("SSD data loaded.");
         }
         catch (IOException e) {}
         return ssdDataList;
@@ -274,13 +288,15 @@ public class DataLoader {
                 boolean hasLighting = false;
                 if (data[13] == "true")
                     hasLighting = true;
-
+                try {
                 ramDataList.add(new ModelRAM(data[0], data[1], data[2], data[3], Integer.parseInt(data[4]), Integer.parseInt(data[5]), Integer.parseInt(data[6]),
                         data[7], Integer.parseInt(data[8]), Integer.parseInt(data[9]), Double.parseDouble(data[10]), Integer.parseInt(data[11]),
                         hasRadiator, hasLighting, Integer.parseInt(data[14]), data[15], data[16]));
+                } catch (Exception ex) { System.out.println("Bad ram data: " + line);}
             }
             Comparator<ModelRAM> comparator = Comparator.comparingInt(ModelRAM::getPrice);
             FXCollections.sort(ramDataList, comparator.reversed());
+            System.out.println("RAM data loaded.");
         }
         catch (IOException e) {}
         return ramDataList;
@@ -303,11 +319,14 @@ public class DataLoader {
             BufferedReader br = new BufferedReader(isr);
             while ((line = br.readLine()) != null) {
                 String[]data = line.split(";");
+                try {
                 moboDataList.add(new ModelMOBO(data[0], data[1], data[2], data[3], data[4], data[5], data[6],Integer.parseInt(data[7]),Integer.parseInt(data[8]),
                         Integer.parseInt(data[9]), data[10], data[11], Integer.parseInt(data[12]), data[13], data[14]));
+                } catch (Exception ex) { System.out.println("Bad mobo data: " + line);}
             }
             Comparator<ModelMOBO> comparator = Comparator.comparingInt(ModelMOBO::getPrice);
             FXCollections.sort(moboDataList, comparator.reversed());
+            System.out.println("MOBO data loaded.");
         }
         catch (IOException e) {}
         return moboDataList;

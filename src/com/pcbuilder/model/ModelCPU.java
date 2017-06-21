@@ -14,6 +14,7 @@ public class ModelCPU {
     private final IntegerProperty numberOfCores;
     private final IntegerProperty numberOfThreads;
     private final BooleanProperty isUnlocked;
+    private final BooleanProperty integratedGfx;
     private final DoubleProperty speed;
     private final DoubleProperty boostSpeed;
     private final DoubleProperty cacheL2;
@@ -36,6 +37,7 @@ public class ModelCPU {
      * @param cpuNumberOfCores number of cores
      * @param cpuNumberOfThreads number of threads
      * @param cpuIsUnlocked is the cpu unlocked?
+     * @param cpuIntegratedGfx does it have integrated graphic card
      * @param cpuSpeed normal speed [in GHz]
      * @param cpuBoostSpeed boost speed [GHz]
      * @param cpuCacheL2 L2 cache memory [MB]
@@ -49,8 +51,8 @@ public class ModelCPU {
      * @param cpuSmallImagePath path to small image file
      */
     public ModelCPU (String cpuBrand, String cpuSocket, String cpuName, String cpuFamily, int cpuTechnology, int cpuNumberOfCores,
-              int cpuNumberOfThreads, boolean cpuIsUnlocked, double cpuSpeed, double cpuBoostSpeed, double cpuCacheL2, double cpuCacheL3,
-              int cpuTdp, int cpuWattage, String cpuPackageType, boolean cpuIsTheCpuCoolerIncluded, int cpuPrice, String cpuImagePath, String cpuSmallImagePath ) {
+                    int cpuNumberOfThreads, boolean cpuIsUnlocked, boolean cpuIntegratedGfx, double cpuSpeed, double cpuBoostSpeed, double cpuCacheL2, double cpuCacheL3,
+                    int cpuTdp, int cpuWattage, String cpuPackageType, boolean cpuIsTheCpuCoolerIncluded, int cpuPrice, String cpuImagePath, String cpuSmallImagePath) {
         brand = new SimpleStringProperty(cpuBrand);
         socket = new SimpleStringProperty(cpuSocket);
         name = new SimpleStringProperty(cpuName);
@@ -59,6 +61,7 @@ public class ModelCPU {
         numberOfCores = new SimpleIntegerProperty(cpuNumberOfCores);
         numberOfThreads = new SimpleIntegerProperty(cpuNumberOfThreads);
         isUnlocked = new SimpleBooleanProperty(cpuIsUnlocked);
+        integratedGfx = new SimpleBooleanProperty(cpuIntegratedGfx);
         speed = new SimpleDoubleProperty(cpuSpeed);
         boostSpeed = new SimpleDoubleProperty(cpuBoostSpeed);
         cacheL2 = new SimpleDoubleProperty(cpuCacheL2);
@@ -80,6 +83,7 @@ public class ModelCPU {
     public int getNumberOfCores(){return numberOfCores.get(); }
     public int getNumberOfThreads(){return numberOfThreads.get(); }
     public boolean getIsUnlocked() {return isUnlocked.get();}
+    public boolean getHasIntegratedGraphic() {return integratedGfx.get();}
     public double getSpeed(){return speed.get(); }
     public double getBoostSpeed(){return boostSpeed.get(); }
     public double getCacheL2(){return cacheL2.get(); }
