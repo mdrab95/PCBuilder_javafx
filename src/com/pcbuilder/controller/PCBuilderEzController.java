@@ -1455,6 +1455,12 @@ public class PCBuilderEzController implements Initializable {
         savedString += "\r\n----------------------------------------------------------------------------";
         savedString += "\r\n"+ padRight("Max load:", 70)  + padRight(String.valueOf(maxLoad), 5) + "W";
         savedString += "\r\n"+ padRight("Recommended PSU wattage: ", 70) + padRight(String.valueOf(df.format(recommendedPsu)), 5) + "W";
+        if ((selectedMobo.getChipset().contains("H110") || selectedMobo.getChipset().contains("B150") || selectedMobo.getChipset().contains("Z170")) ||
+                (selectedCpu.getBrand().equals("Intel"))) {
+            savedString += "\r\n----------------------------------------------------------------------------";
+            savedString += "\r\n" + padLeft("WARNING! YOU NEED TO UPDATE MOTHERBOARD'S BIOS", 60);
+            savedString += "\r\n" + padLeft("TO RUN KABY LAKE ON H110/B150/Z170 MOTHERBOARD", 60);
+        }
         savedString += "\r\n----------------------------------------------------------------------------";
         savedString += "\r\nPCBuilder - made by Michał Drab";
         savedString += "\r\n----------------------------------------------------------------------------";
