@@ -1178,9 +1178,9 @@ public class PCBuilderEzController implements Initializable {
         savedString += "\r\n"+ padRight("HDD:", 13) + padRight(selectedHdd.getBrand() + " " + selectedHdd.getName() + " "
                 + selectedHdd.getCapacity() + "GB " + selectedHdd.getRotationalSpeed() + "rpm",50) + " " + padRight(String.valueOf(selectedHdd.getPrice()),8) + " PLN";
         savedString += "\r\n"+ padRight("PSU:", 13) + padRight(selectedPsu.getBrand() + " " + selectedPsu.getName() + " "
-                + selectedPsu.getWattage() + "W" + selectedPsu.getCertificate80Plus(),50) + " " + padRight(String.valueOf(selectedPsu.getPrice()),8) + " PLN";
-        savedString += "\r\n"+ padRight("Case:", 13) + padRight(selectedCase.getBrand() + " " + selectedCase.getName() + " "
-                + selectedCase.getFormFactor(),50) + " " + padRight(String.valueOf(selectedCase.getPrice()),8) + " PLN";
+                + selectedPsu.getWattage() + "W " + selectedPsu.getCertificate80Plus(),50) + " " + padRight(String.valueOf(selectedPsu.getPrice()),8) + " PLN";
+        savedString += "\r\n"+ padRight("Case:", 13) + padRight(selectedCase.getBrand() + " " + selectedCase.getName() + " ",50) +
+                " " + padRight(String.valueOf(selectedCase.getPrice()),8) + " PLN";
         savedString += "\r\n----------------------------------------------------------------------------";
         savedString += "\r\n" + padRight("Total price:", 64) +  padRight(String.valueOf(df2.format(totalPrice)), 9) + "PLN";
         savedString += "\r\n----------------------------------------------------------------------------";
