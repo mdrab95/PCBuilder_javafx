@@ -209,8 +209,8 @@ public class DataLoader {
                 String[]data = line.split(";");
 
                 hddDataList.add(new ModelHDD(data[0], data[1], data[2], data[3], data[4], Integer.parseInt(data[5]), Integer.parseInt(data[6]),
-                        Integer.parseInt(data[7]), Integer.parseInt(data[8]), Integer.parseInt(data[9]), Double.parseDouble(data[10]), Double.parseDouble(data[11]),
-                        Integer.parseInt(data[12]), Integer.parseInt(data[13]), data[14], data[15]));
+                        Integer.parseInt(data[7]), Integer.parseInt(data[8]), Integer.parseInt(data[9]),
+                        Integer.parseInt(data[10]), Integer.parseInt(data[11]), data[12], data[13]));
             }
             Comparator<ModelHDD> comparator = Comparator.comparingInt(ModelHDD::getPrice);
             FXCollections.sort(hddDataList, comparator.reversed());

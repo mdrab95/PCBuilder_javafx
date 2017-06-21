@@ -53,7 +53,8 @@ public class RAMOverviewController implements Initializable {
                         super.updateItem(ramItem, empty);
                         if (ramItem != null) {
                             try {
-                                Image img = new Image(ramItem.getSmallImagePath(), true);
+                                String ramSerial = ramItem.getSerialNumber().replaceAll("/", "-");
+                                Image img = new Image(ramItem.getSmallImagePath() + ramSerial + ".png", true);
                                 ImageView imageView = new ImageView(img);
                                 imageView.setFitHeight(100);
                                 imageView.setFitWidth(100);
@@ -66,8 +67,11 @@ public class RAMOverviewController implements Initializable {
                                 imageView.setFitWidth(100);
                                 setGraphic(imageView);
                             }
-
-                            setText(ramItem.getBrand());
+                            String ramDescription = ramItem.getBrand() + " " + ramItem.getName() + " " + ramItem.getMemorySize() + "GB (" + ramItem.getNumberOfModules() + "x" + ramItem.getSingleModuleSize() + "GB) " + ramItem.getStandard() + " " + ramItem.getMemoryClock() + "MHz (" + ramItem.getSerialNumber() + ")"
+                                    + "\nNumber of modules: " + ramItem.getNumberOfModules() + ", module size: " + ramItem.getSingleModuleSize() + "GB"
+                                    + "\nCAS Latency: " + ramItem.getCasLatency()
+                                    + "\nPrice: " + ramItem.getPrice() + " PLN";
+                            setText(ramDescription);
                         }
                     }
                 };

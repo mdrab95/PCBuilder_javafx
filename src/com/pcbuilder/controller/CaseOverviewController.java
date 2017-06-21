@@ -69,7 +69,14 @@ public class CaseOverviewController implements Initializable {
                             }
 
                             setText(caseItem.getBrand() + " " + caseItem.getName()
-                                    + "\nCompatibility: " + caseItem.getFormFactor() + ", Type: " + caseItem.getType()
+                                    + "\nCompatibility: " + caseItem.getFormFactor()
+                                    + "\nType: " + caseItem.getType()
+                                    + "\nInstalled fans - front: " +  caseItem.getFrontFanNumber() + "x" + caseItem.getFrontFanSize()
+                                    + "mm, top: " + caseItem.getTopFanNumber() + "x" + caseItem.getTopFanSize() + "mm, rear: " + caseItem.getRearFanNumber() + "x"
+                                    + caseItem.getRearFanSize() + "mm"
+                                    + "\nMax fan number - front: " +  caseItem.getMaxFrontFanNumber() + "x" + caseItem.getFrontFanSize()
+                                    + "mm, top: " + caseItem.getMaxTopFanNumber() + "x" + caseItem.getTopFanSize() + "mm, rear: " + caseItem.getMaxRearFanNumber() + "x"
+                                    + caseItem.getRearFanSize() + "mm"
                                     + "\nPrice: " + caseItem.getPrice() + " PLN");
                         }
                     }

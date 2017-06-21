@@ -56,7 +56,7 @@ public class HDDOverviewController implements Initializable {
                         super.updateItem(hddItem, empty);
                         if (hddItem != null) {
                             try {
-                                Image img = new Image(hddItem.getSmallImagePath(), true);
+                                Image img = new Image(hddItem.getSmallImagePath() + hddItem.getSerialNumber() + ".png",  true);
                                 ImageView imageView = new ImageView(img);
                                 imageView.setFitHeight(100);
                                 imageView.setFitWidth(100);
@@ -69,8 +69,16 @@ public class HDDOverviewController implements Initializable {
                                 imageView.setFitWidth(100);
                                 setGraphic(imageView);
                             }
-
-                            setText(hddItem.getBrand());
+                            String capacity = "";
+                            if (hddItem.getCapacity() >= 1000)
+                                capacity = String.valueOf(hddItem.getCapacity()/1000) + "TB";
+                            else
+                                capacity = hddItem.getCapacity() + "GB";
+                            String hddDescription = hddItem.getBrand() + " " + hddItem.getName() + " " + capacity
+                                    + "\nInterface type: " + hddItem.getHddInterfaceType() + ", form factor: " + hddItem.getFormFactor()
+                                    + "\nRotational speed: " + hddItem.getRotationalSpeed() + "rpm, cache size: " + hddItem.getCacheSize() + "MB"
+                                    + "\nPrice: " + hddItem.getPrice() + "PLN";
+                            setText(hddDescription);
                         }
                     }
                 };

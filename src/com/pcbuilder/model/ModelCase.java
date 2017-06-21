@@ -50,7 +50,7 @@ public class ModelCase {
      * @param caseInternal25 number of internal 2.5"
      * @param caseInternal35 number of internal 3.5"
      * @param caseFrontFanNumber number of installed front fans
-     * @param caseMaxFrontFanNumber max quantity of top fans
+     * @param caseMaxFrontFanNumber max quantity of front fans
      * @param caseFrontFanSize front fans size
      * @param caseTopFanNumber number of installed top fans
      * @param caseMaxTopFanNumber max quantity of top fans
@@ -116,7 +116,7 @@ public class ModelCase {
     public int getMaxTopFanNumber(){return maxTopFanNumber.get(); }
     public int getTopFanSize(){return topFanSize.get(); }
     public int getRearFanNumber(){return rearFanNumber.get(); }
-    public int getRearFrontFanNumber(){return maxRearFanNumber.get(); }
+    public int getMaxRearFanNumber(){return maxRearFanNumber.get(); }
     public int getRearFanSize(){return rearFanSize.get(); }
     public int getPrice(){return price.get(); }
     public String getImagePath(){return imagePath.get();}

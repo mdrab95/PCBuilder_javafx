@@ -388,12 +388,7 @@ public class PCBuilderEzController implements Initializable {
 
         //region CPUCooler init
         // --------------------------------------
-        cpuCoolerNames.add("BOX Cooler");
-        for (int i = 0; i < cpuCoolerList.size(); i++) {
-            String cpuCoolerName = cpuCoolerList.get(i).getBrand() + " " + cpuCoolerList.get(i).getName();
-            cpuCoolerNames.add(cpuCoolerName);
-        }
-        choiceCpuCooler.setItems(cpuCoolerNames);
+
         choiceCpuCooler.getSelectionModel().selectedItemProperty()
                 .addListener(new ChangeListener<String>() {
                     public void changed(ObservableValue<? extends String> observable,
@@ -450,11 +445,6 @@ public class PCBuilderEzController implements Initializable {
         //region MOBO init
         // --------------------------------------
 
-        for (int i = 0; i < moboList.size(); i++) {
-            String moboName = moboList.get(i).getBrand() + " " + moboList.get(i).getChipset() + " " + moboList.get(i).getName();
-            moboNames.add(moboName);
-        }
-        choiceMobo.setItems(moboNames);
         choiceMobo.getSelectionModel().selectedItemProperty()
                 .addListener(new ChangeListener<String>() {
                     public void changed(ObservableValue<? extends String> observable,
@@ -489,11 +479,6 @@ public class PCBuilderEzController implements Initializable {
         //region GPU init
         // --------------------------------------
 
-        for (int i = 0; i < gpuList.size(); i++) {
-            String gpuName = gpuList.get(i).getChipManufacturer() + " " + gpuList.get(i).getseries() + " " + gpuList.get(i).getName();
-            gpuNames.add(gpuName);
-        }
-        choiceGpu.setItems(gpuNames);
         choiceGpu.getSelectionModel().selectedItemProperty()
                 .addListener(new ChangeListener<String>() {
                     public void changed(ObservableValue<? extends String> observable,
@@ -534,24 +519,20 @@ public class PCBuilderEzController implements Initializable {
         //region RAM init
         // --------------------------------------
 
-        for (int i = 0; i < ramList.size(); i++) {
-            String ramName = ramList.get(i).getBrand() + " " + ramList.get(i).getName() + " " + ramList.get(i).getStandard() + " " + ramList.get(i).getMemorySize() + "GB, " + ramList.get(i).getMemoryClock() + "MHz";
-            ramNames.add(ramName);
-        }
-        choiceRam.setItems(ramNames);
         choiceRam.getSelectionModel().selectedItemProperty()
                 .addListener(new ChangeListener<String>() {
                     public void changed(ObservableValue<? extends String> observable,
                                         String oldValue, String newValue) {
                         System.out.println(newValue);
                         for (int i = 0; i < ramList.size(); i++) {
-                            String selectedRamName = ramList.get(i).getBrand() + " " + ramList.get(i).getName() + " " + ramList.get(i).getStandard() + " " + ramList.get(i).getMemorySize() + "GB, " + ramList.get(i).getMemoryClock() + "MHz";
-                            if (newValue.matches(selectedRamName)) {
+                            String selectedRamName = ramList.get(i).getBrand() + " " + ramList.get(i).getName() +  " " + ramList.get(i).getMemorySize() + "GB (" + ramList.get(i).getNumberOfModules() + "x" + ramList.get(i).getSingleModuleSize() + "GB) " + ramList.get(i).getStandard() + " " + ramList.get(i).getMemoryClock() + "MHz (" + ramList.get(i).getSerialNumber() + ")";
+                            if (newValue.equals(selectedRamName)) {
                                 selectedRam = ramList.get(i);
                             }
                         }
                         try {
-                            ramImg = new Image(selectedRam.getSmallImagePath() + selectedRam.getSerialNumber() + ".png", true);
+                            String modifiedSerial = selectedRam.getSerialNumber().replaceAll("/", "-");
+                            ramImg = new Image(selectedRam.getSmallImagePath() + modifiedSerial + ".png", true);
                             setImg(ramImg, ramImageView);
                         } catch (Exception ex) {
                             System.out.println("Can't load RAM img!");
@@ -573,11 +554,6 @@ public class PCBuilderEzController implements Initializable {
         //region SSD init
         // --------------------------------------
 
-        for (int i = 0; i < ssdList.size(); i++) {
-            String ssdName = ssdList.get(i).getBrand() + " " + ssdList.get(i).getName() + " " + ssdList.get(i).getCapacity() + "GB";
-            ssdNames.add(ssdName);
-        }
-        choiceSsd.setItems(ssdNames);
         choiceSsd.getSelectionModel().selectedItemProperty()
                 .addListener(new ChangeListener<String>() {
                     public void changed(ObservableValue<? extends String> observable,
@@ -612,18 +588,18 @@ public class PCBuilderEzController implements Initializable {
         //region HDD init
         // --------------------------------------
 
-        for (int i = 0; i < hddList.size(); i++) {
-            String hddName = hddList.get(i).getBrand() + " " + hddList.get(i).getName() + " " + hddList.get(i).getCapacity() + "GB";
-            hddNames.add(hddName);
-        }
-        choiceHdd.setItems(hddNames);
         choiceHdd.getSelectionModel().selectedItemProperty()
                 .addListener(new ChangeListener<String>() {
                     public void changed(ObservableValue<? extends String> observable,
                                         String oldValue, String newValue) {
                         System.out.println(newValue);
                         for (int i = 0; i < hddList.size(); i++) {
-                            String selectedHddName = hddList.get(i).getBrand() + " " + hddList.get(i).getName() + " " + hddList.get(i).getCapacity() + "GB";
+                            String capacity = "";
+                            if (hddList.get(i).getCapacity() >= 1000)
+                                capacity = String.valueOf(hddList.get(i).getCapacity()/1000) + "TB";
+                            else
+                                capacity = hddList.get(i).getCapacity() + "GB";
+                            String selectedHddName = hddList.get(i).getBrand() + " " + hddList.get(i).getName() + " " + capacity;
                             if (newValue.matches(selectedHddName)) {
                                 selectedHdd = hddList.get(i);
                             }
@@ -634,12 +610,17 @@ public class PCBuilderEzController implements Initializable {
                         } catch (Exception ex) {
                             System.out.println("Can't load HDD img!");
                         }
+                        
+                        String capacity = "";
+                        if (selectedHdd.getCapacity() >= 1000)
+                            capacity = String.valueOf(selectedHdd.getCapacity()/1000) + "TB";
+                        else
+                            capacity = selectedHdd.getCapacity() + "GB";
 
-
-                        String hddDescription = selectedHdd.getBrand() + " " + selectedHdd.getName() + " " + selectedHdd.getCapacity() + "GB "
+                        String hddDescription = selectedHdd.getBrand() + " " + selectedHdd.getName() + " " + capacity
                                 + "\nInterface type: " + selectedHdd.getHddInterfaceType() + ", form factor: " + selectedHdd.getFormFactor()
-                                + "\nRotational speed: " + selectedHdd.getRotationalSpeed() + "rpm"
-                                + "\nPrice: " + selectedHdd.getPrice() + " PLN";
+                                + "\nRotational speed: " + selectedHdd.getRotationalSpeed() + "rpm, cache size: " + selectedHdd.getCacheSize() + "MB"
+                                + "\nPrice: " + selectedHdd.getPrice() + "PLN";
                         hddDesc.setText(hddDescription);
                     }
                 });
@@ -651,11 +632,6 @@ public class PCBuilderEzController implements Initializable {
         //region PSU init
         // --------------------------------------
 
-        for (int i = 0; i < psuList.size(); i++) {
-            String psuName = psuList.get(i).getBrand() + " " + psuList.get(i).getName() + " " + psuList.get(i).getWattage() + "W";
-            psuNames.add(psuName);
-        }
-        choicePsu.setItems(psuNames);
         choicePsu.getSelectionModel().selectedItemProperty()
                 .addListener(new ChangeListener<String>() {
                     public void changed(ObservableValue<? extends String> observable,
@@ -698,11 +674,6 @@ public class PCBuilderEzController implements Initializable {
         //region Case init
         // --------------------------------------
 
-        for (int i = 0; i < caseList.size(); i++) {
-            String caseName = caseList.get(i).getBrand() + " " + caseList.get(i).getName();
-            caseNames.add(caseName);
-        }
-        choiceCase.setItems(caseNames);
         choiceCase.getSelectionModel().selectedItemProperty()
                 .addListener(new ChangeListener<String>() {
                     public void changed(ObservableValue<? extends String> observable,
@@ -723,7 +694,14 @@ public class PCBuilderEzController implements Initializable {
 
 
                         String caseDescription = selectedCase.getBrand() + " " + selectedCase.getName()
-                                + "\nCompatibility: " + selectedCase.getFormFactor() + ", Type: " + selectedCase.getType()
+                                + "\nCompatibility: " + selectedCase.getFormFactor()
+                                + "\nType: " + selectedCase.getType()
+                                + "\nInstalled fans - front: " +  selectedCase.getFrontFanNumber() + "x" + selectedCase.getFrontFanSize()
+                                + "mm, top: " + selectedCase.getTopFanNumber() + "x" + selectedCase.getTopFanSize() + "mm, rear: " + selectedCase.getRearFanNumber() + "x"
+                                + selectedCase.getRearFanSize() + "mm"
+                                + "\nMax fan number - front: " +  selectedCase.getMaxFrontFanNumber() + "x" + selectedCase.getFrontFanSize()
+                                + "mm, top: " + selectedCase.getMaxTopFanNumber() + "x" + selectedCase.getTopFanSize() + "mm, rear: " + selectedCase.getMaxRearFanNumber() + "x"
+                                + selectedCase.getRearFanSize() + "mm"
                                 + "\nPrice: " + selectedCase.getPrice() + " PLN";
                         caseDesc.setText(caseDescription);
                     }
@@ -949,6 +927,12 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice += selectedMobo.getPrice();
             totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
+            gpuNames.clear();
+            for (int i = 0; i < gpuList.size(); i++) {
+                String gpuName = gpuList.get(i).getChipManufacturer() + " " + gpuList.get(i).getseries() + " " + gpuList.get(i).getName();
+                gpuNames.add(gpuName);
+            }
+            choiceGpu.setItems(gpuNames);
         }
     }
 
@@ -979,6 +963,12 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice += selectedGpu.getPrice();
             totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
+            ramNames.clear();
+            for (int i = 0; i < ramList.size(); i++) {
+                String ramName = ramList.get(i).getBrand() + " " + ramList.get(i).getName() + " " + ramList.get(i).getMemorySize() + "GB (" + ramList.get(i).getNumberOfModules() + "x" + ramList.get(i).getSingleModuleSize() + "GB) " + ramList.get(i).getStandard() + " " + ramList.get(i).getMemoryClock() + "MHz (" + ramList.get(i).getSerialNumber() + ")";
+                ramNames.add(ramName);
+            }
+            choiceRam.setItems(ramNames);
         }
     }
 
@@ -1009,6 +999,12 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice += selectedRam.getPrice();
             totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
+            ssdNames.clear();
+            for (int i = 0; i < ssdList.size(); i++) {
+                String ssdName = ssdList.get(i).getBrand() + " " + ssdList.get(i).getName() + " " + ssdList.get(i).getCapacity() + "GB";
+                ssdNames.add(ssdName);
+            }
+            choiceSsd.setItems(ssdNames);
         }
     }
 
@@ -1039,6 +1035,17 @@ public class PCBuilderEzController implements Initializable {
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice += selectedSsd.getPrice();
             totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
+            hddNames.clear();
+            for (int i = 0; i < hddList.size(); i++) {
+                String capacity = "";
+                if (hddList.get(i).getCapacity() >= 1000)
+                    capacity = String.valueOf(hddList.get(i).getCapacity()/1000) + "TB";
+                else
+                    capacity = hddList.get(i).getCapacity() + "GB";
+                String hddName = hddList.get(i).getBrand() + " " + hddList.get(i).getName() + " " + capacity;
+                hddNames.add(hddName);
+            }
+            choiceHdd.setItems(hddNames);
         }
     }
 
@@ -1066,9 +1073,18 @@ public class PCBuilderEzController implements Initializable {
             maxLoad += selectedHdd.getWattage();
             maxLoadCounter.setText(String.valueOf(maxLoad) + "W");
             recommendedPsu = 1.4 * maxLoad;
+            double minimalPsu = 1.2*maxLoad;
             recommendedPsuCounter.setText(String.valueOf(df.format(recommendedPsu)) + "W");
             totalPrice += selectedHdd.getPrice();
             totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
+            psuNames.clear();
+            for (int i = 0; i < psuList.size(); i++) {
+                if(psuList.get(i).getWattage() >= minimalPsu) {
+                    String psuName = psuList.get(i).getBrand() + " " + psuList.get(i).getName() + " " + psuList.get(i).getWattage() + "W";
+                    psuNames.add(psuName);
+                }
+            }
+            choicePsu.setItems(psuNames);
         }
     }
 
@@ -1095,6 +1111,12 @@ public class PCBuilderEzController implements Initializable {
                     addPsu, backPsu, choicePsu, psuHeaderLabel, "Your PSU:");
             totalPrice += selectedPsu.getPrice();
             totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
+            caseNames.clear();
+            for (int i = 0; i < caseList.size(); i++) {
+                String caseName = caseList.get(i).getBrand() + " " + caseList.get(i).getName();
+                caseNames.add(caseName);
+            }
+            choiceCase.setItems(caseNames);
         }
     }
 
