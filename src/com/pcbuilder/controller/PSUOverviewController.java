@@ -1,12 +1,12 @@
 package com.pcbuilder.controller;
 
 import com.pcbuilder.MainApp;
+import com.pcbuilder.model.ModelDataLoaderAndFilter;
 import com.pcbuilder.model.ModelPSU;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -15,7 +15,6 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Comparator;
 import java.util.ResourceBundle;
 
 public class PSUOverviewController implements Initializable {
@@ -35,7 +34,7 @@ public class PSUOverviewController implements Initializable {
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         psuData.clear();
-        DataLoader loader = new DataLoader();
+        ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
         try {psuData.addAll(loader.psuDataLoader());}
         catch(IOException e){};
 
@@ -73,9 +72,11 @@ public class PSUOverviewController implements Initializable {
                             String certificate = "";
                             if (psuItem.getCertificate80Plus().length()==0)
                                 certificate = "no data";
+                            else
+                                certificate = psuItem.getCertificate80Plus();
 
                             setText(psuItem.getBrand() + " " + psuItem.getName() + " " + psuItem.getWattage() + "W " + modular
-                                    + "\nCertificate: " + psuItem.getCertificate80Plus() + ", Protection:  " + psuItem.getProtection()
+                                    + "\nCertificate: " + certificate + ", Protection:  " + psuItem.getProtection()
                                     + "\nPrice: " + psuItem.getPrice() + " PLN");
                         }
                     }

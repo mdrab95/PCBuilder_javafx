@@ -15,8 +15,6 @@ public class ModelHDD {
     private final IntegerProperty readSpeed;
     private final IntegerProperty writeSpeed;
     private final IntegerProperty cacheSize;
-    private final DoubleProperty acousticsIdle; // in dB
-    private final DoubleProperty acousticsOperation;
     private final IntegerProperty wattage;
     private final IntegerProperty price;
     private final StringProperty imagePath;
@@ -34,16 +32,13 @@ public class ModelHDD {
      * @param hddReadSpeed read speed [MB/s]
      * @param hddWriteSpeed write speed [MB/s]
      * @param hddCacheSize cache size [MB]
-     * @param hddAcousticsIdle idle noise [dbA]
-     * @param hddAcousticsOperation stress noise [dbA]
      * @param hddWattage wattage which is used to calculate PSU requirements [W]
      * @param hddPrice hdd price
      * @param hddImagePath path to big image file
      * @param hddSmallImagePath path to small image file
      */
     public ModelHDD (String hddBrand, String hddSerialNumber, String hddName, String hddInterfaceType, String hddFormFactor, int hddRotationalSpeed,
-              int hddCapacity, int hddReadSpeed, int hddWriteSpeed, int hddCacheSize, double hddAcousticsIdle,
-              double hddAcousticsOperation,int hddWattage, int hddPrice, String hddImagePath, String hddSmallImagePath) {
+              int hddCapacity, int hddReadSpeed, int hddWriteSpeed, int hddCacheSize ,int hddWattage, int hddPrice, String hddImagePath, String hddSmallImagePath) {
         brand = new SimpleStringProperty(hddBrand);
         serialNumber = new SimpleStringProperty(hddSerialNumber);
         name = new SimpleStringProperty(hddName);
@@ -54,8 +49,6 @@ public class ModelHDD {
         readSpeed = new SimpleIntegerProperty(hddReadSpeed);
         writeSpeed = new SimpleIntegerProperty(hddWriteSpeed);
         cacheSize = new SimpleIntegerProperty(hddCacheSize);
-        acousticsIdle = new SimpleDoubleProperty(hddAcousticsIdle);
-        acousticsOperation = new SimpleDoubleProperty(hddAcousticsOperation);
         wattage = new SimpleIntegerProperty(hddWattage);
         price = new SimpleIntegerProperty(hddPrice);
         imagePath = new SimpleStringProperty(hddImagePath);
@@ -72,8 +65,6 @@ public class ModelHDD {
     public int getReadSpeed(){return readSpeed.get(); }
     public int getWriteSpeed(){return writeSpeed.get(); }
     public int getCacheSize(){return cacheSize.get(); }
-    public double getAcousticIdle(){return acousticsIdle.get();}
-    public double getAcousticOperation(){return acousticsOperation.get();}
     public int getWattage(){return wattage.get(); }
     public int getPrice(){return price.get(); }
     public String getImagePath(){return imagePath.get();}

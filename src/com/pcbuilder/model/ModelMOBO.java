@@ -10,7 +10,9 @@ public class ModelMOBO {
         private final StringProperty serialNumber;
         private final StringProperty name;
         private final StringProperty formFactor; // like ATX, µATX
+        private final StringProperty socket;
         private final StringProperty chipset;
+        private final StringProperty ramStandard;
         private final IntegerProperty maxRam;
         private final IntegerProperty ramSlots;
         private final IntegerProperty maxRamSpeed;
@@ -27,7 +29,9 @@ public class ModelMOBO {
          * @param moboSerialNumber manufacturer serial number
          * @param moboName name
          * @param moboFormFactor mobo form factor
+         * @param moboSocket socket model
          * @param moboChipset chipset model
+         * @param moboRamStandard ram standard - like ddr4,ddr3
          * @param moboMaxRam max ram capacity
          * @param moboRamSlots ram slots number
          * @param moboMaxRamSpeed ram max speed (incl. oc profiles)
@@ -37,14 +41,16 @@ public class ModelMOBO {
          * @param moboImagePath path to big image file
          * @param moboSmallImagePath path to small image file
          */
-    public ModelMOBO (String moboBrand, String moboSerialNumber, String moboName, String moboFormFactor, String moboChipset,
-                      int moboMaxRam, int moboRamSlots, int moboMaxRamSpeed, String moboConnectors, String moboAudio, int moboPrice,
+    public ModelMOBO (String moboBrand, String moboSerialNumber, String moboName, String moboFormFactor, String moboSocket, String moboChipset,
+                      String moboRamStandard, int moboMaxRam, int moboRamSlots, int moboMaxRamSpeed, String moboConnectors, String moboAudio, int moboPrice,
                       String moboImagePath, String moboSmallImagePath) {
             brand = new SimpleStringProperty(moboBrand);
             serialNumber = new SimpleStringProperty(moboSerialNumber);
             name = new SimpleStringProperty(moboName);
             formFactor = new SimpleStringProperty(moboFormFactor);
+            socket = new SimpleStringProperty(moboSocket);
             chipset = new SimpleStringProperty(moboChipset);
+            ramStandard = new SimpleStringProperty(moboRamStandard);
             maxRam = new SimpleIntegerProperty(moboMaxRam);
             ramSlots = new SimpleIntegerProperty(moboRamSlots);
             maxRamSpeed = new SimpleIntegerProperty(moboMaxRamSpeed);
@@ -60,7 +66,9 @@ public class ModelMOBO {
     public String getSerialNumber(){return serialNumber.get();}
     public String getName(){return name.get();}
     public String getFormFactor(){return formFactor.get();}
-    public String getChipset(){return chipset.get(); }
+    public String getSocket(){return socket.get(); }
+    public String getChipset(){return chipset.get();}
+    public String getRamStandard(){return ramStandard.get();}
     public int getMaxRam(){return maxRam.get(); }
     public int getRamSlots(){return ramSlots.get(); }
     public int getMaxRamSpeed(){return maxRamSpeed.get(); }

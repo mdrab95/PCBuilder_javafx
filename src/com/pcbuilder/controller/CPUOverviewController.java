@@ -1,12 +1,12 @@
 package com.pcbuilder.controller;
 
 import com.pcbuilder.MainApp;
+import com.pcbuilder.model.ModelDataLoaderAndFilter;
 import com.pcbuilder.model.ModelCPU;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -15,7 +15,6 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Comparator;
 import java.util.ResourceBundle;
 
 public class CPUOverviewController implements Initializable {
@@ -36,7 +35,7 @@ public class CPUOverviewController implements Initializable {
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         cpuData.clear();
-        DataLoader loader = new DataLoader();
+        ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
         try {
             cpuData.addAll(loader.cpuDataLoader());
         } catch (IOException e) {}
@@ -78,10 +77,14 @@ public class CPUOverviewController implements Initializable {
                                 speed = cpuItem.getSpeed() + "GHz";
                             else
                                 speed = cpuItem.getSpeed() + "-" + cpuItem.getBoostSpeed() + "GHz";
+                            String integratedGraphic = "no";
+                            if (cpuItem.getHasIntegratedGraphic() == true)
+                                integratedGraphic = "yes";
 
                             setText(cpuItem.getBrand() + " " + cpuItem.getFamily() + spaceInName +  cpuItem.getName() + " (" + howItIsPacked + ")"
                                     + "\n" + cpuItem.getNumberOfCores() + "C/" + cpuItem.getNumberOfThreads() + "T, " + speed + ", " + mainApp.noZeros(cpuItem.getCacheL3()) + " MB" + ", "
                                     + cpuItem.getTdp() + "W TDP"
+                                    + "\nIntegrated graphic card: " + integratedGraphic
                                     + "\nPrice: " + cpuItem.getPrice() + " PLN");
                         }
                     }

@@ -1,12 +1,12 @@
 package com.pcbuilder.controller;
 
 import com.pcbuilder.MainApp;
+import com.pcbuilder.model.ModelDataLoaderAndFilter;
 import com.pcbuilder.model.ModelCase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -15,7 +15,6 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Comparator;
 import java.util.ResourceBundle;
 
 public class CaseOverviewController implements Initializable {
@@ -36,7 +35,7 @@ public class CaseOverviewController implements Initializable {
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         caseData.clear();
-        DataLoader loader = new DataLoader();
+        ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
         try {
             caseData.addAll(loader.caseDataLoader());
         } catch (IOException e) {}
@@ -69,7 +68,14 @@ public class CaseOverviewController implements Initializable {
                             }
 
                             setText(caseItem.getBrand() + " " + caseItem.getName()
-                                    + "\nCompatibility: " + caseItem.getFormFactor() + ", Type: " + caseItem.getType()
+                                    + "\nCompatibility: " + caseItem.getFormFactor()
+                                    + "\nType: " + caseItem.getType()
+                                    + "\nInstalled fans - front: " +  caseItem.getFrontFanNumber() + "x" + caseItem.getFrontFanSize()
+                                    + "mm, top: " + caseItem.getTopFanNumber() + "x" + caseItem.getTopFanSize() + "mm, rear: " + caseItem.getRearFanNumber() + "x"
+                                    + caseItem.getRearFanSize() + "mm"
+                                    + "\nMax fan number - front: " +  caseItem.getMaxFrontFanNumber() + "x" + caseItem.getFrontFanSize()
+                                    + "mm, top: " + caseItem.getMaxTopFanNumber() + "x" + caseItem.getTopFanSize() + "mm, rear: " + caseItem.getMaxRearFanNumber() + "x"
+                                    + caseItem.getRearFanSize() + "mm"
                                     + "\nPrice: " + caseItem.getPrice() + " PLN");
                         }
                     }

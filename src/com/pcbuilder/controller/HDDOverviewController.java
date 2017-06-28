@@ -1,6 +1,7 @@
 package com.pcbuilder.controller;
 
 import com.pcbuilder.MainApp;
+import com.pcbuilder.model.ModelDataLoaderAndFilter;
 import com.pcbuilder.model.ModelHDD;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,7 +36,7 @@ public class HDDOverviewController implements Initializable {
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         hddData.clear();
-        DataLoader loader = new DataLoader();
+        ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
         try {
             hddData.addAll(loader.hddDataLoader());
         } catch (IOException e) {}
@@ -56,7 +57,7 @@ public class HDDOverviewController implements Initializable {
                         super.updateItem(hddItem, empty);
                         if (hddItem != null) {
                             try {
-                                Image img = new Image(hddItem.getSmallImagePath(), true);
+                                Image img = new Image(hddItem.getSmallImagePath() + hddItem.getSerialNumber() + ".png",  true);
                                 ImageView imageView = new ImageView(img);
                                 imageView.setFitHeight(100);
                                 imageView.setFitWidth(100);
@@ -69,8 +70,16 @@ public class HDDOverviewController implements Initializable {
                                 imageView.setFitWidth(100);
                                 setGraphic(imageView);
                             }
-
-                            setText(hddItem.getBrand());
+                            String capacity = "";
+                            if (hddItem.getCapacity() >= 1000)
+                                capacity = String.valueOf(hddItem.getCapacity()/1000) + "TB";
+                            else
+                                capacity = hddItem.getCapacity() + "GB";
+                            String hddDescription = hddItem.getBrand() + " " + hddItem.getName() + " " + capacity
+                                    + "\nInterface type: " + hddItem.getHddInterfaceType() + ", form factor: " + hddItem.getFormFactor()
+                                    + "\nRotational speed: " + hddItem.getRotationalSpeed() + "rpm, cache size: " + hddItem.getCacheSize() + "MB"
+                                    + "\nPrice: " + hddItem.getPrice() + "PLN";
+                            setText(hddDescription);
                         }
                     }
                 };
