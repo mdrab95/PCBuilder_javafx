@@ -55,15 +55,13 @@ public class CPUCoolerOverviewController implements Initializable {
                             try {
                                 Image img = new Image(cpuCoolerItem.getSmallImagePath() + cpuCoolerItem.getManufacturerCode() + ".png", true);
                                 ImageView imageView = new ImageView(img);
-                                imageView.setFitHeight(100);
-                                imageView.setFitWidth(100);
+                                mainApp.setImgSize(imageView);
                                 setGraphic(imageView);
                             }
                             catch (Exception ex){
                                 Image img = new Image("images/no_img.png");
                                 ImageView imageView = new ImageView(img);
-                                imageView.setFitHeight(100);
-                                imageView.setFitWidth(100);
+                                mainApp.setImgSize(imageView);
                                 setGraphic(imageView);
                             }
                             String dimensions = mainApp.noZeros(cpuCoolerItem.getWidth()) + "x" + mainApp.noZeros(cpuCoolerItem.getHeight()) + "x" + mainApp.noZeros(cpuCoolerItem.getDepth()) + "mm";

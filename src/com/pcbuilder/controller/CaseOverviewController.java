@@ -32,6 +32,7 @@ public class CaseOverviewController implements Initializable {
 
     }
 
+
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         caseData.clear();

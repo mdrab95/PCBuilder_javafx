@@ -55,15 +55,13 @@ public class RAMOverviewController implements Initializable {
                                 String ramSerial = ramItem.getSerialNumber().replaceAll("/", "-");
                                 Image img = new Image(ramItem.getSmallImagePath() + ramSerial + ".png", true);
                                 ImageView imageView = new ImageView(img);
-                                imageView.setFitHeight(100);
-                                imageView.setFitWidth(100);
+                                mainApp.setImgSize(imageView);
                                 setGraphic(imageView);
                             }
                             catch (Exception ex){
                                 Image img = new Image("images/no_img.png");
                                 ImageView imageView = new ImageView(img);
-                                imageView.setFitHeight(100);
-                                imageView.setFitWidth(100);
+                                mainApp.setImgSize(imageView);
                                 setGraphic(imageView);
                             }
                             String ramDescription = ramItem.getBrand() + " " + ramItem.getName() + " " + ramItem.getMemorySize() + "GB (" + ramItem.getNumberOfModules() + "x" + ramItem.getSingleModuleSize() + "GB) " + ramItem.getStandard() + " " + ramItem.getMemoryClock() + "MHz (" + ramItem.getSerialNumber() + ")"

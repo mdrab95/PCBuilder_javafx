@@ -32,6 +32,7 @@ public class CPUOverviewController implements Initializable {
 
     }
 
+
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         cpuData.clear();
@@ -55,15 +56,13 @@ public class CPUOverviewController implements Initializable {
                             try {
                                 Image img = new Image(cpuItem.getSmallImagePath(), true);
                                 ImageView imageView = new ImageView(img);
-                                imageView.setFitHeight(100);
-                                imageView.setFitWidth(100);
+                                mainApp.setImgSize(imageView);
                                 setGraphic(imageView);
                             }
                             catch (Exception ex){
                                     Image img = new Image("images/no_img.png");
                                     ImageView imageView = new ImageView(img);
-                                    imageView.setFitHeight(100);
-                                    imageView.setFitWidth(100);
+                                    mainApp.setImgSize(imageView);
                                     setGraphic(imageView);
                                 }
                             String howItIsPacked = cpuItem.getPackageType();
