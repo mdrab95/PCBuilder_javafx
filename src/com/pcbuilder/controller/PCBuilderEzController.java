@@ -604,8 +604,8 @@ public class PCBuilderEzController implements Initializable {
                                 selectedSsd = null;
                             } else {
                                     for (int i = 0; i < ssdList.size(); i++) {
-                                        String selectedSsdName = ssdList.get(i).getBrand() + " " + ssdList.get(i).getName() + " " + ssdList.get(i).getCapacity() + "GB";
-                                        if (newValue.matches(selectedSsdName)) {
+                                        String selectedSsdName = ssdList.get(i).getBrand() + " " + ssdList.get(i).getName() + " " + ssdList.get(i).getCapacity() + "GB (" + ssdList.get(i).getSerialNumber() + ")";
+                                        if (newValue.equals(selectedSsdName)) {
                                             selectedSsd = ssdList.get(i);
                                         }
                                     }
@@ -975,7 +975,7 @@ public class PCBuilderEzController implements Initializable {
         backButtonCpu("backCpuCoolerButtonAction", addCpuCooler, backCpuCooler, cpuCoolerDesc, cpuCoolerHeaderLabel,
                 cpuCoolerImageView, cpuCoolerImg, choiceCpuCooler, addCpu, cpuHeaderLabel, choiceCpu, cpuNames, "CPU");
         selectedCpuCooler = null;
-        cpuCoolerNames.addAll(dlaf.clearCpuCoolerNames());
+        dlaf.clearCpuCoolerNames();
         if (selectedCpu != null) {
             labelsSubValues(selectedCpu.getWattage(), selectedCpu.getPrice());
         }
@@ -1017,7 +1017,7 @@ public class PCBuilderEzController implements Initializable {
         backButtonUniversal("backMoboButtonAction", addMobo, backMobo, moboDesc, moboHeaderLabel, moboImageView, moboImg, choiceMobo,
                 addCpuCooler, backCpuCooler, cpuCoolerHeaderLabel, choiceCpuCooler, moboNames, "Cpu cooler");
         selectedMobo = null;
-        moboNames.addAll(dlaf.clearMoboNames());
+        dlaf.clearMoboNames();
         if (selectedCpuCooler != null) {
             labelsSubValues(selectedCpuCooler.getWattage(), selectedCpuCooler.getPrice());
         }
@@ -1032,7 +1032,7 @@ public class PCBuilderEzController implements Initializable {
             addButtonUniversal("addMoboButtonAction", addGpu, backGpu, gpuDesc, gpuHeaderLabel, gpuImageView, gpuImg, choiceGpu, gpuNames,
                     addMobo, backMobo, choiceMobo, moboHeaderLabel, "Your Motherboard: ");
             labelsAddValues(selectedMobo.getWattage(), selectedMobo.getPrice());
-           gpuNames = dlaf.getGpuNames(selectedCpu);
+           gpuNames = dlaf.getGpuNames(selectedCpu, gpuList);
            choiceGpu.setItems(gpuNames);
         }
     }
@@ -1045,7 +1045,7 @@ public class PCBuilderEzController implements Initializable {
         backButtonUniversal("backGpuButtonAction", addGpu, backGpu, gpuDesc, gpuHeaderLabel, gpuImageView, gpuImg, choiceGpu,
                 addMobo, backMobo, moboHeaderLabel, choiceMobo, moboNames, "Motherboard");
         selectedGpu = null;
-        gpuNames.addAll(dlaf.clearGpuNames());
+        dlaf.clearGpuNames();
         if (selectedMobo != null) {
             labelsSubValues(selectedMobo.getWattage(), selectedMobo.getPrice());
         }
@@ -1084,7 +1084,7 @@ public class PCBuilderEzController implements Initializable {
         backButtonUniversal("backRamButtonAction", addRam, backRam, ramDesc, ramHeaderLabel, ramImageView, ramImg, choiceRam,
                 addGpu, backGpu, gpuHeaderLabel, choiceGpu, gpuNames, "GPU");
         selectedRam = null;
-        ramNames.addAll(dlaf.clearRamNames());
+        dlaf.clearRamNames();
         if (selectedGpu != null) {
             labelsSubValues(selectedGpu.getWattage(), selectedGpu.getPrice());
         }
@@ -1100,7 +1100,7 @@ public class PCBuilderEzController implements Initializable {
                     addRam, backRam, choiceRam, ramHeaderLabel, "Your RAM:");
             labelsAddValues(selectedRam.getWattage(), selectedRam.getPrice());
             ssdNames.clear();
-            ssdNames.addAll(dlaf.getSsdNames(selectedMobo));
+            ssdNames.addAll(dlaf.getSsdNames(selectedMobo, ssdList));
             choiceSsd.setItems(ssdNames);
         }
     }
@@ -1113,7 +1113,7 @@ public class PCBuilderEzController implements Initializable {
         backButtonUniversal("backSsdButtonAction", addSsd, backSsd, ssdDesc, ssdHeaderLabel, ssdImageView, ssdImg, choiceSsd,
                 addRam, backRam, ramHeaderLabel, choiceRam, ramNames, "RAM");
         selectedSsd = null;
-        ssdNames.addAll(dlaf.clearSsdNames());
+        dlaf.clearSsdNames();
         if (selectedRam != null) {
             labelsSubValues(selectedRam.getWattage(), selectedRam.getPrice());
         }
@@ -1140,7 +1140,7 @@ public class PCBuilderEzController implements Initializable {
             addButtonUniversal("addSsdButtonName", addHdd, backHdd, hddDesc, hddHeaderLabel, hddImageView, hddImg, choiceHdd, hddNames,
                     addSsd, backSsd, choiceSsd, ssdHeaderLabel, "Your SSD:");
             hddNames.clear();
-            hddNames.addAll(dlaf.getHddNames(selectedSsd));
+            hddNames.addAll(dlaf.getHddNames(selectedSsd, hddList));
             choiceHdd.setItems(hddNames);
         }
     }
@@ -1153,7 +1153,7 @@ public class PCBuilderEzController implements Initializable {
         backButtonUniversal("backHddButtonAction", addHdd, backHdd, hddDesc, hddHeaderLabel, hddImageView, hddImg, choiceHdd,
                 addSsd, backSsd, ssdHeaderLabel, choiceSsd, ssdNames, "SSD");
         selectedHdd = null;
-        hddNames.addAll(dlaf.clearHddNames());
+        dlaf.clearHddNames();
         if (selectedSsd != null) {
             labelsSubValues(selectedSsd.getWattage(), selectedSsd.getPrice());
         }
@@ -1184,7 +1184,7 @@ public class PCBuilderEzController implements Initializable {
             addButtonUniversal("addHddButtonName", addPsu, backPsu, psuDesc, psuHeaderLabel, psuImageView, psuImg, choicePsu, psuNames,
                     addHdd, backHdd, choiceHdd, hddHeaderLabel, "Your HDD:");
             psuNames.clear();
-            psuNames.addAll(dlaf.getPsuNames(maxLoad));
+            psuNames.addAll(dlaf.getPsuNames(maxLoad, psuList));
             choicePsu.setItems(psuNames);
         }
     }
@@ -1197,7 +1197,7 @@ public class PCBuilderEzController implements Initializable {
         backButtonUniversal("backPsuButtonAction", addPsu, backPsu, psuDesc, psuHeaderLabel, psuImageView, psuImg, choicePsu,
                 addHdd, backHdd, hddHeaderLabel, choiceHdd, hddNames, "HDD");
         selectedPsu = null;
-        psuNames.addAll(dlaf.clearPsuNames());
+        dlaf.clearPsuNames();
         if (selectedHdd != null) {
             labelsSubValues(selectedHdd.getWattage(), selectedHdd.getPrice());
         }
@@ -1214,7 +1214,7 @@ public class PCBuilderEzController implements Initializable {
             totalPrice += selectedPsu.getPrice();
             totalPriceCounter.setText(String.valueOf(df2.format(totalPrice)) + "PLN");
             caseNames.clear();
-            caseNames.addAll(dlaf.getCaseNames(selectedMobo));
+            caseNames.addAll(dlaf.getCaseNames(selectedMobo, caseList));
             choiceCase.setItems(caseNames);
         }
     }

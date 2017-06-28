@@ -365,9 +365,8 @@ public class ModelDataLoaderAndFilter {
      * This function clears cpu cooler names list.
      * @return cpu cooler names list
      */
-    public ObservableList clearCpuCoolerNames () {
+    public void clearCpuCoolerNames () {
         cpuCoolerNames.clear();
-        return cpuCoolerNames;
     }
 
     /**
@@ -393,9 +392,8 @@ public class ModelDataLoaderAndFilter {
      * This function clears mobo names list
      * @return mobo names list
      */
-    public ObservableList clearMoboNames () {
+    public void clearMoboNames () {
         moboNames.clear();
-        return moboNames;
     }
 
     /**
@@ -403,7 +401,7 @@ public class ModelDataLoaderAndFilter {
      * @param selectedCpu selected CPU
      * @return gpu names list
      */
-    public ObservableList getGpuNames (ModelCPU selectedCpu){
+    public ObservableList getGpuNames (ModelCPU selectedCpu, ObservableList<ModelGPU> gpuList){
         gpuNames.clear();
         if (selectedCpu.getHasIntegratedGraphic() == true) {
             gpuNames.add("CPU Integrated graphic card");
@@ -419,9 +417,8 @@ public class ModelDataLoaderAndFilter {
      * This function clears gpu names list
      * @return gpu names list
      */
-    public ObservableList clearGpuNames () {
+    public void clearGpuNames () {
         gpuNames.clear();
-        return gpuNames;
     }
 
     /**
@@ -451,9 +448,8 @@ public class ModelDataLoaderAndFilter {
      * This function clears ram names list
      * @return ram names list
      */
-    public ObservableList clearRamNames () {
+    public void clearRamNames () {
         ramNames.clear();
-        return ramNames;
     }
 
     /**
@@ -461,17 +457,17 @@ public class ModelDataLoaderAndFilter {
      * @param selectedMobo selected motherboard
      * @return ssd names list
      */
-    public ObservableList getSsdNames(ModelMOBO selectedMobo){
+    public ObservableList getSsdNames(ModelMOBO selectedMobo, ObservableList<ModelSSD> ssdList){
         ssdNames.clear();
         ssdNames.add("Select nothing");
         for (int i = 0; i < ssdList.size(); i++) {
-            if (selectedMobo.getConnectors().contains("M.2 slot")) {
-                String ssdName = ssdList.get(i).getBrand() + " " + ssdList.get(i).getName() + " " + ssdList.get(i).getCapacity() + "GB";
+            if (selectedMobo.getConnectors().contains("M.2")) {
+                String ssdName = ssdList.get(i).getBrand() + " " + ssdList.get(i).getName() + " " + ssdList.get(i).getCapacity() + "GB (" + ssdList.get(i).getSerialNumber() + ")";
                 ssdNames.add(ssdName);
-            }
-            else {
-                if (ssdList.get(i).getFormFactor().contains("M.2") == false){
-                    String ssdName = ssdList.get(i).getBrand() + " " + ssdList.get(i).getName() + " " + ssdList.get(i).getCapacity() + "GB";
+            } else {
+                String formFactor = ssdList.get(i).getFormFactor();
+                if (formFactor.contains("M.2") == false){
+                    String ssdName = ssdList.get(i).getBrand() + " " + ssdList.get(i).getName() + " " + ssdList.get(i).getCapacity() + "GB (" + ssdList.get(i).getSerialNumber() + ")";
                     ssdNames.add(ssdName);
                 }
             }
@@ -483,9 +479,8 @@ public class ModelDataLoaderAndFilter {
      * This function clears ssd names list
      * @return ssd names list
      */
-    public ObservableList clearSsdNames () {
+    public void clearSsdNames () {
         ssdNames.clear();
-        return ssdNames;
     }
 
     /**
@@ -493,7 +488,7 @@ public class ModelDataLoaderAndFilter {
      * @param selectedSsd selected ssd
      * @return hdd names list
      */
-    public ObservableList getHddNames (ModelSSD selectedSsd) {
+    public ObservableList getHddNames (ModelSSD selectedSsd, ObservableList<ModelHDD> hddList) {
         hddNames.clear();
         if (selectedSsd != null) {
             hddNames.add("Select nothing");
@@ -514,9 +509,8 @@ public class ModelDataLoaderAndFilter {
      * This function clears hdd names list
      * @return hdd names list
      */
-    public ObservableList clearHddNames () {
+    public void clearHddNames () {
         hddNames.clear();
-        return hddNames;
     }
 
     /**
@@ -524,7 +518,7 @@ public class ModelDataLoaderAndFilter {
      * @param maxLoad max load (max wattage)
      * @return psu names list
      */
-    public ObservableList getPsuNames (double maxLoad) {
+    public ObservableList getPsuNames (double maxLoad, ObservableList<ModelPSU> psuList) {
         double minimalPsu = 1.2*maxLoad;
         psuNames.clear();
         for (int i = 0; i < psuList.size(); i++) {
@@ -540,9 +534,8 @@ public class ModelDataLoaderAndFilter {
      * This function clears psu names list
      * @return psu names list
      */
-    public ObservableList clearPsuNames () {
+    public void clearPsuNames () {
         psuNames.clear();
-        return psuNames;
     }
 
     /**
@@ -550,7 +543,7 @@ public class ModelDataLoaderAndFilter {
      * @param selectedMobo selected mobo
      * @return case names list
      */
-    public ObservableList getCaseNames (ModelMOBO selectedMobo) {
+    public ObservableList getCaseNames (ModelMOBO selectedMobo, ObservableList<ModelCase> caseList) {
         caseNames.clear();
         for (int i = 0; i < caseList.size(); i++) {
             if (caseList.get(i).getFormFactor().contains(selectedMobo.getFormFactor())){
