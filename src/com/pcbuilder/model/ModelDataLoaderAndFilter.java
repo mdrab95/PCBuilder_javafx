@@ -27,7 +27,7 @@ public class ModelDataLoaderAndFilter {
     /**
      * PSU data loader.
      * @return ModelPSU ObservableList
-     * @throws IOException
+     * @throws IOException File not found.
      */
     public ObservableList<ModelPSU> psuDataLoader() throws IOException {
         String line;
@@ -58,7 +58,7 @@ public class ModelDataLoaderAndFilter {
     /**
      * GPU data loader.
      * @return ModelGPU ObservableList
-     * @throws IOException
+     * @throws IOException File not found.
      */
     public ObservableList<ModelGPU> gpuDataLoader() throws IOException {
         String line;
@@ -97,7 +97,7 @@ public class ModelDataLoaderAndFilter {
     /**
      * CPU data loader.
      * @return ModelCPU ObservableList
-     * @throws IOException
+     * @throws IOException File not found.
      */
     public ObservableList<ModelCPU> cpuDataLoader() throws IOException {
         String line;
@@ -141,7 +141,7 @@ public class ModelDataLoaderAndFilter {
     /**
      * CPU Cooler data loader.
      * @return ModelCPUCooler ObservableList
-     * @throws IOException
+     * @throws IOException File not found.
      */
     public ObservableList<ModelCPUCooler> cpuCoolerDataLoader() throws IOException {
         String line;
@@ -173,7 +173,7 @@ public class ModelDataLoaderAndFilter {
     /**
      * Case data loader.
      * @return ModelCase ObservableList
-     * @throws IOException
+     * @throws IOException File not found.
      */
     public ObservableList<ModelCase> caseDataLoader() throws IOException {
         String line;
@@ -206,7 +206,7 @@ public class ModelDataLoaderAndFilter {
     /**
      * HDD data loader.
      * @return ModelHDD ObservableList
-     * @throws IOException
+     * @throws IOException File not found.
      */
     public ObservableList<ModelHDD> hddDataLoader() throws IOException {
         String line;
@@ -236,7 +236,7 @@ public class ModelDataLoaderAndFilter {
     /**
      * SSD data loader.
      * @return ModelSSD ObservableList
-     * @throws IOException
+     * @throws IOException File not found.
      */
     public ObservableList<ModelSSD> ssdDataLoader() throws IOException {
         String line;
@@ -269,7 +269,7 @@ public class ModelDataLoaderAndFilter {
     /**
      * RAM data loader.
      * @return ModelRAM ObservableList
-     * @throws IOException
+     * @throws IOException File not found.
      */
     public ObservableList<ModelRAM> ramDataLoader() throws IOException {
         String line;
@@ -306,7 +306,7 @@ public class ModelDataLoaderAndFilter {
     /**
      * PSU data loader.
      * @return ModelPSU ObservableList
-     * @throws IOException
+     * @throws IOException File not found.
      */
     public ObservableList<ModelMOBO> moboDataLoader() throws IOException {
         String line;
@@ -343,8 +343,10 @@ public class ModelDataLoaderAndFilter {
     ObservableList caseNames = FXCollections.observableArrayList();
 
     /**
+     * /**
      * This function creates cpu cooler names list based on selected CPU.
      * @param selectedCpu selectedCpu
+     * @param cpuCoolerList cpuCoolerList
      * @return cpu cooler names list
      */
     public ObservableList getCpuCoolerNames (ModelCPU selectedCpu, ObservableList<ModelCPUCooler> cpuCoolerList) {
@@ -363,17 +365,18 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function clears cpu cooler names list.
-     * @return cpu cooler names list
      */
     public void clearCpuCoolerNames () {
         cpuCoolerNames.clear();
     }
 
     /**
+     *  /**
      * This function creates mobo names list based on selected CPU.
      * @param selectedCpu selected cpu
      * @param selectedCpuCooler selected cpu cooler
-     * @return
+     * @param moboList mobo list
+     * @return mobo names list
      */
     public ObservableList getMoboNames (ModelCPU selectedCpu, ModelCPUCooler selectedCpuCooler, ObservableList<ModelMOBO> moboList) {
         if (selectedCpu.getBoxCooler() == false && selectedCpuCooler != null || selectedCpu.getBoxCooler() == true && selectedCpuCooler != null || selectedCpu.getBoxCooler() == true && selectedCpuCooler == null) {
@@ -390,15 +393,15 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function clears mobo names list
-     * @return mobo names list
      */
     public void clearMoboNames () {
         moboNames.clear();
     }
 
     /**
-     * This function creates gpu names list based on selected CPU.
-     * @param selectedCpu selected CPU
+     * * This function creates gpu names list based on selected CPU.
+     * @param selectedCpu selected cpu
+     * @param gpuList gpu list
      * @return gpu names list
      */
     public ObservableList getGpuNames (ModelCPU selectedCpu, ObservableList<ModelGPU> gpuList){
@@ -415,7 +418,6 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function clears gpu names list
-     * @return gpu names list
      */
     public void clearGpuNames () {
         gpuNames.clear();
@@ -423,8 +425,9 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function creates ram names list based on selected mobo.
-     * @param selectedMobo selected motherboard
-     * @return
+     * @param selectedMobo selected mobo
+     * @param ramList ram list
+     * @return ram names list
      */
     public ObservableList getRamNames(ModelMOBO selectedMobo, ObservableList<ModelRAM> ramList){
         ramNames.clear();
@@ -446,7 +449,6 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function clears ram names list
-     * @return ram names list
      */
     public void clearRamNames () {
         ramNames.clear();
@@ -454,7 +456,8 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function creates ssd names list based on selected mobo.
-     * @param selectedMobo selected motherboard
+     * @param selectedMobo selected mobo
+     * @param ssdList ssd list
      * @return ssd names list
      */
     public ObservableList getSsdNames(ModelMOBO selectedMobo, ObservableList<ModelSSD> ssdList){
@@ -477,7 +480,6 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function clears ssd names list
-     * @return ssd names list
      */
     public void clearSsdNames () {
         ssdNames.clear();
@@ -486,6 +488,7 @@ public class ModelDataLoaderAndFilter {
     /**
      * This function creates hdd names list based on selected ssd
      * @param selectedSsd selected ssd
+     * @param hddList hdd list
      * @return hdd names list
      */
     public ObservableList getHddNames (ModelSSD selectedSsd, ObservableList<ModelHDD> hddList) {
@@ -507,7 +510,6 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function clears hdd names list
-     * @return hdd names list
      */
     public void clearHddNames () {
         hddNames.clear();
@@ -515,7 +517,8 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function creates psu names list based on max load
-     * @param maxLoad max load (max wattage)
+     * @param maxLoad max load wattage (W)
+     * @param psuList psu list
      * @return psu names list
      */
     public ObservableList getPsuNames (double maxLoad, ObservableList<ModelPSU> psuList) {
@@ -532,7 +535,6 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function clears psu names list
-     * @return psu names list
      */
     public void clearPsuNames () {
         psuNames.clear();
@@ -541,6 +543,7 @@ public class ModelDataLoaderAndFilter {
     /**
      * This function creates case names list based on form factor of selected mobo
      * @param selectedMobo selected mobo
+     * @param caseList case list
      * @return case names list
      */
     public ObservableList getCaseNames (ModelMOBO selectedMobo, ObservableList<ModelCase> caseList) {

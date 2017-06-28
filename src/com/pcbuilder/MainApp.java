@@ -293,7 +293,7 @@ public class MainApp extends Application {
 
     /**
      * main method
-     * @param args
+     * @param args args
      */
     public static void main(String[] args) {
         launch(args);
