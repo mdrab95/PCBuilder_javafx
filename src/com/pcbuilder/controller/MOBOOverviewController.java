@@ -1,6 +1,7 @@
 package com.pcbuilder.controller;
 
 import com.pcbuilder.MainApp;
+import com.pcbuilder.model.ModelDataLoaderAndFilter;
 import com.pcbuilder.model.ModelMOBO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,7 +37,7 @@ public class MOBOOverviewController implements Initializable{
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         moboData.clear();
-        DataLoader loader = new DataLoader();
+        ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
         try {
             moboData.addAll(loader.moboDataLoader());
         } catch (IOException e) {}

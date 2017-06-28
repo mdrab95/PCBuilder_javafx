@@ -1,6 +1,7 @@
 package com.pcbuilder.controller;
 
 import com.pcbuilder.MainApp;
+import com.pcbuilder.model.ModelDataLoaderAndFilter;
 import com.pcbuilder.model.ModelGPU;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -246,7 +247,7 @@ public class GPUOverviewController implements Initializable {
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         gpuData.clear();
-        DataLoader loader = new DataLoader();
+        ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
         try {gpuData.addAll(loader.gpuDataLoader());}
         catch(IOException e){};
         searchBar.textProperty().addListener((obs, oldText, newText) -> {

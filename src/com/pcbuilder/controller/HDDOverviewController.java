@@ -1,6 +1,7 @@
 package com.pcbuilder.controller;
 
 import com.pcbuilder.MainApp;
+import com.pcbuilder.model.ModelDataLoaderAndFilter;
 import com.pcbuilder.model.ModelHDD;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,7 +36,7 @@ public class HDDOverviewController implements Initializable {
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         hddData.clear();
-        DataLoader loader = new DataLoader();
+        ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
         try {
             hddData.addAll(loader.hddDataLoader());
         } catch (IOException e) {}
