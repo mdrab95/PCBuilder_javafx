@@ -111,9 +111,9 @@
 }
 
 .pcbuilder-disabled {
-  visibility:disabled;
+  visibility: disabled;
 }
 
 .pcbuilder-enabled {
-  visibility:visible;
+  visibility: visible;
 }
