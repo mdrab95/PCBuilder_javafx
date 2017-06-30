@@ -122,42 +122,15 @@ class SingleService {
      * loads all data
      */
     private void dataLoading() {
-        try {
-            cpuList.addAll(dlaf.cpuDataLoader());
-        } catch (IOException e) {
-        }
-        try {
-            cpuCoolerList.addAll(dlaf.cpuCoolerDataLoader());
-        } catch (IOException e) {
-        }
-        try {
-            ramList.addAll(dlaf.ramDataLoader());
-        } catch (IOException e) {
-        }
-        try {
-            ssdList.addAll(dlaf.ssdDataLoader());
-        } catch (IOException e) {
-        }
-        try {
-            hddList.addAll(dlaf.hddDataLoader());
-        } catch (IOException e) {
-        }
-        try {
-            gpuList.addAll(dlaf.gpuDataLoader());
-        } catch (IOException e) {
-        }
-        try {
-            psuList.addAll(dlaf.psuDataLoader());
-        } catch (IOException e) {
-        }
-        try {
-            caseList.addAll(dlaf.caseDataLoader());
-        } catch (IOException e) {
-        }
-        try {
-            moboList.addAll(dlaf.moboDataLoader());
-        } catch (IOException e) {
-        }
+        cpuList.addAll(dlaf.cpuDataLoader());
+        cpuCoolerList.addAll(dlaf.cpuCoolerDataLoader());
+        moboList.addAll(dlaf.moboDataLoader());
+        gpuList.addAll(dlaf.gpuDataLoader());
+        ramList.addAll(dlaf.ramDataLoader());
+        ssdList.addAll(dlaf.ssdDataLoader());
+        hddList.addAll(dlaf.hddDataLoader());
+        psuList.addAll(dlaf.psuDataLoader());
+        caseList.addAll(dlaf.caseDataLoader());
     }
 
     /**
@@ -419,12 +392,12 @@ class SingleService {
                     + " " + item.getName();
             if (itemData.toUpperCase().contains(searchedValue.toUpperCase())) {
                 out.println((padRight(item.getManufacturer(), 7) + padRight(item.getseries()
-                        + " ", 11) + padRight(item.getName(),14) + padRight(String.valueOf(item.getPrice()), 6)) + " PLN");
+                        + " ", 11) + padRight(item.getName(), 14) + padRight(String.valueOf(item.getPrice()), 6)) + " PLN");
                 foundNothing = false;
             }
-            if (foundNothing == true)
-                foundNothing();
         }
+        if (foundNothing == true)
+            foundNothing();
     }
 
     /**

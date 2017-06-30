@@ -37,15 +37,8 @@ public class HDDOverviewController implements Initializable {
     public void initialize (URL location, ResourceBundle resources) {
         hddData.clear();
         ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
-        try {
-            hddData.addAll(loader.hddDataLoader());
-        } catch (IOException e) {}
-
-        Comparator<ModelHDD> comparator = Comparator.comparingInt(ModelHDD::getPrice);
-        FXCollections.sort(hddData, comparator.reversed());
-
+        hddData.addAll(loader.hddDataLoader());
         hddListView.setItems(hddData);
-
         hddListView.setCellFactory(new Callback<ListView<ModelHDD>, ListCell<ModelHDD>>() {
             @Override
             public ListCell<ModelHDD> call(ListView<ModelHDD> param) {

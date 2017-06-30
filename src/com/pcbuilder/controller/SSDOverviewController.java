@@ -36,12 +36,8 @@ public class SSDOverviewController implements Initializable {
     public void initialize (URL location, ResourceBundle resources) {
         ssdData.clear();
         ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
-        try {
-            ssdData.addAll(loader.ssdDataLoader());
-        } catch (IOException e) {}
-
+        ssdData.addAll(loader.ssdDataLoader());
         ssdListView.setItems(ssdData);
-
         ssdListView.setCellFactory(new Callback<ListView<ModelSSD>, ListCell<ModelSSD>>() {
             @Override
             public ListCell<ModelSSD> call(ListView<ModelSSD> param) {

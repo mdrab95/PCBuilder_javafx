@@ -248,8 +248,7 @@ public class GPUOverviewController implements Initializable {
     public void initialize (URL location, ResourceBundle resources) {
         gpuData.clear();
         ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
-        try {gpuData.addAll(loader.gpuDataLoader());}
-        catch(IOException e){};
+        gpuData.addAll(loader.gpuDataLoader());
         searchBar.textProperty().addListener((obs, oldText, newText) -> {
             searchBarFiltering();
         });

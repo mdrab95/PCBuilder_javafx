@@ -36,11 +36,8 @@ public class RAMOverviewController implements Initializable {
     public void initialize (URL location, ResourceBundle resources) {
         ramData.clear();
         ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
-        try {ramData.addAll(loader.ramDataLoader());}
-        catch(IOException e){};
-
+        ramData.addAll(loader.ramDataLoader());
         ramListView.setItems(ramData);
-
         ramListView.setCellFactory(new Callback<ListView<ModelRAM>, ListCell<ModelRAM>>() {
             @Override
             public ListCell<ModelRAM> call(ListView<ModelRAM> param) {

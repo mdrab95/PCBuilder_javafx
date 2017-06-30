@@ -37,12 +37,8 @@ public class CPUOverviewController implements Initializable {
     public void initialize (URL location, ResourceBundle resources) {
         cpuData.clear();
         ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
-        try {
-            cpuData.addAll(loader.cpuDataLoader());
-        } catch (IOException e) {}
-
+        cpuData.addAll(loader.cpuDataLoader());
         cpuListView.setItems(cpuData);
-
         cpuListView.setCellFactory(new Callback<ListView<ModelCPU>, ListCell<ModelCPU>>() {
             @Override
             public ListCell<ModelCPU> call(ListView<ModelCPU> param) {

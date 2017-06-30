@@ -38,9 +38,7 @@ public class CPUCoolerOverviewController implements Initializable {
     public void initialize (URL location, ResourceBundle resources) {
         cpuCoolerData.clear();
         ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
-        try {
-            cpuCoolerData.addAll(loader.cpuCoolerDataLoader());
-        } catch (IOException e) {}
+        cpuCoolerData.addAll(loader.cpuCoolerDataLoader());
         cpuCoolerListView.setItems(cpuCoolerData);
         cpuCoolerListView.setCellFactory(new Callback<ListView<ModelCPUCooler>, ListCell<ModelCPUCooler>>() {
             @Override

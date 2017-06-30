@@ -35,11 +35,8 @@ public class PSUOverviewController implements Initializable {
     public void initialize (URL location, ResourceBundle resources) {
         psuData.clear();
         ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
-        try {psuData.addAll(loader.psuDataLoader());}
-        catch(IOException e){};
-
+        psuData.addAll(loader.psuDataLoader());
         psuListView.setItems(psuData);
-
         psuListView.setCellFactory(new Callback<ListView<ModelPSU>, ListCell<ModelPSU>>() {
             @Override
             public ListCell<ModelPSU> call(ListView<ModelPSU> param) {

@@ -38,12 +38,8 @@ public class MOBOOverviewController implements Initializable{
     public void initialize (URL location, ResourceBundle resources) {
         moboData.clear();
         ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
-        try {
-            moboData.addAll(loader.moboDataLoader());
-        } catch (IOException e) {}
-
+        moboData.addAll(loader.moboDataLoader());
         moboListView.setItems(moboData);
-
         moboListView.setCellFactory(new Callback<ListView<ModelMOBO>, ListCell<ModelMOBO>>() {
             @Override
             public ListCell<ModelMOBO> call(ListView<ModelMOBO> param) {
