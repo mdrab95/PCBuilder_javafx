@@ -30,7 +30,7 @@ public class ModelDataLoaderAndFilter {
      * @return ModelCPU ObservableList
      */
     public ObservableList<ModelCPU> cpuDataLoader(){
-        System.out.println("Loading CPU data...");
+        System.out.println("----------\nLoading CPU data...");
         Connection con = null;
         try {
             // Load file with db driver class
@@ -65,6 +65,7 @@ public class ModelDataLoaderAndFilter {
             }
             rs.close();
         } catch (SQLException sqle) {
+            System.out.println("Can't load CPU data.");
             System.err.println("SQL exception: " + sqle.getMessage());
         } catch (ClassNotFoundException cnfe) {
             System.err.println("ClassNotFound exception: " + cnfe.getMessage());
@@ -78,7 +79,10 @@ public class ModelDataLoaderAndFilter {
             }
             Comparator<ModelCPU> comparator = Comparator.comparingInt(ModelCPU::getPrice);
             FXCollections.sort(cpuList, comparator.reversed());
-            System.out.println("CPU data loaded.");
+            if (cpuList.size()!=0)
+                System.out.println("CPU data loaded.");
+            else
+                System.out.println("There is no CPU data.");
         }
         return cpuList;
     }
@@ -88,7 +92,7 @@ public class ModelDataLoaderAndFilter {
      * @return ModelCPUCooler ObservableList
      */
     public ObservableList<ModelCPUCooler> cpuCoolerDataLoader() {
-        System.out.println("Loading CPU Cooler data...");
+        System.out.println("----------\nLoading CPU Cooler data...");
         Connection con = null;
         try {
             // Load file with db driver class
@@ -114,6 +118,7 @@ public class ModelDataLoaderAndFilter {
             }
             rs.close();
         } catch (SQLException sqle) {
+            System.out.println("Can't load CPU Cooler data.");
             System.err.println("SQL exception: " + sqle.getMessage());
         } catch (ClassNotFoundException cnfe) {
             System.err.println("ClassNotFound exception: " + cnfe.getMessage());
@@ -127,7 +132,10 @@ public class ModelDataLoaderAndFilter {
             }
             Comparator<ModelCPUCooler> comparator = Comparator.comparingInt(ModelCPUCooler::getPrice);
             FXCollections.sort(cpuCoolerList, comparator.reversed());
-            System.out.println("CPU Cooler data loaded.");
+            if (cpuCoolerList.size()!=0)
+                System.out.println("CPU Cooler data loaded.");
+            else
+                System.out.println("There is no CPU Cooler data.");
         }
         return cpuCoolerList;
     }
@@ -137,7 +145,7 @@ public class ModelDataLoaderAndFilter {
      * @return ModelPSU ObservableList
      */
     public ObservableList<ModelMOBO> moboDataLoader() {
-        System.out.println("Loading MOBO data...");
+        System.out.println("----------\nLoading MOBO data...");
         Connection con = null;
         try {
             // Load file with db driver class
@@ -162,6 +170,7 @@ public class ModelDataLoaderAndFilter {
             }
             rs.close();
         } catch (SQLException sqle) {
+            System.out.println("Can't load MOBO data.");
             System.err.println("SQL exception: " + sqle.getMessage());
         } catch (ClassNotFoundException cnfe) {
             System.err.println("ClassNotFound exception: " + cnfe.getMessage());
@@ -175,7 +184,10 @@ public class ModelDataLoaderAndFilter {
             }
             Comparator<ModelMOBO> comparator = Comparator.comparingInt(ModelMOBO::getPrice);
             FXCollections.sort(moboList, comparator.reversed());
-            System.out.println("MOBO data loaded.");
+            if (moboList.size()!=0)
+                System.out.println("MOBO data loaded.");
+            else
+                System.out.println("There is no MOBO data.");
         }
         return moboList;
     }
@@ -185,7 +197,7 @@ public class ModelDataLoaderAndFilter {
      * @return ModelGPU ObservableList
      */
     public ObservableList<ModelGPU> gpuDataLoader(){
-        System.out.println("Loading GPU data...");
+        System.out.println("----------\nLoading GPU data...");
         Connection con = null;
         try {
             // Load file with db driver class
@@ -222,6 +234,7 @@ public class ModelDataLoaderAndFilter {
             }
             rs.close();
         } catch (SQLException sqle) {
+            System.out.println("Can't load GPU data.");
             System.err.println("SQL exception: " + sqle.getMessage());
         } catch (ClassNotFoundException cnfe) {
             System.err.println("ClassNotFound exception: " + cnfe.getMessage());
@@ -235,7 +248,10 @@ public class ModelDataLoaderAndFilter {
             }
             Comparator<ModelGPU> comparator = Comparator.comparingInt(ModelGPU::getPrice);
             FXCollections.sort(gpuList, comparator.reversed());
-            System.out.println("GPU data loaded.");
+            if (gpuList.size()!=0)
+                System.out.println("GPU data loaded.");
+            else
+                System.out.println("There is no GPU data.");
         }
         return gpuList;
     }
@@ -245,7 +261,7 @@ public class ModelDataLoaderAndFilter {
      * @return ModelRAM ObservableList
      */
     public ObservableList<ModelRAM> ramDataLoader() {
-        System.out.println("Loading RAM data...");
+        System.out.println("----------\nLoading RAM data...");
         Connection con = null;
         try {
             // Load file with db driver class
@@ -277,6 +293,7 @@ public class ModelDataLoaderAndFilter {
             }
             rs.close();
         } catch (SQLException sqle) {
+            System.out.println("Can't load RAM data.");
             System.err.println("SQL exception: " + sqle.getMessage());
         } catch (ClassNotFoundException cnfe) {
             System.err.println("ClassNotFound exception: " + cnfe.getMessage());
@@ -290,7 +307,10 @@ public class ModelDataLoaderAndFilter {
             }
             Comparator<ModelRAM> comparator = Comparator.comparingInt(ModelRAM::getPrice);
             FXCollections.sort(ramList, comparator.reversed());
-            System.out.println("RAM data loaded.");
+            if (ramList.size()!=0)
+                System.out.println("RAM data loaded.");
+            else
+                System.out.println("There is no RAM data.");
         }
         return ramList;
     }
@@ -300,7 +320,7 @@ public class ModelDataLoaderAndFilter {
      * @return ModelSSD ObservableList
      */
     public ObservableList<ModelSSD> ssdDataLoader() {
-        System.out.println("Loading SSD data...");
+        System.out.println("----------\nLoading SSD data...");
         Connection con = null;
         try {
             // Load file with db driver class
@@ -329,6 +349,7 @@ public class ModelDataLoaderAndFilter {
             }
             rs.close();
         } catch (SQLException sqle) {
+            System.out.println("Can't load SSD data.");
             System.err.println("SQL exception: " + sqle.getMessage());
         } catch (ClassNotFoundException cnfe) {
             System.err.println("ClassNotFound exception: " + cnfe.getMessage());
@@ -342,7 +363,10 @@ public class ModelDataLoaderAndFilter {
             }
             Comparator<ModelSSD> comparator = Comparator.comparingInt(ModelSSD::getPrice);
             FXCollections.sort(ssdList, comparator.reversed());
-            System.out.println("SSD data loaded.");
+            if (ssdList.size()!=0)
+                System.out.println("SSD data loaded.");
+            else
+                System.out.println("There is no SSD data.");
         }
         return ssdList;
     }
@@ -352,7 +376,7 @@ public class ModelDataLoaderAndFilter {
      * @return ModelHDD ObservableList
      */
     public ObservableList<ModelHDD> hddDataLoader() {
-        System.out.println("Loading HDD data...");
+        System.out.println("----------\nLoading HDD data...");
         Connection con = null;
         try {
             // Load file with db driver class
@@ -378,6 +402,7 @@ public class ModelDataLoaderAndFilter {
             }
             rs.close();
         } catch (SQLException sqle) {
+            System.out.println("Can't load HDD data.");
             System.err.println("SQL exception: " + sqle.getMessage());
         } catch (ClassNotFoundException cnfe) {
             System.err.println("ClassNotFound exception: " + cnfe.getMessage());
@@ -391,7 +416,10 @@ public class ModelDataLoaderAndFilter {
             }
             Comparator<ModelHDD> comparator = Comparator.comparingInt(ModelHDD::getPrice);
             FXCollections.sort(hddList, comparator.reversed());
-            System.out.println("HDD data loaded.");
+            if (hddList.size()!=0)
+                System.out.println("HDD data loaded.");
+            else
+                System.out.println("There is no HDD data.");
         }
         return hddList;
     }
@@ -401,7 +429,7 @@ public class ModelDataLoaderAndFilter {
      * @return ModelPSU ObservableList
      */
     public ObservableList<ModelPSU> psuDataLoader() {
-        System.out.println("Loading PSU data...");
+        System.out.println("----------\nLoading PSU data...");
         Connection con = null;
         try {
             // Load file with db driver class
@@ -431,6 +459,7 @@ public class ModelDataLoaderAndFilter {
             }
             rs.close();
         } catch (SQLException sqle) {
+            System.out.println("Can't load PSU data.");
             System.err.println("SQL exception: " + sqle.getMessage());
         } catch (ClassNotFoundException cnfe) {
             System.err.println("ClassNotFound exception: " + cnfe.getMessage());
@@ -444,7 +473,10 @@ public class ModelDataLoaderAndFilter {
             }
             Comparator<ModelPSU> comparator = Comparator.comparingInt(ModelPSU::getPrice);
             FXCollections.sort(psuList, comparator.reversed());
-            System.out.println("PSU data loaded.");
+            if (psuList.size()!=0)
+                System.out.println("PSU data loaded.");
+            else
+                System.out.println("There is no PSU data.");
         }
         return psuList;
     }
@@ -454,7 +486,7 @@ public class ModelDataLoaderAndFilter {
      * @return ModelCase ObservableList
      */
     public ObservableList<ModelCase> caseDataLoader() {
-        System.out.println("Loading Case data...");
+        System.out.println("----------\nLoading Case data...");
         Connection con = null;
         try {
             // Load file with db driver class
@@ -483,6 +515,7 @@ public class ModelDataLoaderAndFilter {
             }
             rs.close();
         } catch (SQLException sqle) {
+            System.out.println("Can't load Case data.");
             System.err.println("SQL exception: " + sqle.getMessage());
         } catch (ClassNotFoundException cnfe) {
             System.err.println("ClassNotFound exception: " + cnfe.getMessage());
@@ -496,7 +529,11 @@ public class ModelDataLoaderAndFilter {
             }
             Comparator<ModelCase> comparator = Comparator.comparingInt(ModelCase::getPrice);
             FXCollections.sort(caseList, comparator.reversed());
-            System.out.println("Case data loaded.");
+            if (ssdList.size()!=0)
+                System.out.println("Case data loaded.");
+            else
+                System.out.println("There is no Case data.");
+            System.out.println("----------");
         }
         return caseList;
     }
