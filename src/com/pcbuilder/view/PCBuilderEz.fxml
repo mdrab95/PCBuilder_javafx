@@ -128,7 +128,7 @@
                   <String fx:value="pcbuilder-disabled" />
                </styleClass>
             </Label>
-            <Label fx:id="gpuDesc" maxWidth="250.0" style="pcbuilder-disabled" text="GPU description" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Label fx:id="gpuDesc" maxWidth="250.0" styleClass="pcbuilder-disabled" text="GPU description" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <styleClass>
                   <String fx:value="label-pcbuilder" />
                   <String fx:value="pcbuilder-disabled" />

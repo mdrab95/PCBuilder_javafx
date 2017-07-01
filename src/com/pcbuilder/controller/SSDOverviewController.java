@@ -36,12 +36,8 @@ public class SSDOverviewController implements Initializable {
     public void initialize (URL location, ResourceBundle resources) {
         ssdData.clear();
         ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
-        try {
-            ssdData.addAll(loader.ssdDataLoader());
-        } catch (IOException e) {}
-
+        ssdData.addAll(loader.ssdDataLoader());
         ssdListView.setItems(ssdData);
-
         ssdListView.setCellFactory(new Callback<ListView<ModelSSD>, ListCell<ModelSSD>>() {
             @Override
             public ListCell<ModelSSD> call(ListView<ModelSSD> param) {
@@ -55,15 +51,13 @@ public class SSDOverviewController implements Initializable {
                             try {
                                 Image img = new Image(ssdItem.getSmallImagePath() + ssdItem.getSerialNumber() + ".png", true);
                                 ImageView imageView = new ImageView(img);
-                                imageView.setFitHeight(100);
-                                imageView.setFitWidth(100);
+                                mainApp.setImgSize(imageView);
                                 setGraphic(imageView);
                             }
                             catch (Exception ex){
                                 Image img = new Image("images/no_img.png");
                                 ImageView imageView = new ImageView(img);
-                                imageView.setFitHeight(100);
-                                imageView.setFitWidth(100);
+                                mainApp.setImgSize(imageView);
                                 setGraphic(imageView);
                             }
 

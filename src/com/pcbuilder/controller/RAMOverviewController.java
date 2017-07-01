@@ -36,11 +36,8 @@ public class RAMOverviewController implements Initializable {
     public void initialize (URL location, ResourceBundle resources) {
         ramData.clear();
         ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
-        try {ramData.addAll(loader.ramDataLoader());}
-        catch(IOException e){};
-
+        ramData.addAll(loader.ramDataLoader());
         ramListView.setItems(ramData);
-
         ramListView.setCellFactory(new Callback<ListView<ModelRAM>, ListCell<ModelRAM>>() {
             @Override
             public ListCell<ModelRAM> call(ListView<ModelRAM> param) {
@@ -55,15 +52,13 @@ public class RAMOverviewController implements Initializable {
                                 String ramSerial = ramItem.getSerialNumber().replaceAll("/", "-");
                                 Image img = new Image(ramItem.getSmallImagePath() + ramSerial + ".png", true);
                                 ImageView imageView = new ImageView(img);
-                                imageView.setFitHeight(100);
-                                imageView.setFitWidth(100);
+                                mainApp.setImgSize(imageView);
                                 setGraphic(imageView);
                             }
                             catch (Exception ex){
                                 Image img = new Image("images/no_img.png");
                                 ImageView imageView = new ImageView(img);
-                                imageView.setFitHeight(100);
-                                imageView.setFitWidth(100);
+                                mainApp.setImgSize(imageView);
                                 setGraphic(imageView);
                             }
                             String ramDescription = ramItem.getBrand() + " " + ramItem.getName() + " " + ramItem.getMemorySize() + "GB (" + ramItem.getNumberOfModules() + "x" + ramItem.getSingleModuleSize() + "GB) " + ramItem.getStandard() + " " + ramItem.getMemoryClock() + "MHz (" + ramItem.getSerialNumber() + ")"

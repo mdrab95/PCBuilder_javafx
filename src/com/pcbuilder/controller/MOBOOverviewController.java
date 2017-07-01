@@ -38,12 +38,8 @@ public class MOBOOverviewController implements Initializable{
     public void initialize (URL location, ResourceBundle resources) {
         moboData.clear();
         ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
-        try {
-            moboData.addAll(loader.moboDataLoader());
-        } catch (IOException e) {}
-
+        moboData.addAll(loader.moboDataLoader());
         moboListView.setItems(moboData);
-
         moboListView.setCellFactory(new Callback<ListView<ModelMOBO>, ListCell<ModelMOBO>>() {
             @Override
             public ListCell<ModelMOBO> call(ListView<ModelMOBO> param) {
@@ -57,15 +53,13 @@ public class MOBOOverviewController implements Initializable{
                             try {
                                 Image img = new Image(moboItem.getSmallImagePath() + moboItem.getSerialNumber() + ".png", true);
                                 ImageView imageView = new ImageView(img);
-                                imageView.setFitHeight(100);
-                                imageView.setFitWidth(100);
+                                mainApp.setImgSize(imageView);
                                 setGraphic(imageView);
                             }
                             catch (Exception ex){
                                 Image img = new Image("images/no_img.png");
                                 ImageView imageView = new ImageView(img);
-                                imageView.setFitHeight(100);
-                                imageView.setFitWidth(100);
+                                mainApp.setImgSize(imageView);
                                 setGraphic(imageView);
                             }
 

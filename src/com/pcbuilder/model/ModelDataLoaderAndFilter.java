@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.sql.*;
 import java.util.Comparator;
 
 /**
@@ -25,312 +26,518 @@ public class ModelDataLoaderAndFilter {
     ObservableList <ModelCase> caseList = FXCollections.observableArrayList();
 
     /**
+     * CPU data loader.
+     * @return ModelCPU ObservableList
+     */
+    public ObservableList<ModelCPU> cpuDataLoader(){
+        System.out.println("----------\nLoading CPU data...");
+        Connection con = null;
+        try {
+            // Load file with db driver class
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            // Create connection to db
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/pcbuilder", "pcbuilder", "pcbuilder");
+            // Create the statement
+            Statement statement = con.createStatement();
+            // Send inquiry to db
+            ResultSet rs = statement.executeQuery("SELECT * FROM CPU");
+            // Add recieved data to list
+
+            while (rs.next()) {
+                boolean cpuIsUnlocked = false;
+                if (rs.getInt("IsUnlocked") == 1)
+                    cpuIsUnlocked = true;
+                boolean cpuHasIntegratedGraphicCard = false;
+                if (rs.getInt("integratedGfx") == 1)
+                    cpuHasIntegratedGraphicCard = true;
+                boolean isTheCpuCoolerIncluded = false;
+                if (rs.getInt("isTheCpuCoolerIncluded") == 1)
+                    isTheCpuCoolerIncluded = true;
+                try {
+                    cpuList.add(new ModelCPU(rs.getString("brand"), rs.getString("socket"), rs.getString("name"), rs.getString("family"),
+                            rs.getInt("technology"), rs.getInt("numberOfCores"), rs.getInt("numberOfThreads"), cpuIsUnlocked, cpuHasIntegratedGraphicCard,
+                            rs.getDouble("speed"), rs.getDouble("boostSpeed"), rs.getDouble("cacheL2"), rs.getDouble("cacheL3"),
+                            rs.getInt("tdp"), rs.getInt("wattage"), rs.getString("packageType"), isTheCpuCoolerIncluded, rs.getInt("price"),
+                            rs.getString("imagePath"), rs.getString("smallImagePath")));
+                } catch (Exception ex) {
+                    System.out.println("Can't load data from table. Row number: " + rs.getInt("id"));
+                }
+            }
+            rs.close();
+        } catch (SQLException sqle) {
+            System.out.println("Can't load CPU data.");
+            System.err.println("SQL exception: " + sqle.getMessage());
+        } catch (ClassNotFoundException cnfe) {
+            System.err.println("ClassNotFound exception: " + cnfe.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException sqle) {
+                System.err.println("SQL exception: " + sqle.getMessage());
+            }
+            Comparator<ModelCPU> comparator = Comparator.comparingInt(ModelCPU::getPrice);
+            FXCollections.sort(cpuList, comparator.reversed());
+            if (cpuList.size()!=0)
+                System.out.println("CPU data loaded.");
+            else
+                System.out.println("There is no CPU data.");
+        }
+        return cpuList;
+    }
+
+    /**
+     * CPU Cooler data loader.
+     * @return ModelCPUCooler ObservableList
+     */
+    public ObservableList<ModelCPUCooler> cpuCoolerDataLoader() {
+        System.out.println("----------\nLoading CPU Cooler data...");
+        Connection con = null;
+        try {
+            // Load file with db driver class
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            // Create connection to db
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/pcbuilder", "pcbuilder", "pcbuilder");
+            // Create the statement
+            Statement statement = con.createStatement();
+            // Send inquiry to db
+            ResultSet rs = statement.executeQuery("SELECT * FROM CPUCOOLER");
+            // Add recieved data to list
+
+            while (rs.next()) {
+                try {
+                    cpuCoolerList.add(new ModelCPUCooler(rs.getString("brand"), rs.getString("name"), rs.getString("manufacturerCode"), rs.getString("sockets"),
+                            rs.getString("design"), rs.getDouble("depth"), rs.getDouble("width"), rs.getDouble("height"), rs.getInt("weight"),
+                            rs.getDouble("airFlow"), rs.getInt("heatPipes"), rs.getInt("numberOfFans"), rs.getDouble("fanSizeX"), rs.getDouble("fanSizeY"),
+                            rs.getDouble("fanSizeHeight"), rs.getInt("minFanSpeed"), rs.getInt("maxFanSpeed"), rs.getInt("minFanNoise"), rs.getInt("maxFanNoise"),
+                            rs.getInt("wattage"), rs.getString("connectorType"), rs.getInt("price"), rs.getString("imagePath"), rs.getString("smallImagePath")));
+                } catch (Exception ex) {
+                    System.out.println("Can't load data from table. Row number: " + rs.getInt("id"));
+                }
+            }
+            rs.close();
+        } catch (SQLException sqle) {
+            System.out.println("Can't load CPU Cooler data.");
+            System.err.println("SQL exception: " + sqle.getMessage());
+        } catch (ClassNotFoundException cnfe) {
+            System.err.println("ClassNotFound exception: " + cnfe.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException sqle) {
+                System.err.println("SQL exception: " + sqle.getMessage());
+            }
+            Comparator<ModelCPUCooler> comparator = Comparator.comparingInt(ModelCPUCooler::getPrice);
+            FXCollections.sort(cpuCoolerList, comparator.reversed());
+            if (cpuCoolerList.size()!=0)
+                System.out.println("CPU Cooler data loaded.");
+            else
+                System.out.println("There is no CPU Cooler data.");
+        }
+        return cpuCoolerList;
+    }
+
+    /**
      * PSU data loader.
      * @return ModelPSU ObservableList
-     * @throws IOException
      */
-    public ObservableList<ModelPSU> psuDataLoader() throws IOException {
-        String line;
-        psuList.clear();
+    public ObservableList<ModelMOBO> moboDataLoader() {
+        System.out.println("----------\nLoading MOBO data...");
+        Connection con = null;
         try {
-            name = "psu.txt";
-            File file = new File (path + name);
-            InputStream fis = new FileInputStream(file);
-            InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
-            BufferedReader br = new BufferedReader(isr);
-            while ((line = br.readLine()) != null) {
-                String[]data = line.split(";");
-                String psuIsModularString = data[9];
-                Boolean psuIsModular = false;
-                if (psuIsModularString.equals("true"))
-                    psuIsModular = true;
+            // Load file with db driver class
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            // Create connection to db
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/pcbuilder", "pcbuilder", "pcbuilder");
+            // Create the statement
+            Statement statement = con.createStatement();
+            // Send inquiry to db
+            ResultSet rs = statement.executeQuery("SELECT * FROM MOBO");
+            // Add recieved data to list
 
-                psuList.add(new ModelPSU(data[0], data[1], data[2], data[3], data[4], data[5],data[6],Double.parseDouble(data[7]),
-                        Double.parseDouble(data[8]), psuIsModular, Integer.parseInt(data[10]), Integer.parseInt(data[11]), data[12], data[13]));
+            while (rs.next()) {
+                try {
+                    moboList.add(new ModelMOBO(rs.getString("brand"), rs.getString("serialNumber"), rs.getString("name"),
+                            rs.getString("formFactor"), rs.getString("socket"), rs.getString("chipset"), rs.getString("ramStandard"),
+                            rs.getInt("maxRam"), rs.getInt("ramSlots"), rs.getInt("maxRamSpeed"), rs.getString("connectors"),
+                            rs.getString("audio"), rs.getInt("price"), rs.getString("imagePath"), rs.getString("smallImagePath")));
+                } catch (Exception ex) {
+                    System.out.println("Can't load data from table. Row number: " + rs.getInt("id"));
+                }
             }
-            Comparator<ModelPSU> comparator = Comparator.comparingInt(ModelPSU::getPrice);
-            FXCollections.sort(psuList, comparator.reversed());
+            rs.close();
+        } catch (SQLException sqle) {
+            System.out.println("Can't load MOBO data.");
+            System.err.println("SQL exception: " + sqle.getMessage());
+        } catch (ClassNotFoundException cnfe) {
+            System.err.println("ClassNotFound exception: " + cnfe.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException sqle) {
+                System.err.println("SQL exception: " + sqle.getMessage());
+            }
+            Comparator<ModelMOBO> comparator = Comparator.comparingInt(ModelMOBO::getPrice);
+            FXCollections.sort(moboList, comparator.reversed());
+            if (moboList.size()!=0)
+                System.out.println("MOBO data loaded.");
+            else
+                System.out.println("There is no MOBO data.");
         }
-        catch (IOException e) {}
-        return psuList;
+        return moboList;
     }
 
     /**
      * GPU data loader.
      * @return ModelGPU ObservableList
-     * @throws IOException
      */
-    public ObservableList<ModelGPU> gpuDataLoader() throws IOException {
-        String line;
-        gpuList.clear();
+    public ObservableList<ModelGPU> gpuDataLoader(){
+        System.out.println("----------\nLoading GPU data...");
+        Connection con = null;
         try {
-            name = "gpu.txt";
-            File file = new File (path + name);
-            InputStream fis = new FileInputStream(file);
-            InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
-            BufferedReader br = new BufferedReader(isr);
-            while ((line = br.readLine()) != null) {
-                String[]data = line.split(";");
-                String gpuIsCooledPassiveString = data[22];
-                Boolean gpuIsCooledPassive = false;
-                if (gpuIsCooledPassiveString.equals("true"))
-                    gpuIsCooledPassive = true;
-                String gpuHasBackplateString = data[23];
-                Boolean gpuHasBackplate = false;
-                if (gpuHasBackplateString.equals("true"))
-                    gpuHasBackplate = true;
+            // Load file with db driver class
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            // Create connection to db
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/pcbuilder", "pcbuilder", "pcbuilder");
+            // Create the statement
+            Statement statement = con.createStatement();
+            // Send inquiry to db
+            ResultSet rs = statement.executeQuery("SELECT * FROM GPU");
+            // Add recieved data to list
 
-                gpuList.add(new ModelGPU(data[0], data[1], data[2], data[3], data[4], data[5], Double.parseDouble(data[6]),
-                        Integer.parseInt(data[7]), data[8], Integer.parseInt(data[9]), data[10], Integer.parseInt(data[11]),
-                        Integer.parseInt(data[12]), Double.parseDouble(data[13]), Integer.parseInt(data[14]), Integer.parseInt(data[15]),
-                        Integer.parseInt(data[16]), Integer.parseInt(data[17]), Integer.parseInt(data[18]), Integer.parseInt(data[19]),
-                        Integer.parseInt(data[20]), Integer.parseInt(data[21]), gpuIsCooledPassive, gpuHasBackplate, Integer.parseInt(data[24]), data[25], data[26]));
+            while (rs.next()) {
+                boolean isCooledPassive = false;
+                if (rs.getInt("isCooledPassive") == 1)
+                    isCooledPassive = true;
+                boolean hasBackplate = false;
+                if (rs.getInt("hasBackplate") == 1)
+                    hasBackplate = true;
+                boolean isTheCpuCoolerIncluded = false;
+
+                try {
+                    gpuList.add(new ModelGPU(rs.getString("chipManufacturer"), rs.getString("manufacturer"), rs.getString("series"),
+                            rs.getString("name"), rs.getString("manufacturerCode"), rs.getString("architecture"),
+                            rs.getDouble("cardLength"), rs.getInt("technology"), rs.getString("interfaceType"),
+                            rs.getInt("memorySize"), rs.getString("memoryType"), rs.getInt("speed"),
+                            rs.getInt("boostSpeed"), rs.getDouble("memorySpeed"), rs.getInt("external6pin"),
+                            rs.getInt("external8pin"), rs.getInt("dpConnectors"), rs.getInt("hdmiConnectors"),
+                            rs.getInt("dviConnectors"), rs.getInt("vgaConnectors"), rs.getInt("tdp"), rs.getInt("wattage"),
+                            isCooledPassive, hasBackplate, rs.getInt("price"), rs.getString("imagePath"), rs.getString("smallImagePath")));
+                } catch (Exception ex) {
+                    System.out.println("Can't load data from table. Row number: " + rs.getInt("id"));
+                }
+            }
+            rs.close();
+        } catch (SQLException sqle) {
+            System.out.println("Can't load GPU data.");
+            System.err.println("SQL exception: " + sqle.getMessage());
+        } catch (ClassNotFoundException cnfe) {
+            System.err.println("ClassNotFound exception: " + cnfe.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException sqle) {
+                System.err.println("SQL exception: " + sqle.getMessage());
             }
             Comparator<ModelGPU> comparator = Comparator.comparingInt(ModelGPU::getPrice);
             FXCollections.sort(gpuList, comparator.reversed());
+            if (gpuList.size()!=0)
+                System.out.println("GPU data loaded.");
+            else
+                System.out.println("There is no GPU data.");
         }
-        catch (IOException e) {}
         return gpuList;
-    }
-
-
-    /**
-     * CPU data loader.
-     * @return ModelCPU ObservableList
-     * @throws IOException
-     */
-    public ObservableList<ModelCPU> cpuDataLoader() throws IOException {
-        String line;
-        cpuList.clear();
-        try {
-            name = "cpu.txt";
-            File file = new File (path + name);
-            InputStream fis = new FileInputStream(file);
-            InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
-            BufferedReader br = new BufferedReader(isr);
-            while ((line = br.readLine()) != null) {
-                String[]data = line.split(";");
-                boolean cpuIsUnlocked = false;
-                String cpuIsUnlockedString = data[7];
-                if (cpuIsUnlockedString.equals("true"))
-                    cpuIsUnlocked = true;
-                boolean cpuHasIntegratedGraphicCard = false;
-                String cpuHasIntegratedGraphicCardString = data[8];
-                if (cpuHasIntegratedGraphicCardString.equals("true"))
-                    cpuHasIntegratedGraphicCard = true;
-                boolean cpuIsTheCpuCoolerIncluded = false;
-                String cpuIsTheCpuCoolerIncludedString = data[16];
-                if (cpuIsTheCpuCoolerIncludedString.equals("true"))
-                    cpuIsTheCpuCoolerIncluded = true;
-                try {
-                    cpuList.add(new ModelCPU(data[0], data[1], data[2], data[3], Integer.parseInt(data[4]), Integer.parseInt(data[5]), Integer.parseInt(data[6]),
-                            cpuIsUnlocked, cpuHasIntegratedGraphicCard, Double.parseDouble(data[9]), Double.parseDouble(data[10]), Double.parseDouble(data[11]), Double.parseDouble(data[12]),
-                            Integer.parseInt(data[13]), Integer.parseInt(data[14]), data[15],
-                            cpuIsTheCpuCoolerIncluded, Integer.parseInt(data[17]), data[18], data[19]));
-                } catch (Exception ex) { System.out.println("Bad cpu data: " + line);}
-            }
-            Comparator<ModelCPU> comparator = Comparator.comparingInt(ModelCPU::getPrice);
-            FXCollections.sort(cpuList, comparator.reversed());
-            System.out.println("CPU data loaded.");
-        }
-        catch (IOException e) {}
-        return cpuList;
-    }
-
-
-    /**
-     * CPU Cooler data loader.
-     * @return ModelCPUCooler ObservableList
-     * @throws IOException
-     */
-    public ObservableList<ModelCPUCooler> cpuCoolerDataLoader() throws IOException {
-        String line;
-        cpuCoolerList.clear();
-        try {
-            name = "cpuCooler.txt";
-            File file = new File (path + name);
-            InputStream fis = new FileInputStream(file);
-            InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
-            BufferedReader br = new BufferedReader(isr);
-            while ((line = br.readLine()) != null) {
-                String[]data = line.split(";");
-                try {
-                    cpuCoolerList.add(new ModelCPUCooler(data[0], data[1], data[2], data[3], data[4], Double.parseDouble(data[5]), Double.parseDouble(data[6]),
-                            Double.parseDouble(data[7]), Integer.parseInt(data[8]), Double.parseDouble(data[9]), Integer.parseInt(data[10]), Integer.parseInt(data[11]),
-                            Double.parseDouble(data[12]), Double.parseDouble(data[13]), Double.parseDouble(data[14]), Integer.parseInt(data[15]),
-                            Integer.parseInt(data[16]), Integer.parseInt(data[17]), Integer.parseInt(data[18]), Integer.parseInt(data[19]),
-                            data[20], Integer.parseInt(data[21]), data[22], data[23]));
-                } catch (Exception ex) { System.out.println("Bad cpu cooler data: " + line);}
-            }
-            Comparator<ModelCPUCooler> comparator = Comparator.comparingInt(ModelCPUCooler::getPrice);
-            FXCollections.sort(cpuCoolerList, comparator.reversed());
-            System.out.println("CPU Cooler data loaded.");
-        }
-        catch (IOException e) {}
-        return cpuCoolerList;
-    }
-
-    /**
-     * Case data loader.
-     * @return ModelCase ObservableList
-     * @throws IOException
-     */
-    public ObservableList<ModelCase> caseDataLoader() throws IOException {
-        String line;
-        caseList.clear();
-        try {
-            name = "case.txt";
-            File file = new File (path + name);
-            InputStream fis = new FileInputStream(file);
-            InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
-            BufferedReader br = new BufferedReader(isr);
-            while ((line = br.readLine()) != null) {
-                String[]data = line.split(";");
-                try {
-                caseList.add(new ModelCase(data[0], data[1], data[2], data[3], data[4], data[5], Double.parseDouble(data[6]),
-                        Double.parseDouble(data[7]), Double.parseDouble(data[8]), Double.parseDouble(data[9]), Double.parseDouble(data[10]), Integer.parseInt(data[11]),
-                        Integer.parseInt(data[12]), Integer.parseInt(data[13]), Integer.parseInt(data[14]), Integer.parseInt(data[15]),
-                        Integer.parseInt(data[16]), Integer.parseInt(data[17]), Integer.parseInt(data[18]), Integer.parseInt(data[19]),
-                        Integer.parseInt(data[20]), Integer.parseInt(data[21]), Integer.parseInt(data[22]), Integer.parseInt(data[23]),
-                        data[24], data[25]));
-                } catch (Exception ex) { System.out.println("Bad case data: " + line);}
-            }
-            Comparator<ModelCase> comparator = Comparator.comparingInt(ModelCase::getPrice);
-            FXCollections.sort(caseList, comparator.reversed());
-            System.out.println("Case data loaded.");
-        }
-        catch (IOException e) {}
-        return caseList;
-    }
-
-    /**
-     * HDD data loader.
-     * @return ModelHDD ObservableList
-     * @throws IOException
-     */
-    public ObservableList<ModelHDD> hddDataLoader() throws IOException {
-        String line;
-        hddList.clear();
-        try {
-            name = "hdd.txt";
-            File file = new File (path + name);
-            InputStream fis = new FileInputStream(file);
-            InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
-            BufferedReader br = new BufferedReader(isr);
-            while ((line = br.readLine()) != null) {
-                String[]data = line.split(";");
-                try {
-                hddList.add(new ModelHDD(data[0], data[1], data[2], data[3], data[4], Integer.parseInt(data[5]), Integer.parseInt(data[6]),
-                        Integer.parseInt(data[7]), Integer.parseInt(data[8]), Integer.parseInt(data[9]),
-                        Integer.parseInt(data[10]), Integer.parseInt(data[11]), data[12], data[13]));
-                } catch (Exception ex) { System.out.println("Bad hdd data: " + line);}
-            }
-            Comparator<ModelHDD> comparator = Comparator.comparingInt(ModelHDD::getPrice);
-            FXCollections.sort(hddList, comparator.reversed());
-            System.out.println("HDD data loaded.");
-        }
-        catch (IOException e) {}
-        return hddList;
-    }
-
-    /**
-     * SSD data loader.
-     * @return ModelSSD ObservableList
-     * @throws IOException
-     */
-    public ObservableList<ModelSSD> ssdDataLoader() throws IOException {
-        String line;
-        ssdList.clear();
-        try {
-            name = "ssd.txt";
-            File file = new File (path + name);
-            InputStream fis = new FileInputStream(file);
-            InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
-            BufferedReader br = new BufferedReader(isr);
-            while ((line = br.readLine()) != null) {
-                String[]data = line.split(";");
-                boolean hasRadiator = false;
-                if (data[14] == "true")
-                    hasRadiator = true;
-                try {
-                ssdList.add(new ModelSSD(data[0], data[1], data[2], data[3], data[4], data[5], Integer.parseInt(data[6]),
-                        Integer.parseInt(data[7]), Integer.parseInt(data[8]), data[9], Integer.parseInt(data[10]),
-                        data[11], data[12], Integer.parseInt(data[13]), hasRadiator, Integer.parseInt(data[15]), data[16], data[17]));
-                } catch (Exception ex) { System.out.println("Bad ssd data: " + line);}
-            }
-            Comparator<ModelSSD> comparator = Comparator.comparingInt(ModelSSD::getPrice);
-            FXCollections.sort(ssdList, comparator.reversed());
-            System.out.println("SSD data loaded.");
-        }
-        catch (IOException e) {}
-        return ssdList;
     }
 
     /**
      * RAM data loader.
      * @return ModelRAM ObservableList
-     * @throws IOException
      */
-    public ObservableList<ModelRAM> ramDataLoader() throws IOException {
-        String line;
-        ObservableList <ModelRAM> ramList = FXCollections.observableArrayList();
-        ramList.clear();
+    public ObservableList<ModelRAM> ramDataLoader() {
+        System.out.println("----------\nLoading RAM data...");
+        Connection con = null;
         try {
-            name = "ram.txt";
-            File file = new File (path + name);
-            InputStream fis = new FileInputStream(file);
-            InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
-            BufferedReader br = new BufferedReader(isr);
-            while ((line = br.readLine()) != null) {
-                String[]data = line.split(";");
+            // Load file with db driver class
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            // Create connection to db
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/pcbuilder", "pcbuilder", "pcbuilder");
+            // Create the statement
+            Statement statement = con.createStatement();
+            // Send inquiry to db
+            ResultSet rs = statement.executeQuery("SELECT * FROM RAM");
+            // Add recieved data to list
+
+            while (rs.next()) {
                 boolean hasRadiator = false;
-                if (data[12] == "true")
+                if (rs.getInt("hasRadiator") == 1)
                     hasRadiator = true;
                 boolean hasLighting = false;
-                if (data[13] == "true")
+                if (rs.getInt("hasLighting") == 1)
                     hasLighting = true;
                 try {
-                ramList.add(new ModelRAM(data[0], data[1], data[2], data[3], Integer.parseInt(data[4]), Integer.parseInt(data[5]), Integer.parseInt(data[6]),
-                        data[7], Integer.parseInt(data[8]), Integer.parseInt(data[9]), Double.parseDouble(data[10]), Integer.parseInt(data[11]),
-                        hasRadiator, hasLighting, Integer.parseInt(data[14]), data[15], data[16]));
-                } catch (Exception ex) { System.out.println("Bad ram data: " + line);}
+                    ramList.add(new ModelRAM(rs.getString("brand"), rs.getString("serialNumber"), rs.getString("name"),
+                            rs.getString("standard"), rs.getInt("memorySize"), rs.getInt("numberOfModules"),
+                            rs.getInt("singleModuleSize"), rs.getString("ramType"), rs.getInt("memoryClock"),
+                            rs.getInt("casLatency"), rs.getDouble("voltage"), rs.getInt("wattage"), hasRadiator, hasLighting,
+                            rs.getInt("price"), rs.getString("imagePath"), rs.getString("smallImagePath")));
+                } catch (Exception ex) {
+                    System.out.println("Can't load data from table. Row number: " + rs.getInt("id"));
+                }
+            }
+            rs.close();
+        } catch (SQLException sqle) {
+            System.out.println("Can't load RAM data.");
+            System.err.println("SQL exception: " + sqle.getMessage());
+        } catch (ClassNotFoundException cnfe) {
+            System.err.println("ClassNotFound exception: " + cnfe.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException sqle) {
+                System.err.println("SQL exception: " + sqle.getMessage());
             }
             Comparator<ModelRAM> comparator = Comparator.comparingInt(ModelRAM::getPrice);
             FXCollections.sort(ramList, comparator.reversed());
-            System.out.println("RAM data loaded.");
+            if (ramList.size()!=0)
+                System.out.println("RAM data loaded.");
+            else
+                System.out.println("There is no RAM data.");
         }
-        catch (IOException e) {}
         return ramList;
+    }
+
+    /**
+     * SSD data loader.
+     * @return ModelSSD ObservableList
+     */
+    public ObservableList<ModelSSD> ssdDataLoader() {
+        System.out.println("----------\nLoading SSD data...");
+        Connection con = null;
+        try {
+            // Load file with db driver class
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            // Create connection to db
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/pcbuilder", "pcbuilder", "pcbuilder");
+            // Create the statement
+            Statement statement = con.createStatement();
+            // Send inquiry to db
+            ResultSet rs = statement.executeQuery("SELECT * FROM SSD");
+            // Add recieved data to list
+
+            while (rs.next()) {
+                boolean hasRadiator = false;
+                if (rs.getInt("hasRadiator") == 1)
+                    hasRadiator = true;
+                try {
+                    ssdList.add(new ModelSSD(rs.getString("brand"), rs.getString("serialNumber"), rs.getString("name"),
+                            rs.getString("interfaceType"), rs.getString("formFactor"), rs.getString("protocol"),
+                            rs.getInt("capacity"), rs.getInt("readSpeed"), rs.getInt("writeSpeed"), rs.getString("memoryType"),
+                            rs.getInt("tbw"), rs.getString("controllerManufacturer"), rs.getString("controllerModel"),
+                            rs.getInt("wattage"), hasRadiator, rs.getInt("price"), rs.getString("imagePath"), rs.getString("smallImagePath")));
+                } catch (Exception ex) {
+                    System.out.println("Can't load data from table. Row number: " + rs.getInt("id"));
+                }
+            }
+            rs.close();
+        } catch (SQLException sqle) {
+            System.out.println("Can't load SSD data.");
+            System.err.println("SQL exception: " + sqle.getMessage());
+        } catch (ClassNotFoundException cnfe) {
+            System.err.println("ClassNotFound exception: " + cnfe.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException sqle) {
+                System.err.println("SQL exception: " + sqle.getMessage());
+            }
+            Comparator<ModelSSD> comparator = Comparator.comparingInt(ModelSSD::getPrice);
+            FXCollections.sort(ssdList, comparator.reversed());
+            if (ssdList.size()!=0)
+                System.out.println("SSD data loaded.");
+            else
+                System.out.println("There is no SSD data.");
+        }
+        return ssdList;
+    }
+
+    /**
+     * HDD data loader.
+     * @return ModelHDD ObservableList
+     */
+    public ObservableList<ModelHDD> hddDataLoader() {
+        System.out.println("----------\nLoading HDD data...");
+        Connection con = null;
+        try {
+            // Load file with db driver class
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            // Create connection to db
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/pcbuilder", "pcbuilder", "pcbuilder");
+            // Create the statement
+            Statement statement = con.createStatement();
+            // Send inquiry to db
+            ResultSet rs = statement.executeQuery("SELECT * FROM HDD");
+            // Add recieved data to list
+
+            while (rs.next()) {
+                try {
+                    hddList.add(new ModelHDD(rs.getString("brand"), rs.getString("serialNumber"), rs.getString("name"),
+                            rs.getString("interfaceType"), rs.getString("formFactor"), rs.getInt("rotationalSpeed"),
+                            rs.getInt("capacity"), rs.getInt("readSpeed"), rs.getInt("writeSpeed"),
+                            rs.getInt("cacheSize"), rs.getInt("wattage"), rs.getInt("price"),
+                            rs.getString("imagePath"), rs.getString("smallImagePath")));
+                } catch (Exception ex) {
+                    System.out.println("Can't load data from table. Row number: " + rs.getInt("id"));
+                }
+            }
+            rs.close();
+        } catch (SQLException sqle) {
+            System.out.println("Can't load HDD data.");
+            System.err.println("SQL exception: " + sqle.getMessage());
+        } catch (ClassNotFoundException cnfe) {
+            System.err.println("ClassNotFound exception: " + cnfe.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException sqle) {
+                System.err.println("SQL exception: " + sqle.getMessage());
+            }
+            Comparator<ModelHDD> comparator = Comparator.comparingInt(ModelHDD::getPrice);
+            FXCollections.sort(hddList, comparator.reversed());
+            if (hddList.size()!=0)
+                System.out.println("HDD data loaded.");
+            else
+                System.out.println("There is no HDD data.");
+        }
+        return hddList;
     }
 
     /**
      * PSU data loader.
      * @return ModelPSU ObservableList
-     * @throws IOException
      */
-    public ObservableList<ModelMOBO> moboDataLoader() throws IOException {
-        String line;
-        moboList.clear();
+    public ObservableList<ModelPSU> psuDataLoader() {
+        System.out.println("----------\nLoading PSU data...");
+        Connection con = null;
         try {
-            name = "mobo.txt";
-            File file = new File (path + name);
-            InputStream fis = new FileInputStream(file);
-            InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
-            BufferedReader br = new BufferedReader(isr);
-            while ((line = br.readLine()) != null) {
-                String[]data = line.split(";");
+            // Load file with db driver class
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            // Create connection to db
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/pcbuilder", "pcbuilder", "pcbuilder");
+            // Create the statement
+            Statement statement = con.createStatement();
+            // Send inquiry to db
+            ResultSet rs = statement.executeQuery("SELECT * FROM PSU");
+            // Add recieved data to list
+
+            while (rs.next()) {
                 try {
-                moboList.add(new ModelMOBO(data[0], data[1], data[2], data[3], data[4], data[5], data[6],Integer.parseInt(data[7]),Integer.parseInt(data[8]),
-                        Integer.parseInt(data[9]), data[10], data[11], Integer.parseInt(data[12]), data[13], data[14]));
-                } catch (Exception ex) { System.out.println("Bad mobo data: " + line);}
+                    boolean isModular = false;
+                    if (rs.getInt("isModular") == 1)
+                        isModular = true;
+                    psuList.add(new ModelPSU(rs.getString("brand"), rs.getString("name"), rs.getString("manufacturerCode"),
+                            rs.getString("specification"), rs.getString("certificate80Plus"),
+                            rs.getString("coolingMode"), rs.getString("protection"),
+                            rs.getDouble("fanSize"), rs.getDouble("depth"), isModular,
+                            rs.getInt("wattage"), rs.getInt("price"), rs.getString("imagePath"),
+                            rs.getString("smallImagePath")));
+                } catch (Exception ex) {
+                    System.out.println("Can't load data from table. Row number: " + rs.getInt("id"));
+                }
             }
-            Comparator<ModelMOBO> comparator = Comparator.comparingInt(ModelMOBO::getPrice);
-            FXCollections.sort(moboList, comparator.reversed());
-            System.out.println("MOBO data loaded.");
+            rs.close();
+        } catch (SQLException sqle) {
+            System.out.println("Can't load PSU data.");
+            System.err.println("SQL exception: " + sqle.getMessage());
+        } catch (ClassNotFoundException cnfe) {
+            System.err.println("ClassNotFound exception: " + cnfe.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException sqle) {
+                System.err.println("SQL exception: " + sqle.getMessage());
+            }
+            Comparator<ModelPSU> comparator = Comparator.comparingInt(ModelPSU::getPrice);
+            FXCollections.sort(psuList, comparator.reversed());
+            if (psuList.size()!=0)
+                System.out.println("PSU data loaded.");
+            else
+                System.out.println("There is no PSU data.");
         }
-        catch (IOException e) {}
-        return moboList;
+        return psuList;
     }
+
+    /**
+     * Case data loader.
+     * @return ModelCase ObservableList
+     */
+    public ObservableList<ModelCase> caseDataLoader() {
+        System.out.println("----------\nLoading Case data...");
+        Connection con = null;
+        try {
+            // Load file with db driver class
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            // Create connection to db
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/pcbuilder", "pcbuilder", "pcbuilder");
+            // Create the statement
+            Statement statement = con.createStatement();
+            // Send inquiry to db
+            ResultSet rs = statement.executeQuery("SELECT * FROM PCCase");
+            // Add recieved data to list
+            while (rs.next()) {
+                try {
+                    caseList.add(new ModelCase(rs.getString("brand"), rs.getString("serialNumber"),
+                            rs.getString("name"), rs.getString("formFactor"), rs.getString("type"),
+                            rs.getString("psuPosition"), rs.getDouble("height"), rs.getDouble("width"),
+                            rs.getDouble("depth"), rs.getDouble("weight"), rs.getDouble("maxCpuCoolerHeight"),
+                            rs.getInt("external525"), rs.getInt("internal25"), rs.getInt("internal35"),
+                            rs.getInt("frontFanNumber"), rs.getInt("maxFrontFanNumber"), rs.getInt("frontFanSize"),
+                            rs.getInt("topFanNumber"), rs.getInt("maxTopFanNumber"), rs.getInt("topFanSize"),
+                            rs.getInt("rearFanNumber"), rs.getInt("maxRearFanNumber"), rs.getInt("rearFanSize"),
+                            rs.getInt("price"), rs.getString("imagePath"), rs.getString("smallImagePath")));
+                } catch (Exception ex) {
+                    System.out.println("Can't load data from table. Row number: " + rs.getInt("id"));
+                }
+            }
+            rs.close();
+        } catch (SQLException sqle) {
+            System.out.println("Can't load Case data.");
+            System.err.println("SQL exception: " + sqle.getMessage());
+        } catch (ClassNotFoundException cnfe) {
+            System.err.println("ClassNotFound exception: " + cnfe.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException sqle) {
+                System.err.println("SQL exception: " + sqle.getMessage());
+            }
+            Comparator<ModelCase> comparator = Comparator.comparingInt(ModelCase::getPrice);
+            FXCollections.sort(caseList, comparator.reversed());
+            if (ssdList.size()!=0)
+                System.out.println("Case data loaded.");
+            else
+                System.out.println("There is no Case data.");
+            System.out.println("----------");
+        }
+        return caseList;
+    }
+
 
     ObservableList cpuCoolerNames = FXCollections.observableArrayList();
     ObservableList moboNames = FXCollections.observableArrayList();
@@ -343,8 +550,10 @@ public class ModelDataLoaderAndFilter {
     ObservableList caseNames = FXCollections.observableArrayList();
 
     /**
+     * /**
      * This function creates cpu cooler names list based on selected CPU.
      * @param selectedCpu selectedCpu
+     * @param cpuCoolerList cpuCoolerList
      * @return cpu cooler names list
      */
     public ObservableList getCpuCoolerNames (ModelCPU selectedCpu, ObservableList<ModelCPUCooler> cpuCoolerList) {
@@ -363,17 +572,18 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function clears cpu cooler names list.
-     * @return cpu cooler names list
      */
     public void clearCpuCoolerNames () {
         cpuCoolerNames.clear();
     }
 
     /**
+     *  /**
      * This function creates mobo names list based on selected CPU.
      * @param selectedCpu selected cpu
      * @param selectedCpuCooler selected cpu cooler
-     * @return
+     * @param moboList mobo list
+     * @return mobo names list
      */
     public ObservableList getMoboNames (ModelCPU selectedCpu, ModelCPUCooler selectedCpuCooler, ObservableList<ModelMOBO> moboList) {
         if (selectedCpu.getBoxCooler() == false && selectedCpuCooler != null || selectedCpu.getBoxCooler() == true && selectedCpuCooler != null || selectedCpu.getBoxCooler() == true && selectedCpuCooler == null) {
@@ -390,15 +600,15 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function clears mobo names list
-     * @return mobo names list
      */
     public void clearMoboNames () {
         moboNames.clear();
     }
 
     /**
-     * This function creates gpu names list based on selected CPU.
-     * @param selectedCpu selected CPU
+     * * This function creates gpu names list based on selected CPU.
+     * @param selectedCpu selected cpu
+     * @param gpuList gpu list
      * @return gpu names list
      */
     public ObservableList getGpuNames (ModelCPU selectedCpu, ObservableList<ModelGPU> gpuList){
@@ -415,7 +625,6 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function clears gpu names list
-     * @return gpu names list
      */
     public void clearGpuNames () {
         gpuNames.clear();
@@ -423,8 +632,9 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function creates ram names list based on selected mobo.
-     * @param selectedMobo selected motherboard
-     * @return
+     * @param selectedMobo selected mobo
+     * @param ramList ram list
+     * @return ram names list
      */
     public ObservableList getRamNames(ModelMOBO selectedMobo, ObservableList<ModelRAM> ramList){
         ramNames.clear();
@@ -446,7 +656,6 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function clears ram names list
-     * @return ram names list
      */
     public void clearRamNames () {
         ramNames.clear();
@@ -454,7 +663,8 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function creates ssd names list based on selected mobo.
-     * @param selectedMobo selected motherboard
+     * @param selectedMobo selected mobo
+     * @param ssdList ssd list
      * @return ssd names list
      */
     public ObservableList getSsdNames(ModelMOBO selectedMobo, ObservableList<ModelSSD> ssdList){
@@ -477,7 +687,6 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function clears ssd names list
-     * @return ssd names list
      */
     public void clearSsdNames () {
         ssdNames.clear();
@@ -486,6 +695,7 @@ public class ModelDataLoaderAndFilter {
     /**
      * This function creates hdd names list based on selected ssd
      * @param selectedSsd selected ssd
+     * @param hddList hdd list
      * @return hdd names list
      */
     public ObservableList getHddNames (ModelSSD selectedSsd, ObservableList<ModelHDD> hddList) {
@@ -507,7 +717,6 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function clears hdd names list
-     * @return hdd names list
      */
     public void clearHddNames () {
         hddNames.clear();
@@ -515,7 +724,8 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function creates psu names list based on max load
-     * @param maxLoad max load (max wattage)
+     * @param maxLoad max load wattage (W)
+     * @param psuList psu list
      * @return psu names list
      */
     public ObservableList getPsuNames (double maxLoad, ObservableList<ModelPSU> psuList) {
@@ -532,7 +742,6 @@ public class ModelDataLoaderAndFilter {
 
     /**
      * This function clears psu names list
-     * @return psu names list
      */
     public void clearPsuNames () {
         psuNames.clear();
@@ -541,6 +750,7 @@ public class ModelDataLoaderAndFilter {
     /**
      * This function creates case names list based on form factor of selected mobo
      * @param selectedMobo selected mobo
+     * @param caseList case list
      * @return case names list
      */
     public ObservableList getCaseNames (ModelMOBO selectedMobo, ObservableList<ModelCase> caseList) {

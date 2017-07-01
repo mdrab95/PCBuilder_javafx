@@ -5,6 +5,7 @@ import com.pcbuilder.controller.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -292,8 +293,17 @@ public class MainApp extends Application {
     }
 
     /**
+     * Set image size
+     * @param imageView imageView
+     */
+    public void setImgSize(ImageView imageView) {
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(100);
+    }
+
+    /**
      * main method
-     * @param args
+     * @param args args
      */
     public static void main(String[] args) {
         launch(args);

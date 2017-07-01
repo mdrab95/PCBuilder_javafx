@@ -35,11 +35,8 @@ public class PSUOverviewController implements Initializable {
     public void initialize (URL location, ResourceBundle resources) {
         psuData.clear();
         ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
-        try {psuData.addAll(loader.psuDataLoader());}
-        catch(IOException e){};
-
+        psuData.addAll(loader.psuDataLoader());
         psuListView.setItems(psuData);
-
         psuListView.setCellFactory(new Callback<ListView<ModelPSU>, ListCell<ModelPSU>>() {
             @Override
             public ListCell<ModelPSU> call(ListView<ModelPSU> param) {
@@ -53,15 +50,13 @@ public class PSUOverviewController implements Initializable {
                             try {
                                 Image img = new Image(psuItem.getSmallImagePath()+ psuItem.getManufacturerCode() + ".png", true);
                                 ImageView imageView = new ImageView(img);
-                                imageView.setFitHeight(100);
-                                imageView.setFitWidth(100);
+                                mainApp.setImgSize(imageView);
                                 setGraphic(imageView);
                             }
                             catch (Exception ex){
                                 Image img = new Image("images/no_img.png");
                                 ImageView imageView = new ImageView(img);
-                                imageView.setFitHeight(100);
-                                imageView.setFitWidth(100);
+                                mainApp.setImgSize(imageView);
                                 setGraphic(imageView);
                             }
 

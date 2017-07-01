@@ -32,14 +32,12 @@ public class CaseOverviewController implements Initializable {
 
     }
 
+
     @FXML
     public void initialize (URL location, ResourceBundle resources) {
         caseData.clear();
         ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
-        try {
-            caseData.addAll(loader.caseDataLoader());
-        } catch (IOException e) {}
-
+        caseData.addAll(loader.caseDataLoader());
         caseListView.setItems(caseData);
         caseListView.setCellFactory(new Callback<ListView<ModelCase>, ListCell<ModelCase>>() {
 

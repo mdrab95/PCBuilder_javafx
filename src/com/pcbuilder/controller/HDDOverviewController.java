@@ -37,15 +37,8 @@ public class HDDOverviewController implements Initializable {
     public void initialize (URL location, ResourceBundle resources) {
         hddData.clear();
         ModelDataLoaderAndFilter loader = new ModelDataLoaderAndFilter();
-        try {
-            hddData.addAll(loader.hddDataLoader());
-        } catch (IOException e) {}
-
-        Comparator<ModelHDD> comparator = Comparator.comparingInt(ModelHDD::getPrice);
-        FXCollections.sort(hddData, comparator.reversed());
-
+        hddData.addAll(loader.hddDataLoader());
         hddListView.setItems(hddData);
-
         hddListView.setCellFactory(new Callback<ListView<ModelHDD>, ListCell<ModelHDD>>() {
             @Override
             public ListCell<ModelHDD> call(ListView<ModelHDD> param) {
@@ -59,15 +52,13 @@ public class HDDOverviewController implements Initializable {
                             try {
                                 Image img = new Image(hddItem.getSmallImagePath() + hddItem.getSerialNumber() + ".png",  true);
                                 ImageView imageView = new ImageView(img);
-                                imageView.setFitHeight(100);
-                                imageView.setFitWidth(100);
+                                mainApp.setImgSize(imageView);
                                 setGraphic(imageView);
                             }
                             catch (Exception ex){
                                 Image img = new Image("images/no_img.png");
                                 ImageView imageView = new ImageView(img);
-                                imageView.setFitHeight(100);
-                                imageView.setFitWidth(100);
+                                mainApp.setImgSize(imageView);
                                 setGraphic(imageView);
                             }
                             String capacity = "";
